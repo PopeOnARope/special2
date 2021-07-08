@@ -15,7 +15,13 @@ const CartSidebarView: FC = () => {
   const subTotal = cart?.subtotalPrice
   const total = ' - '
 
-  const items = cart?.lineItems ?? []
+  const items = cart?.lineItems ?? [
+    {
+      name: 'foo',
+      price: '100'
+
+    }
+  ]
   const isEmpty = items.length === 0
   const [cartUpsell, setCartUpsell] = useState()
 
@@ -47,6 +53,7 @@ const CartSidebarView: FC = () => {
         alignItems: 'center',
         px: 2,
         color: 'background',
+        background: '#e5e5e5',
         ...(isEmpty && { justifyContent: 'center' }),
       }}
     >
@@ -55,7 +62,7 @@ const CartSidebarView: FC = () => {
           <Bag />
           Your cart is empty
           <Text>
-            Biscuit oat cake wafer icing ice cream tiramisu pudding cupcake.
+            Biscuit oat cake wafer icing ice cream tiramisu pudding cupcake. ok?
           </Text>
         </>
       ) : (

@@ -1,16 +1,20 @@
 import React, { FC, useMemo } from 'react'
 
 export interface State {
-  displaySidebar: boolean
+  displayCart: boolean
   navigationLinks?: Array<{ link: string; title: string }>
   logo?: { image?: string; text: string; width: number; height: number }
-  toggleSidebar?: any
-  closeSidebar?: any
-  openSidebar?: any
+  toggleCart?: any
+  closeCart?: any
+  openCart?: any
+  toggleSideNav?: any
+  closeSideNav?: any
+  openSideNav?: any
 }
 
 const initialState = {
-  displaySidebar: false,
+  displayCart: false,
+  displaySideMenu: false,
 }
 
 type Action =
@@ -34,17 +38,25 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
     ...siteSettings,
   })
 
-  const openSidebar = () => setState(() => ({ displaySidebar: true }))
-  const closeSidebar = () => setState(() => ({ displaySidebar: false }))
-  const toggleSidebar = () =>
-    setState((prev) => ({ displaySidebar: !prev.displaySidebar }))
+  const openCart = () => setState(() => ({ displayCart: true }))
+  const closeCart = () => setState(() => ({ displayCart: false }))
+  const toggleCart = () =>
+    setState((prev) => ({ displayCart: !prev.displayCart }))
+
+  const openSideNav = () => setState(() => ({ displaySideNav: true }))
+  const closeSideNav = () => setState(() => ({ displaySideNav: false }))
+  const toggleSideNav = () =>
+    setState((prev) => ({ displaySideNav: !prev.displaySideNav }))
 
   const value = {
     ...state,
     ...siteSettings,
-    openSidebar,
-    closeSidebar,
-    toggleSidebar,
+    openCart,
+    closeCart,
+    toggleCart,
+    openSideNav,
+    closeSideNav,
+    toggleSideNav,
   }
 
   return <UIContext.Provider value={value} children={children} />

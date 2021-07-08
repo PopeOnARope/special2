@@ -18,7 +18,6 @@ import '../blocks/CollectionView/CollectionView.builder'
 import { useThemeUI } from '@theme-ui/core'
 import { Link } from '@components/ui'
 import { Themed } from '@theme-ui/mdx'
-import { getLayoutProps } from '@lib/get-layout-props'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -31,11 +30,13 @@ export async function getStaticProps({
     urlPath: '/' + (params?.path?.join('/') || ''),
   })
 
+  const theme = await resolveBuilderContent('theme')
+
   return {
     props: {
       page,
+      theme,
       locale,
-      ...(await getLayoutProps()),
     },
     // Next.js will attempt to re-generate the page:
     // - When a request comes in
@@ -73,13 +74,13 @@ export default function Path({
           <meta name="robots" content="noindex" />
           <meta name="title"></meta>
         </Head>
-        {Builder.isBrowser && <DefaultErrorPage statusCode={404} />}
+        { Builder.isBrowser &&  <DefaultErrorPage statusCode={404} /> }
       </>
     )
   }
 
   const { title, description, image } = page?.data! || {}
-  Builder.isStatic = true;
+
   return (
     <div>
       {title && (

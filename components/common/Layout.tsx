@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React from 'react'
-import { ThemeProvider, jsx } from 'theme-ui'
+import { ThemeProvider, jsx, Themed, Close } from 'theme-ui'
 import dynamic from 'next/dynamic'
 import { ManagedUIContext, useUI } from '@components/ui/context'
 import { Head, Navbar } from '@components/common'
@@ -9,6 +9,8 @@ import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
 import { Button } from 'theme-ui'
 import { Sidebar } from '@components/ui'
 import { CartSidebarView } from '@components/cart'
+import { SideNav } from '@components/common'
+
 import { CommerceProvider } from '@lib/shopify/storefront-data-hooks'
 import shopifyConfig from '@config/shopify'
 import { builder, BuilderContent, Builder } from '@builder.io/react'
@@ -73,7 +75,7 @@ const InnerLayout: React.FC<{
       ...colorOverrides,
     },
   }
-  const { displaySidebar, closeSidebar } = useUI()
+  const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
     <ThemeProvider theme={theme}>
@@ -81,7 +83,7 @@ const InnerLayout: React.FC<{
       <div
         sx={{
           margin: `0 auto`,
-          px: 20,
+          px: 0,
           maxWidth: 1920,
           minWidth: '60vw',
           minHeight: 800,
@@ -92,13 +94,26 @@ const InnerLayout: React.FC<{
 
       <Sidebar
         open={
-          displaySidebar ||
+          displayCart ||
           (builder.editingModel || Builder.previewingModel) ===
             'cart-upsell-sidebar'
         }
-        onClose={closeSidebar}
+        onClose={closeCart}
+        from='right'
       >
         <CartSidebarView />
+      </Sidebar>
+      <Sidebar
+        open={displaySideNav
+          //   displaySideNav ||
+          //   (builder.editingModel || Builder.previewingModel) ===
+          //   'cart-upsell-sidebar'
+          // }
+        }
+        onClose={closeSideNav}
+        from='left'
+      >
+        <SideNav />
       </Sidebar>
       <NoSSR>
         <FeatureBar

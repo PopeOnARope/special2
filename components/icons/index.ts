@@ -14,3 +14,7 @@ export { default as RightArrow } from './RightArrow'
 export { default as Info } from './Info'
 export { default as ChevronUp } from './ChevronUp'
 export { default as Vercel } from './Vercel'
+export { default as NounEyes } from './NounEyes'
+export { default as SpecialLogo } from './SpecialLogo'
+
+

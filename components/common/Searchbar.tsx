@@ -30,8 +30,6 @@ const Searchbar: FC<Props> = () => {
   return (
     <React.Fragment>
       <ExpandModal
-        transitionConfig={{}}
-        contentTransition={{}}
         overlayProps={{
           style: {
             maxWidth: 1920,

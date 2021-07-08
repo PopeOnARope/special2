@@ -10,11 +10,18 @@ import { jsx, Themed, useThemeUI } from 'theme-ui'
 import { useUI } from '@components/ui/context'
 import Image from 'next/image'
 import Searchbar from './Searchbar'
+import { SpecialLogo } from '@components/icons'
 
 const Navbar: FC = () => {
   const [announcement, setAnnouncement] = useState()
   const { theme } = useThemeUI()
-  const { navigationLinks, logo } = useUI()
+  const {
+    navigationLinks,
+    logo,
+    toggleSideNav,
+    displaySideNav,
+    displayCart,
+  } = useUI()
   const cart = useCart()
 
   useEffect(() => {
@@ -33,24 +40,37 @@ const Navbar: FC = () => {
     fetchContent()
   }, [cart?.lineItems])
 
+  const primaryColor = displayCart || displaySideNav ? '#000' : '#eee'
+  const navItemStyles = {
+    background: 'none',
+    border: primaryColor,
+    color: primaryColor,
+    transition: 'all 0.25s',
+    ' svg': {
+      transition: 'all 0.25s',
+      fill: primaryColor,
+      stroke: primaryColor,
+    },
+  }
+
   return (
     <React.Fragment>
-      <BuilderComponent
-        content={announcement}
-        data={{ theme }}
-        model="announcement-bar"
-      />
       <Themed.div
         as="header"
         sx={{
           margin: `0 auto`,
           maxWidth: 1920,
-          py: 2,
-          px: 2,
+          py: 3,
+          px: 3,
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          position: 'relative',
+          width: '100%',
+          position: 'absolute',
+          zIndex: '100',
+          ' a': {
+            ...navItemStyles
+          },
         }}
       >
         <Themed.div
@@ -61,16 +81,17 @@ const Navbar: FC = () => {
             justifyContent: 'space-evenly',
           }}
         >
-          {navigationLinks?.map((link, index) => (
-            <Themed.a
-              key={index}
-              sx={{ padding: 10, minWidth: 90 }}
-              as={Link}
-              href={link.link}
-            >
-              {link.title}
-            </Themed.a>
-          ))}
+          <a onClick={toggleSideNav}>menu</a>
+          {/*{navigationLinks?.map((link, index) => (*/}
+          {/*  <Themed.a*/}
+          {/*    key={index}*/}
+          {/*    sx={{ padding: 10, minWidth: 90 }}*/}
+          {/*    as={Link}*/}
+          {/*    href={link.link}*/}
+          {/*  >*/}
+          {/*    {link.title}*/}
+          {/*  </Themed.a>*/}
+          {/*))}*/}
         </Themed.div>
         <Themed.div
           sx={{
@@ -85,24 +106,18 @@ const Navbar: FC = () => {
               fontWeight: 'bold',
             }}
           >
-            {logo && logo.image && (
-              <Themed.a
-                as={Link}
-                href="/"
-                sx={{
-                  letterSpacing: -1,
-                  textDecoration: `none`,
-                  paddingLeft: '5px',
-                }}
-              >
-                <Image
-                  layout="fixed"
-                  width={logo.width}
-                  height={logo.height}
-                  src={logo.image}
-                ></Image>
-              </Themed.a>
-            )}
+            <Themed.a
+              as={Link}
+              href="/"
+              sx={{
+                letterSpacing: -1,
+                textDecoration: `none`,
+                paddingLeft: '5px',
+              }}
+            >
+              <SpecialLogo fill={primaryColor}/>
+            </Themed.a>
+
             {logo && logo.text && !logo.image && (
               <Themed.a
                 as={Link}
@@ -126,7 +141,6 @@ const Navbar: FC = () => {
             justifyContent: ['space-between', 'flex-end'],
           }}
         >
-          <Searchbar />
           <UserNav />
         </Themed.div>
       </Themed.div>

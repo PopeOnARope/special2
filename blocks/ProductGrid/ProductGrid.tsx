@@ -77,6 +77,20 @@ export const ProductGrid: FC<ProductGridProps> = ({
     : ProductCard
 
   return (
+    <div className='flex flex-col items-center'>
+      <div className="flex flex-col w-763">
+        {products.slice(offset, limit).map((product, i) => (
+          <ProductComponent
+            key={String(product.id) + i}
+            {...(highlightCard?.index === i ? highlightCard : cardProps)}
+            product={product}
+          />
+        ))}
+      </div>
+    </div>
+  )
+
+  return (
     <Grid gap={2} width={['100%', '40%', '24%']}>
       {products.slice(offset, limit).map((product, i) => (
         <ProductComponent
