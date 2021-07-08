@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .type-wrapper {
+    font-family: 'Value Sans Pro' !important;
+  }
+  .light-mode-wrapper {
+    color: black;
+  }
+
+  .dark-mode-wrapper {
+    color: #eee;
+    background: black;
+  }
+
+  /*TODO FIND A BETTER WAY TO HANDLE THIS*/
+  .dark-mode-wrapper button {
+    background: white !important;
+    color: black !important;
+  }
+
+  .dark-mode-wrapper input {
+    border-bottom-color: white !important;
+  }
+
+ .dark-mode-wrapper .checkbox-custom + .checkbox-custom-label:before {
+   border: 2px solid white !important;
+ }
+
+  .primary-h1 {
+    margin-left: 0;
+    font-family: 'Value Sans Pro';
+    font-size: 83px;
+    font-weight: 400;
+  }
+
+  .secondary-h1 {
+    margin-top: -70px;
+    margin-left: 25px;
+    font-family: 'Value Sans Pro';
+    font-size: 83px;
+    font-weight: 400;
+    padding: 0px;
+  }
+
+  .w-763 {
+    width: 763px;
+  }
+}

@@ -28,14 +28,18 @@ interface Props {
   description?: string
   title?: string
 }
-const NextButton = ({ onClick }) => (
+
+interface ButtonProps {
+  onClick?: any
+}
+const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
   <button onClick={onClick} className='focus:outline-none'>
     <div sx={{ color: 'white', transform: 'rotate(90deg)' }} className='hover:pr-20'>
       <ChevronUp />
     </div>
   </button>
 )
-const PreviousButton = ({ onClick }) => (
+const PreviousButton: React.FC<ButtonProps> = ({ onClick }) => (
   <button onClick={onClick} className='focus:outline-none'>
     <div sx={{ color: 'white', transform: 'rotate(270deg)' }}>
       <ChevronUp />
