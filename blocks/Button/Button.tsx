@@ -1,11 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
 import {ArrowLeft} from '@components/icons'
+import { ForwardRef } from '@theme-ui/components'
 
 const _Button = styled.button`
-  background: ${(props) => props.background || '#000'};
-  color: ${(props) => props.color || '#eee'};
-  border: 1px solid ${(props) => props.background || '#000'};
+  background: #000;
+  color: #eee;
+  border: 1px solid #000;
   height: 51.15191650390625px;
   width: 432.23297119140625px;
   border-radius: 0px;
@@ -30,11 +31,13 @@ interface ButtonProps {
   children: any
   icon?: any
   background?: string
-  color?: stringn
+  color?: string
   onClick?: any
+  name?: string
+  disabled?: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({ children, icon, background, color, ...rest }) => (
+const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
   <_Button {...rest}>
     <span className='w-full'>{children}</span>
     <span><ArrowLeft transform='rotate(180)'/></span>

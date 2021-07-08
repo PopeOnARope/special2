@@ -192,7 +192,6 @@ const ProductBox: React.FC<Props> = ({
             <Button
               name="add-to-cart"
               disabled={loading}
-              sx={{ margin: 2, display: 'block' }}
               onClick={addToCart}
             >
               <span className="flex flex-row justify-between mr-2">

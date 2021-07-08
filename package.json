@@ -60,6 +60,7 @@
     "@types/qs": "^6.9.5",
     "@types/react-sticky": "^6.0.3",
     "@types/shopify-buy": "^2.10.3",
+    "@types/styled-components": "^5.1.11",
     "@types/traverse": "^0.6.32",
     "@vercel/fetch": "^6.1.0",
     "atob": "^2.1.2",

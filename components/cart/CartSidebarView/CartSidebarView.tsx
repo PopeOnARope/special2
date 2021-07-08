@@ -15,13 +15,7 @@ const CartSidebarView: FC = () => {
   const subTotal = cart?.subtotalPrice
   const total = ' - '
 
-  const items = cart?.lineItems ?? [
-    {
-      name: 'foo',
-      price: '100'
-
-    }
-  ]
+  const items = cart?.lineItems ?? []
   const isEmpty = items.length === 0
   const [cartUpsell, setCartUpsell] = useState()
 
