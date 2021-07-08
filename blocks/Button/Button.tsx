@@ -26,7 +26,15 @@ const _Button = styled.button`
   }
 `
 
-const Button = ({ children, icon, background, color, ...rest }) => (
+interface ButtonProps {
+  children: any
+  icon?: any
+  background?: string
+  color?: stringn
+  onClick?: any
+}
+
+const Button: React.FC<ButtonProps> = ({ children, icon, background, color, ...rest }) => (
   <_Button {...rest}>
     <span className='w-full'>{children}</span>
     <span><ArrowLeft transform='rotate(180)'/></span>
