@@ -46,6 +46,7 @@ interface TagProps {
 }
 
 const Tag: React.FC<TagProps> = ({ displayAs, children, ...rest }) => {
+  console.log({...rest})
   return displayAs === 'link' ? (
     <Link {...rest}>{children}</Link>
   ) : (

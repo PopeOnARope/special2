@@ -82,7 +82,7 @@ const Carousel = (props) => {
       </Wrapper>
     )
   }
-  const { image, titleLine1, titleLine2, buttonLabel, buttonLink } = props.slides[currentSlide];
+  const { image, titleLine1, titleLine2, buttonLabel, buttonUrl } = props.slides[currentSlide];
   const collectionAvailable = true
 
   function updateSlide() {
@@ -96,7 +96,7 @@ const Carousel = (props) => {
         <H1>{titleLine1}</H1>
         {titleLine2 && <H1 className="title2">{titleLine2}</H1>}
         {collectionAvailable && (
-          <Button displayAs='link' href={buttonLink}>{buttonLabel}</Button>
+          <Button displayAs='link' href={buttonUrl}>{buttonLabel}</Button>
         )}
       </div>
       <NextButton onClick={updateSlide}>1 out of {slides.length} <ChevronDown><ChevronUp/></ChevronDown></NextButton>
