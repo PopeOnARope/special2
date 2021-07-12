@@ -3,6 +3,9 @@ const bundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 module.exports = bundleAnalyzer({
+  future: {
+    webpack5: true,
+  },
   target: 'serverless',
   images: {
     domains: ['cdn.shopify.com', 'cdn.builder.io', 'via.placeholder.com'],
@@ -37,3 +40,4 @@ module.exports = bundleAnalyzer({
     defaultLocale: 'en-US',
   },
 })
+

@@ -7,7 +7,8 @@
     "start": "next start",
     "analyze": "BUNDLE_ANALYZE=both yarn build",
     "find:unused": "next-unused",
-    "prettier": "prettier"
+    "prettier": "prettier",
+    "build:tailwind": "tailwind build src/tailwind.css -o src/tailwind.output.css"
   },
   "prettier": {
     "semi": false,

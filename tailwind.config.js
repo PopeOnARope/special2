@@ -4,6 +4,7 @@ module.exports = {
     applyComplexClasses: true,
   },
   purge: {
+    enabled: true,
     content: [
       './pages/**/*.{js,ts,jsx,tsx}',
       './blocks/**/*.{js,ts,jsx,tsx}',
