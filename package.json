@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "tailwind build src/tailwind.css -o src/tailwind.output.css && next build",
     "start": "next start",
     "analyze": "BUNDLE_ANALYZE=both yarn build",
     "find:unused": "next-unused",

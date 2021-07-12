@@ -96,7 +96,7 @@ const Carousel = (props) => {
         <H1>{titleLine1}</H1>
         {titleLine2 && <H1 className="title2">{titleLine2}</H1>}
         {collectionAvailable && (
-          <Button href={buttonLink}>{buttonLabel}</Button>
+          <Button displayAs='link' href={buttonLink}>{buttonLabel}</Button>
         )}
       </div>
       <NextButton onClick={updateSlide}>1 out of {slides.length} <ChevronDown><ChevronUp/></ChevronDown></NextButton>
