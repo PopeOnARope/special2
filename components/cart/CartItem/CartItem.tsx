@@ -121,7 +121,6 @@ const CartItem = ({
           item.variant.priceV2.currencyCode || 'USD'
         )}
       </Themed.div>
-
     </Themed.div>
   )
 
