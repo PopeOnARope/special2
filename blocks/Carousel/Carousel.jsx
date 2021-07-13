@@ -1,10 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { ChevronUp } from '../../components/icons'
-// import { NextSeo } from 'next-seo'
-// import { Themed, jsx } from 'theme-ui'
-// import { LoadingDots } from '@components/ui'
-// import builderConfig from '@config/builder'
 
 import Button from '../Button/Button'
 import {H1} from '../../components/Typography'

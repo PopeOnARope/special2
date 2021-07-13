@@ -16,5 +16,7 @@ export { default as ChevronUp } from './ChevronUp'
 export { default as Vercel } from './Vercel'
 export { default as NounEyes } from './NounEyes'
 export { default as SpecialLogo } from './SpecialLogo'
+export { default as Hamburger } from './Hamburger'
+
 
 
