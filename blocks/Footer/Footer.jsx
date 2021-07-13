@@ -35,7 +35,6 @@ const Footer1 = () => (
 )
 
 const Footer = ({ sections, bottomLinks, darkMode}) => {
-  console.log({sections, bottomLinks})
   const bgClass = darkMode ? 'dark-mode-wrapper' : 'light-mode-wrapper';
   return (
     <div

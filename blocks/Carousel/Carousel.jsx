@@ -60,7 +60,6 @@ transform: rotate(180deg);
 `
 
 const Carousel = (props) => {
-  console.log({ props })
   const { slides } = props
 
   const [height, setHeight] = React.useState(780)

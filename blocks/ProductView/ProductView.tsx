@@ -95,7 +95,6 @@ const ProductBox: React.FC<Props> = ({
   }, [size, color, variants, variant.id])
 
   const addToCart = async () => {
-    console.log('test')
     setLoading(true)
     try {
       await addItem(variant.id, 1)

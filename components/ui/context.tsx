@@ -110,7 +110,6 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
     toggleSideNav,
   }
 
-  console.log({value})
 
   return <UIContext.Provider value={value} children={children} />
 }
