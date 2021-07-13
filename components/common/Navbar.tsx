@@ -61,7 +61,7 @@ const Navbar: FC = () => {
           width: '100%',
           height: '100px',
           position: 'absolute',
-          zIndex: '100',
+          zIndex: '1000',
           ' a': {
             ...navItemStyles,
           },

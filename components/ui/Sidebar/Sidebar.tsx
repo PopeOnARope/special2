@@ -31,9 +31,9 @@ const Sidebar: FC<Props> = ({
           height: '100%',
         },
       }}
-      // overlayProps={{
-      //   style: { zIndex: from === 'right' ? 0 : 1000 },
-      // }}
+      overlayProps={{
+        style: { zIndex: 100 },
+      }}
       contentTransition={{
         from: {
           transform: `translateX(${from === 'right' ? '100%' : '-100%'})`,

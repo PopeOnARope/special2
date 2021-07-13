@@ -68,7 +68,65 @@ const CartItem = ({
   }, [item.quantity])
 
   return (
-    <Grid gap={2} sx={{ width: '100%', m: 12 }} columns={[2]}>
+    <Themed.div
+      sx={{
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: '123px',
+        width: '100%',
+      }}
+    >
+      <Themed.div
+        sx={{
+          display: 'flex',
+          height: '100%',
+          width: '50%',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Image
+          height={123}
+          width={286}
+          unoptimized
+          alt={item.variant.image.altText}
+          src={item.variant.image.src}
+        />
+      </Themed.div>
+      <Themed.div sx={{ height: '100%', width: '25%' }}>
+        <Themed.div
+          as={Link}
+          href={`/product/${item.variant.product.handle}/`}
+          sx={{ fontSize: 3, m: 0, fontWeight: 700 }}
+        >
+          <>
+            {item.title}
+            <Text
+              sx={{
+                fontSize: 4,
+                fontWeight: 700,
+                display: 'block',
+                marginLeft: 'auto',
+              }}
+            >
+              {item.description}
+            </Text>
+          </>
+        </Themed.div>
+      </Themed.div>
+      <Themed.div sx={{ height: '100%', width: '25%' }}>
+        {getPrice(
+          item.variant.priceV2.amount,
+          item.variant.priceV2.currencyCode || 'USD'
+        )}
+      </Themed.div>
+
+    </Themed.div>
+  )
+
+  return (
+    <Grid gap={2} sx={{ width: '100%', m: 12 }} columns={[4, 2, 2]}>
       <div
         sx={{
           padding: 1,
@@ -147,7 +205,7 @@ const CartItem = ({
 }
 
 /**
- *         
+ *
 
  */
 

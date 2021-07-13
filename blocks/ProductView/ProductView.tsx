@@ -102,7 +102,7 @@ const ProductBox: React.FC<Props> = ({
       openCart()
       setLoading(false)
     } catch (err) {
-      console.log('coudlnt add item')
+      console.log({ err })
       setLoading(false)
     }
   }

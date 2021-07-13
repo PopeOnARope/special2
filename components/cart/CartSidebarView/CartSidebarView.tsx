@@ -38,6 +38,37 @@ const CartSidebarView: FC = () => {
   return (
     <Themed.div
       sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: '127px',
+        alignItems: 'center',
+        alignContent: 'center',
+        height: '100%'
+      }}
+    >
+      {isEmpty ? (
+        <>
+          <Bag />
+          Your cart is empty
+        </>
+      ) : (
+        <>
+          {items.map((item: any) => (
+            <CartItem
+              key={item.id}
+              item={item}
+              // todo update types
+              currencyCode={item.variant?.priceV2?.currencyCode || 'USD'}
+            />
+          ))}
+        </>
+      )}
+    </Themed.div>
+  )
+
+  return (
+    <Themed.div
+      sx={{
         height: '100%',
         overflow: 'auto',
         paddingBottom: 5,
@@ -46,7 +77,7 @@ const CartSidebarView: FC = () => {
         flexDirection: 'column',
         alignItems: 'center',
         px: 2,
-        color: 'background',
+        color: 'black',
         background: '#e5e5e5',
         ...(isEmpty && { justifyContent: 'center' }),
       }}
@@ -55,9 +86,6 @@ const CartSidebarView: FC = () => {
         <>
           <Bag />
           Your cart is empty
-          <Text>
-            Biscuit oat cake wafer icing ice cream tiramisu pudding cupcake. ok?
-          </Text>
         </>
       ) : (
         <>

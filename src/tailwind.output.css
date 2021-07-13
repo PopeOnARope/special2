@@ -573,6 +573,10 @@ video {
   height: auto;
 }
 
+.bg-blue {
+  background-color: var(--blue);
+}
+
 .border {
   border-width: 1px;
 }
@@ -647,6 +651,10 @@ video {
 
 .text-5xl {
   font-size: 3rem;
+}
+
+.m-52 {
+  margin: 13rem;
 }
 
 .mx-5 {
