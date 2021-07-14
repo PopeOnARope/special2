@@ -2,14 +2,27 @@
 /** @jsx jsx */
 import { Themed, jsx, Grid, Button, Input, Text, IconButton } from 'theme-ui'
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import builderConfig from '@config/builder'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Plus, Minus } from '@components/icons'
+import { Plus, Minus, ArrowLeft } from '@components/icons'
 import { getPrice } from '@lib/shopify/storefront-data-hooks/src/utils/product'
 import {
   useUpdateItemQuantity,
   useRemoveItemFromCart,
 } from '@lib/shopify/storefront-data-hooks'
+import {
+  BuillderConfig,
+  getProduct,
+} from '@lib/shopify/storefront-data-hooks/src/api/operations-builder'
+import Select from '@components/ui/Form/Select'
+
+function getDetails(config: BuillderConfig, id: string) {
+  return getProduct(config, { id }).then((r) => {
+    console.log({ r })
+    return r.description
+  })
+}
 
 const CartItem = ({
   item,
@@ -21,6 +34,7 @@ const CartItem = ({
   const updateItem = useUpdateItemQuantity()
   const removeItem = useRemoveItemFromCart()
   const [quantity, setQuantity] = useState(item.quantity)
+  const [details, setDetails] = useState(false)
   const [removing, setRemoving] = useState(false)
   const updateQuantity = async (quantity: number) => {
     await updateItem(item.variant.id, quantity)
@@ -70,20 +84,14 @@ const CartItem = ({
   return (
     <Themed.div
       sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        height: '123px',
-        width: '100%',
+        width: '50rem',
+        display: 'inline-flex',
+        fontFamily: 'Value Sans Pro',
       }}
     >
       <Themed.div
         sx={{
-          display: 'flex',
-          height: '100%',
-          width: '50%',
-          justifyContent: 'center',
-          alignItems: 'center',
+          width: '17.875rem',
         }}
       >
         <Image
@@ -94,32 +102,56 @@ const CartItem = ({
           src={item.variant.image.src}
         />
       </Themed.div>
-      <Themed.div sx={{ height: '100%', width: '25%' }}>
+      <Themed.div sx={{ height: '100%', width: '12rem', marginLeft: '2rem' }}>
         <Themed.div
           as={Link}
           href={`/product/${item.variant.product.handle}/`}
           sx={{ fontSize: 3, m: 0, fontWeight: 700 }}
         >
-          <>
+          <h1
+            sx={{
+              fontWeight: 700,
+              fontSize: '1rem',
+              fontFamily: 'Value Sans Pro',
+            }}
+          >
             {item.title}
-            <Text
-              sx={{
-                fontSize: 4,
-                fontWeight: 700,
-                display: 'block',
-                marginLeft: 'auto',
-              }}
-            >
-              {item.description}
-            </Text>
-          </>
+          </h1>
         </Themed.div>
+        <Themed.ul sx={{ fontSize: '0.7rem', color: '#888' }}>
+          <li>100% Carbon Offset</li>
+          <li>Shipped in Recycled Packaging</li>
+          <li>Free Shipping in 2 - 4 Business Days</li>
+        </Themed.ul>
       </Themed.div>
-      <Themed.div sx={{ height: '100%', width: '25%' }}>
+      <Themed.div
+        sx={{
+          height: '100%',
+          marginLeft: '2rem',
+          fontFamily: 'Value Sans Pro',
+          fontWeight: 'Bold',
+        }}
+      >
         {getPrice(
           item.variant.priceV2.amount,
           item.variant.priceV2.currencyCode || 'USD'
         )}
+      </Themed.div>
+      <Themed.div
+        sx={{ display: 'flex', justifyItems: 'center', marginLeft: '4rem' }}
+      >
+        <label>
+          <Select
+            options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
+              value: num,
+              label: num,
+            }))}
+            value={quantity}
+            onChange={handleQuantity}
+            onBlur={handleBlur}
+          />
+
+        </label>
       </Themed.div>
     </Themed.div>
   )

@@ -573,6 +573,12 @@ video {
   height: auto;
 }
 
+.border-black {
+  --border-opacity: 1;
+  border-color: #000000;
+  border-color: rgba(0, 0, 0, var(--border-opacity));
+}
+
 .border {
   border-width: 1px;
 }
@@ -587,6 +593,10 @@ video {
 
 .flex {
   display: flex;
+}
+
+.inline-flex {
+  display: inline-flex;
 }
 
 .table {

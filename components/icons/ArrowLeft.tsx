@@ -1,5 +1,17 @@
-const ArrowLeft = ({ ...props }) => {
+const ArrowLeft = ({orientation, ...props }) => {
+  let rotation;
+  if(orientation === 'down') {
+    rotation = 270
+  }
+  if(orientation === 'right') {
+    rotation = 90
+  }
+  if(orientation === 'up') {
+    rotation = 135
+  }
   return (
+    <div style={{transform: `rotate(${rotation}deg)`, display: 'inherit'}}>
+
     <svg
       width="24"
       height="24"
@@ -21,6 +33,8 @@ const ArrowLeft = ({ ...props }) => {
         strokeLinejoin="round"
       />
     </svg>
+    </div>
+
   )
 }
 

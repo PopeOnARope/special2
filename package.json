@@ -2,15 +2,15 @@
   "name": "nextjs-commerce",
   "version": "1.0.0",
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm-run-all build:tailwind --parallel watch:tailwind start:next",
+    "start:next": "next dev",
     "build": "tailwind build src/tailwind.css -o src/tailwind.output.css && next build",
     "start": "next start",
     "analyze": "BUNDLE_ANALYZE=both yarn build",
     "find:unused": "next-unused",
     "prettier": "prettier",
     "build:tailwind": "tailwind build src/tailwind.css -o src/tailwind.output.css",
-    "watch:tailwind": "chokidar 'src/**/*.css' 'src/**/*.scss' --ignore src/tailwind.output.css -c 'npm run build:tailwind'",
-    "start:react": "react-scripts start"
+    "watch:tailwind": "chokidar 'src/**/*.css' --ignore src/tailwind.output.css -c 'npm run build:tailwind'"
   },
   "prettier": {
     "semi": false,
@@ -69,6 +69,8 @@
     "body-scroll-lock": "^3.1.5",
     "bowser": "^2.11.0",
     "cheerio": "^1.0.0-rc.6",
+    "chokidar": "^3.5.2",
+    "chokidar-cli": "^2.1.0",
     "classnames": "^2.2.6",
     "css-color-names": "^1.0.1",
     "email-validator": "^2.0.4",
@@ -80,6 +82,7 @@
     "next": "^10.1.2",
     "next-seo": "^4.11.0",
     "next-themes": "^0.0.4",
+    "npm-run-all": "^4.1.5",
     "postcss-nesting": "^7.0.1",
     "pure-react-carousel": "^1.27.6",
     "qs": "^6.9.6",
@@ -88,6 +91,7 @@
     "react-intersection-observer": "^8.30.1",
     "react-json-tree": "^0.13.0",
     "react-merge-refs": "^1.1.0",
+    "react-select": "^4.3.1",
     "react-spring": "^9.1.1",
     "react-spring-modal": "^2.0.7",
     "react-sticky": "^6.0.3",

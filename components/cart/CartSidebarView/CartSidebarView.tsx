@@ -8,12 +8,16 @@ import { useCart, useCheckoutUrl } from '@lib/shopify/storefront-data-hooks'
 import CartItem from '../CartItem'
 import { BuilderComponent, builder } from '@builder.io/react'
 import env from '@config/env'
+import { getProduct } from '@lib/shopify/storefront-data-hooks/src/api/operations-builder'
+import builderConfig from '@config/builder'
 
 const CartSidebarView: FC = () => {
   const checkoutUrl = useCheckoutUrl()
   const cart = useCart()
   const subTotal = cart?.subtotalPrice
-  const total = ' - '
+  const tax = cart?.totalTax
+  const total = cart?.totalPrice
+  console.log({ cart })
 
   const items = cart?.lineItems ?? []
   const isEmpty = items.length === 0
@@ -43,7 +47,8 @@ const CartSidebarView: FC = () => {
         marginTop: '127px',
         alignItems: 'center',
         alignContent: 'center',
-        height: '100%'
+        height: '100%',
+        fontFamily: 'Value Sans Pro',
       }}
     >
       {isEmpty ? (
@@ -52,16 +57,45 @@ const CartSidebarView: FC = () => {
           Your cart is empty
         </>
       ) : (
-        <>
-          {items.map((item: any) => (
-            <CartItem
-              key={item.id}
-              item={item}
-              // todo update types
-              currencyCode={item.variant?.priceV2?.currencyCode || 'USD'}
-            />
-          ))}
-        </>
+        <div className="border-black border-1">
+          <div >
+            {items.map((item: any) => (
+              <CartItem
+                key={item.id}
+                item={item}
+                // todo update types
+                currencyCode={item.variant?.priceV2?.currencyCode || 'USD'}
+              />
+            ))}
+          </div>
+          <div>
+            <Card
+              sx={{ marginLeft: '14rem', minWidth: '10rem', paddingLeft: 5 }}
+            >
+              <Grid gap={1} columns={2} sx={{ my: 3, width: '26rem' }}>
+                <Text>Subtotal:</Text>
+                <Text >{subTotal}</Text>
+                <Text>Taxes: </Text>
+                <Text > {tax} </Text>
+                <Text>Shipping:</Text>
+                <Text > Free </Text>
+              </Grid>
+
+              <Grid gap={1} columns={2} sx={{width: '26rem'}}>
+                <Text sx={{ fontWeight: 'bold' }}>Total:</Text>
+                <Text
+                  variant="bold"
+                  sx={{  fontWeight: 'bold' }}
+                >
+                  {total}
+                </Text>
+              </Grid>
+            </Card>
+          <div>
+            hey
+          </div>
+          </div>
+        </div>
       )}
     </Themed.div>
   )
@@ -107,7 +141,6 @@ const CartSidebarView: FC = () => {
               <Text sx={{ marginLeft: 'auto' }}> - </Text>
             </Grid>
 
-            <Divider />
             <Grid gap={1} columns={2}>
               <Text variant="bold">Estimated Total:</Text>
               <Text variant="bold" sx={{ marginLeft: 'auto' }}>

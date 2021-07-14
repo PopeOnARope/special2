@@ -23,10 +23,10 @@ const UserNav: FC<Props> = () => {
         <Themed.div sx={{ border: `1px solid ${navPrimaryColor}`, padding: '0px 15px'  }}>0</Themed.div>
         Bag
       </Button>
-      <Button sx={{ ...navItemStyles, '&:focus': { outline: 0} }} aria-label="Login">
-        <NounEyes sx={{ margin: 0 }} />
-        <span>Login</span>
-      </Button>
+      {/*<Button sx={{ ...navItemStyles, '&:focus': { outline: 0} }} aria-label="Login">*/}
+      {/*  <NounEyes sx={{ margin: 0 }} />*/}
+      {/*  <span>Login</span>*/}
+      {/*</Button>*/}
     </Themed.div>
   )
 }
