@@ -157,7 +157,7 @@ const CartItem = ({
   )
 
   return (
-    <Grid gap={2} sx={{ width: '100%', m: 12 }} columns={[4, 2, 2]}>
+    <div >
       <div
         sx={{
           padding: 1,
@@ -231,7 +231,7 @@ const CartItem = ({
           ))}
         </Themed.ul>
       </div>
-    </Grid>
+    </div>
   )
 }
 

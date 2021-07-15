@@ -25,9 +25,9 @@
     border-bottom-color: white !important;
   }
 
- .dark-mode-wrapper .checkbox-custom + .checkbox-custom-label:before {
-   border: 2px solid white !important;
- }
+  .dark-mode-wrapper .checkbox-custom + .checkbox-custom-label:before {
+    border: 2px solid white !important;
+  }
 
   .primary-h1 {
     margin-left: 0;
@@ -46,5 +46,19 @@
   }
   .w-763 {
     width: 763px;
+  }
+}
+
+html {
+  font-size: 12px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px;
   }
 }

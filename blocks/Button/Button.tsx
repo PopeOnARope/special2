@@ -28,7 +28,7 @@ const Tag: React.FC<TagProps> = ({ displayAs, children, ...rest }) => {
   )
 }
 
-const _Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
+const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
   <Tag
     {...rest}
     sx={{
@@ -36,7 +36,8 @@ const _Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
       color: '#eee',
       border: '1px solid #000',
       height: '51px',
-      width: '432px',
+      width: '100%',
+      minWidth: '300px',
       borderRadius: '0px',
       textAlign: 'left',
       padding: '0 21px',
@@ -47,11 +48,16 @@ const _Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-between',
+      // ...styles,
 
       ' &:hover': {
         padding: '0 24px',
         transition: '0.3s ease-in-out',
         boxShadow: '5px 5px 15px 5px rgba(0,0,0,0.65)',
+      },
+
+      '@media screen and (min-width: 768px)': {
+        width: styles?.width || '432px',
       },
     }}
   >
