@@ -237,7 +237,7 @@ const ProductBox: React.FC<Props> = ({
         onClose={closeProductDetails}
         from="left"
       >
-        <ProductDetails details={JSON.parse(product.description)} />
+        <ProductDetails details={product.description ? JSON.parse(product.description) : {}} />
       </Sidebar>
     </React.Fragment>
   )
