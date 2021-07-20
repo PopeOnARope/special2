@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-//ts-nocheck
+//@ts-nocheck
 import React, { useMemo, useState, useEffect } from 'react'
 import { Themed, jsx } from 'theme-ui'
 import { Grid } from '@theme-ui/components'

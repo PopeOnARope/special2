@@ -14,6 +14,7 @@ interface ButtonProps {
   onClick?: any
   name?: string
   disabled?: boolean
+  styles?: any
 }
 
 interface TagProps {
