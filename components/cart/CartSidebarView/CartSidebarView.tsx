@@ -1,5 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
+//@ts-ignore
 import React from 'react'
 import { Themed, jsx, Text, Card, Grid, Divider, NavLink } from 'theme-ui'
 import { FC, useEffect, useState } from 'react'
@@ -95,69 +96,6 @@ const CartSidebarView: FC = () => {
       )}
     </div>
   )
-
-  // return (
-  //   <Themed.div
-  //     sx={{
-  //       height: '100%',
-  //       overflow: 'auto',
-  //       paddingBottom: 5,
-  //       bg: 'text',
-  //       display: 'flex',
-  //       flexDirection: 'column',
-  //       alignItems: 'center',
-  //       px: 2,
-  //       color: 'black',
-  //       background: '#e5e5e5',
-  //       ...(isEmpty && { justifyContent: 'center' }),
-  //     }}
-  //   >
-  //     {isEmpty ? (
-  //       <>
-  //         <Bag />
-  //         Your cart is empty
-  //       </>
-  //     ) : (
-  //       <>
-  //         {items.map((item: any) => (
-  //           <CartItem
-  //             key={item.id}
-  //             item={item}
-  //             // todo update types
-  //             currencyCode={item.variant?.priceV2?.currencyCode || 'USD'}
-  //           />
-  //         ))}
-  //         <Card sx={{ marginLeft: 'auto', minWidth: '10rem', paddingLeft: 5 }}>
-  //           <Grid gap={1} columns={2} sx={{ my: 3 }}>
-  //             <Text>Subtotal:</Text>
-  //             <Text sx={{ marginLeft: 'auto' }}>{subTotal}</Text>
-  //             <Text>Shipping:</Text>
-  //             <Text sx={{ marginLeft: 'auto' }}> - </Text>
-  //             <Text>Tax: </Text>
-  //             <Text sx={{ marginLeft: 'auto' }}> - </Text>
-  //           </Grid>
-  //
-  //           <Grid gap={1} columns={2}>
-  //             <Text variant="bold">Estimated Total:</Text>
-  //             <Text variant="bold" sx={{ marginLeft: 'auto' }}>
-  //               {total}
-  //             </Text>
-  //           </Grid>
-  //         </Card>
-  //         <BuilderComponent content={cartUpsell} model="cart-upsell-sidebar" />
-  //         {checkoutUrl && (
-  //           <NavLink
-  //             variant="nav"
-  //             sx={{ width: '100%', m: 2, p: 12, textAlign: 'center' }}
-  //             href={checkoutUrl!}
-  //           >
-  //             Proceed to Checkout
-  //           </NavLink>
-  //         )}
-  //       </>
-  //     )}
-  //   </Themed.div>
-  // )
 }
 
 export default CartSidebarView

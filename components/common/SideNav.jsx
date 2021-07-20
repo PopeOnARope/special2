@@ -1,9 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React from 'react'
-import Footer from '../../blocks/Footer/Footer'
 import { Themed, jsx, Text, Card, Grid, Divider, NavLink } from 'theme-ui'
-import { FC, useEffect, useState } from 'react'
 import { useUI } from '@components/ui/context'
 import { ArrowLeft } from '@components/icons'
 
@@ -73,7 +71,7 @@ const data = {
   ],
 }
 
-const CartSidebarView: FC = () => {
+const CartSidebarView = () => {
   const { navigationLinks, toggleSideNav } = useUI()
   return (
     <Themed.div

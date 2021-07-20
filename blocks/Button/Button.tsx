@@ -15,12 +15,15 @@ interface ButtonProps {
   name?: string
   disabled?: boolean
   styles?: any
+  displayAs?: string
+  href?: string
 }
 
 interface TagProps {
   displayAs?: string
   sx: ThemeUIStyleObject
   children: any
+  href?: string
 }
 
 const Tag: React.FC<TagProps> = ({ displayAs, children, ...rest }) => {
