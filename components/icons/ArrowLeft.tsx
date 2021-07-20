@@ -10,7 +10,7 @@ const ArrowLeft = ({orientation, ...props }) => {
     rotation = 135
   }
   return (
-    <div style={{transform: `rotate(${rotation}deg)`, display: 'inherit'}}>
+    <span style={{transform: `rotate(${rotation}deg)`, display: 'inherit'}}>
 
     <svg
       width="24"
@@ -33,7 +33,7 @@ const ArrowLeft = ({orientation, ...props }) => {
         strokeLinejoin="round"
       />
     </svg>
-    </div>
+    </span>
 
   )
 }

@@ -15,11 +15,15 @@ export interface State {
   toggleSideNav?: any
   closeSideNav?: any
   openSideNav?: any
+  toggleProductDetails?: any
+  closeProductDetails?: any
+  openProductDetails?: any
 }
 
 const initialState = {
   displayCart: false,
   displaySideNav: false,
+  displayProductDetails: false,
   navPrimaryColor: 'white',
 }
 
@@ -98,6 +102,25 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
       displayCart: false,
       navPrimaryColor: prev.displaySideNav ? navPrimaryColor : 'black'
     })))
+  const openProductDetails = () =>
+    setState((state) => ({
+      ...state,
+      displayProductDetails: true,
+      navPrimaryColor: 'black',
+    }))
+  const closeProductDetails = () =>
+    setState((state) => ({
+      ...state,
+      displayProductDetails: false,
+      navPrimaryColor,
+    }))
+  const toggleProductDetails = () =>(
+    setState((prev) => ({
+      ...prev,
+      displayProductDetails: !prev.displayProductDetails,
+      displayCart: false,
+      navPrimaryColor: prev.displayProductDetails ? navPrimaryColor : 'black'
+    })))
 
   const value = {
     ...state,
@@ -108,6 +131,9 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
     openSideNav,
     closeSideNav,
     toggleSideNav,
+    openProductDetails,
+    closeProductDetails,
+    toggleProductDetails,
   }
 
 

@@ -10,7 +10,7 @@ import { Button } from 'theme-ui'
 import { Sidebar } from '@components/ui'
 import { CartSidebarView } from '@components/cart'
 import { SideNav } from '@components/common'
-
+import ProductDetails from '../ProductDetails/ProductDetails'
 import { CommerceProvider } from '@lib/shopify/storefront-data-hooks'
 import shopifyConfig from '@config/shopify'
 import { builder, BuilderContent, Builder } from '@builder.io/react'
@@ -75,7 +75,12 @@ const InnerLayout: React.FC<{
       ...colorOverrides,
     },
   }
-  const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
+  const {
+    displayCart,
+    closeCart,
+    displaySideNav,
+    closeSideNav,
+  } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
     <ThemeProvider theme={theme}>
@@ -99,22 +104,14 @@ const InnerLayout: React.FC<{
             'cart-upsell-sidebar'
         }
         onClose={closeCart}
-        from='right'
+        from="right"
       >
         <CartSidebarView />
       </Sidebar>
-      <Sidebar
-        open={displaySideNav
-          //   displaySideNav ||
-          //   (builder.editingModel || Builder.previewingModel) ===
-          //   'cart-upsell-sidebar'
-          // }
-        }
-        onClose={closeSideNav}
-        from='left'
-      >
+      <Sidebar open={displaySideNav} onClose={closeSideNav} from="left">
         <SideNav />
       </Sidebar>
+
       <NoSSR>
         <FeatureBar
           title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."

@@ -148,7 +148,7 @@ const CartItem = ({
             }))}
             value={quantity}
             onChange={handleQuantity}
-            onBlur={handleBlur}
+
           />
 
         </label>

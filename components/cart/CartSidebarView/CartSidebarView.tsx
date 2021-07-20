@@ -63,7 +63,7 @@ const CartSidebarView: FC = () => {
               <table className="w-64 float-right md:float-left">
                 <tbody>
                   <tr>
-                    <td>Subtotal:</td>
+                    <td className='w-80'>Subtotal:</td>
                     <td className="text-right md:text-left">{subTotal}</td>
                   </tr>
                   <tr>
@@ -86,7 +86,7 @@ const CartSidebarView: FC = () => {
           <div className="p-4 md:p-0 w-full md:w-1/4 lg:w-1/3 pr-6 mt-10 md:mt-0">
             {' '}
             {checkoutUrl && (
-              <Button displayAs="link" href={checkoutUrl!}>
+              <Button displayAs="link" href={checkoutUrl!} styles={{width: 'inherit'}}>
                 Checkout
               </Button>
             )}

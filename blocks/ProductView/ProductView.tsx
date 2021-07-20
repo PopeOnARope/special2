@@ -5,8 +5,9 @@ import React, { useMemo, useState, useEffect } from 'react'
 import { Themed, jsx } from 'theme-ui'
 import { Grid } from '@theme-ui/components'
 import Button from '../Button/Button'
+
 import Thumbnail from '@components/common/Thumbnail'
-import { ChevronUp } from '../../components/icons'
+import { ArrowLeft, ChevronUp } from '../../components/icons'
 import OptionPicker from '@components/common/OptionPicker'
 import { NextSeo } from 'next-seo'
 import { useUI } from '@components/ui/context'
@@ -18,8 +19,9 @@ import {
 } from '@lib/shopify/storefront-data-hooks/src/utils/product'
 import Image from 'next/image'
 import NoSSR from '@components/common/NoSSR'
-import { LoadingDots } from '@components/ui'
+import { LoadingDots, Sidebar } from '@components/ui'
 import ProductLoader from './ProductLoader'
+import ProductDetails from '@components/ProductDetails/ProductDetails'
 
 interface Props {
   className?: string
@@ -72,7 +74,7 @@ const ProductBox: React.FC<Props> = ({
     variants,
   ])
 
-  const { openCart } = useUI()
+  const { openCart, toggleProductDetails, displayProductDetails, closeProductDetails } = useUI()
   const [peakingImage, setPeakingImage] = useState(
     null as { src: string } | null
   )
@@ -107,6 +109,8 @@ const ProductBox: React.FC<Props> = ({
     }
   }
 
+  console.log({product})
+
   return (
     <React.Fragment>
       {renderSeo && (
@@ -129,6 +133,9 @@ const ProductBox: React.FC<Props> = ({
         />
       )}
       <div sx={{ position: 'relative', height: 902 }} className="type-wrapper">
+        <div  className='text-white absolute z-50 mt-1/3 rotate-90' style={{ marginLeft: '-2rem'}} >
+          <button style={{transform: 'rotate(90deg)', display: 'inline-flex'}} onClick={toggleProductDetails}>Details and Specs <ArrowLeft orientation='down' marginTop='0'/></button>
+        </div>
         <div
           sx={{
             display: 'flex',
@@ -142,6 +149,7 @@ const ProductBox: React.FC<Props> = ({
             padding: 32,
           }}
         >
+
           <div className="flex flex-row justify-between items-start w-full h-1/2">
             <PreviousButton
               onClick={() => {
@@ -199,6 +207,7 @@ const ProductBox: React.FC<Props> = ({
               </span>
             </Button>
           </div>
+
         </div>
         <div
           sx={{
@@ -223,6 +232,13 @@ const ProductBox: React.FC<Props> = ({
           )}
         </div>
       </div>
+      <Sidebar
+        open={displayProductDetails}
+        onClose={closeProductDetails}
+        from="left"
+      >
+        <ProductDetails details={JSON.parse(product.description)} />
+      </Sidebar>
     </React.Fragment>
   )
 }
