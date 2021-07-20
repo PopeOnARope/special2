@@ -3,7 +3,7 @@ import ShopifyBuy from 'shopify-buy'
 
 interface ContextShape {
   client: ShopifyBuy.Client | null
-  cart: ShopifyBuy.Cart | null
+  cart: any
   setCart: React.Dispatch<React.SetStateAction<ShopifyBuy.Cart | null>>
   domain: string
   storefrontAccessToken: string
