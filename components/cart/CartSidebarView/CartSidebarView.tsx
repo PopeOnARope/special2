@@ -1,6 +1,5 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-//@ts-ignore
 import React from 'react'
 import { Themed, jsx, Text, Card, Grid, Divider, NavLink } from 'theme-ui'
 import { FC, useEffect, useState } from 'react'

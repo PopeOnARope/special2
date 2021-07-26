@@ -4,11 +4,9 @@ module.exports = {
       padding: ['hover'],
     },
   },
-  future: {
-    purgeLayersByDefault: true,
-    applyComplexClasses: true,
-  },
+
   purge: {
+    enabled: true,
     content: [
       './pages/**/*.{js,ts,jsx,tsx}',
       './blocks/**/*.{js,ts,jsx,tsx}',

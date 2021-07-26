@@ -82,7 +82,7 @@ const CartSidebarView = ({ details }) => {
   console.log({ detailsArr })
   const { navigationLinks, toggleSideNav } = useUI()
 const [shownDetails, setShownDetails] = React.useState('')
-
+return <div></div>
 
   return (
     <Themed.div
