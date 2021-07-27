@@ -54,6 +54,7 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
       alignItems: 'center',
       flexDirection: 'row',
       justifyContent: 'space-between',
+      zIndex: 1,
       // ...styles,
 
       ' &:hover': {
