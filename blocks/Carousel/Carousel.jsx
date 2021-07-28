@@ -45,6 +45,7 @@ const NextButton = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
 
   &:hover {
     margin-bottom: 24px;
@@ -58,7 +59,6 @@ const NextButton = styled.button`
 const Video = styled.video`
   position: absolute;
   z-index: 0;
-  //height: 100%;
   height: ${(props) => props.height}px;
   object-fit: cover;
   top: 0;
@@ -86,16 +86,34 @@ const Carousel = (props) => {
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
 
   React.useEffect(() => {
-    // window is accessible here.
     setHeight(window.innerHeight)
   }, [])
 
+  React.useEffect(() => {
+    window.addEventListener('wheel', handleScroll,{passive: false} )
+    return function cleanup() {
+      window.removeEventListener('wheel', handleScroll)
+    }
+  })
+
   const handleScroll = React.useCallback((event) => {
-    // const { key, keyCode } = event;
-    //
-    // if (keyCode === 32 || (keyCode >= 65 && keyCode <= 90)) {
-    //   setUserText(prevUserText => `${prevUserText}${key}`);
-    // }
+
+    const isScrollingDown = event.deltaY
+
+
+    if (event.deltaY > 0 && currentSlide < slides.length-1) {
+    event.preventDefault()
+      console.log('scrolling down')
+      updateSlide()
+    }
+    console.log({currentSlide})
+    if(event.deltaY < 1 && currentSlide > 0) {
+      event.preventDefault()
+      setCurrentSlide(currentSlide - 1)
+      console.log('scrolling up')
+    }
+
+    event.stopPropagation()
   }, [])
 
   if (!slides) {
@@ -129,76 +147,76 @@ const Carousel = (props) => {
 
   return (
     // <CSSTransition>
-      <Wrapper height={height}>
-        <Video
-          height={height}
-          src={currentSlideVideos && currentSlideVideos}
-          autoPlay
-          poster={slides[currentSlide].image}
-          muted
-          loop
-        ></Video>
-        <div className="content">
-          <H1>{titleLine1}</H1>
-          {titleLine2 && <H1 className="title2">{titleLine2}</H1>}
-          {collectionAvailable && (
-            <Button displayAs="link" href={buttonUrl}>
-              {buttonLabel}
-            </Button>
-          )}
-        </div>
-        <ModelToggle>
-          <button
-            onClick={() => {
-              setCurrentModel('model1')
-            }}
-          >
-            {slides[currentSlide].videos?.model1Name}
-          </button>
-          <button
-            onClick={() => {
-              setCurrentModel('model2')
-            }}
-          >
-            {slides[currentSlide].videos?.model2Name}
-          </button>
-          <button
-            onClick={() => {
-              setTimeOfDay('Night')
-            }}
-          >
-            Night
-          </button>
-          <button
-            onClick={() => {
-              setTimeOfDay('Dusk')
-            }}
-          >
-            Dusk
-          </button>
-          <button
-            onClick={() => {
-              setTimeOfDay('Day')
-            }}
-          >
-            Day
-          </button>{' '}
-          <button
-            onClick={() => {
-              setTimeOfDay('Dawn')
-            }}
-          >
-            Dawn
-          </button>
-        </ModelToggle>
+    <Wrapper height={height}>
+      <Video
+        height={height}
+        src={currentSlideVideos && currentSlideVideos}
+        autoPlay
+        poster={slides[currentSlide].image}
+        muted
+        loop
+      ></Video>
+      <div className="content">
+        <H1>{titleLine1}</H1>
+        {titleLine2 && <H1 className="title2">{titleLine2}</H1>}
+        {collectionAvailable && (
+          <Button displayAs="link" href={buttonUrl}>
+            {buttonLabel}
+          </Button>
+        )}
+      </div>
+      <ModelToggle>
+        <button
+          onClick={() => {
+            setCurrentModel('model1')
+          }}
+        >
+          {slides[currentSlide].videos?.model1Name}
+        </button>
+        <button
+          onClick={() => {
+            setCurrentModel('model2')
+          }}
+        >
+          {slides[currentSlide].videos?.model2Name}
+        </button>
+        <button
+          onClick={() => {
+            setTimeOfDay('Night')
+          }}
+        >
+          Night
+        </button>
+        <button
+          onClick={() => {
+            setTimeOfDay('Dusk')
+          }}
+        >
+          Dusk
+        </button>
+        <button
+          onClick={() => {
+            setTimeOfDay('Day')
+          }}
+        >
+          Day
+        </button>{' '}
+        <button
+          onClick={() => {
+            setTimeOfDay('Dawn')
+          }}
+        >
+          Dawn
+        </button>
+      </ModelToggle>
 
-        <NextButton onClick={updateSlide}>
-          {currentSlide + 1} out of {slides.length}{' '}
-          <ChevronDown>
-            <ChevronUp />
-          </ChevronDown>
-        </NextButton>
-      </Wrapper>
+      <NextButton onClick={updateSlide}>
+        {currentSlide + 1} out of {slides.length}{' '}
+        <ChevronDown>
+          <ChevronUp />
+        </ChevronDown>
+      </NextButton>
+    </Wrapper>
     // </CSSTransition>
   )
 }
