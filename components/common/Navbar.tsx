@@ -53,7 +53,7 @@ const Navbar: FC = () => {
         as="header"
         sx={{
           margin: `0`,
-          maxWidth: 1920,
+          // maxWidth: 1920,
           padding: '10px 30px',
           display: 'flex',
           justifyContent: 'space-between',

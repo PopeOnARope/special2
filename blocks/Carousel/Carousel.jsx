@@ -29,6 +29,9 @@ const Wrapper = styled.div`
       margin-left: 25px;
       padding: 0px;
     }
+    @media (max-width: 768px) {
+margin: 3rem;
+    }
   }
 `
 
@@ -46,7 +49,6 @@ const NextButton = styled.button`
   flex-direction: column;
   align-items: center;
   z-index: 2;
-
   &:hover {
     margin-bottom: 24px;
     transition: 0.3s ease-in-out;
@@ -54,6 +56,17 @@ const NextButton = styled.button`
   &:focus {
     outline: none;
   }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 260px;
+    margin-left: 80%;
+    font-size: 1.75rem;
+    &:hover {
+      margin-bottom: 270px;
+    }
+  }
+
 `
 
 const Video = styled.video`
@@ -63,6 +76,7 @@ const Video = styled.video`
   object-fit: cover;
   top: 0;
   left: 0;
+  width: 100%;
 `
 
 const ModelToggle = styled.div`
@@ -84,42 +98,49 @@ const Carousel = (props) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
+  const [scrollValue, setScrollValue] = React.useState(0)
 
   React.useEffect(() => {
     setHeight(window.innerHeight)
   }, [])
 
-  React.useEffect(() => {
-    window.addEventListener(
-      'wheel',
-      (e) => {
-        handleScroll(e, currentSlide)
-      },
-      { passive: false }
-    )
-    return function cleanup() {
-      window.removeEventListener('wheel', (e) => {
-        handleScroll(e, currentSlide)
-      },{ passive: false })
-    }
-  })
+  // React.useEffect(() => {
+  //   window.addEventListener(
+  //     'wheel',
+  //     (e) => {
+  //       handleScroll(e, currentSlide)
+  //     },
+  //     { passive: false }
+  //   )
+  //   return function cleanup() {
+  //     window.removeEventListener('wheel', (e) => {
+  //       handleScroll(e, currentSlide)
+  //     },{ passive: false })
+  //   }
+  // })
 
-  const handleScroll = React.useCallback((event, cs) => {
-    const isScrollingDown = event.deltaY > 0 && cs < slides.length - 1
-    const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
-
-    if (isScrollingDown) {
-      console.log('scrolling down')
-      event.stopPropagation()
-      updateSlide()
-    }
-    console.log({ cs })
-    if (isScrollingUp) {
-      event.stopPropagation()
-      setCurrentSlide(cs - 1)
-      console.log('scrolling up')
-    }
-  }, [])
+  // const handleScroll = React.useCallback((event, cs) => {
+  //   const isScrollingDown = event.deltaY > 1 && cs < slides.length
+  //   const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
+  //
+  //   if (isScrollingDown) {
+  //     console.log('scrolling down', event.deltaY)
+  //     //if scroll value is less than 100,
+  //     console.log({scrollValue, cs})
+  //     if(scrollValue<100){
+  //       setScrollValue(scrollValue+event.deltaY)
+  //     } else {
+  //       setScrollValue(0)
+  //       updateSlide()
+  //     event.stopPropagation()
+  //   }}
+  //   // console.log({ cs })
+  //   if (isScrollingUp) {
+  //     event.stopPropagation()
+  //     setCurrentSlide(cs - 1)
+  //     console.log('scrolling up', event.deltaY)
+  //   }
+  // }, [])
 
   if (!slides) {
     return (

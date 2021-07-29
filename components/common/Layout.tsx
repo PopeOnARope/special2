@@ -89,7 +89,7 @@ const InnerLayout: React.FC<{
         sx={{
           margin: `0 auto`,
           px: 0,
-          maxWidth: 1920,
+          // maxWidth: 1920,
           minWidth: '60vw',
           minHeight: 800,
         }}
