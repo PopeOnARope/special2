@@ -90,30 +90,35 @@ const Carousel = (props) => {
   }, [])
 
   React.useEffect(() => {
-    window.addEventListener('wheel', handleScroll,{passive: false} )
+    window.addEventListener(
+      'wheel',
+      (e) => {
+        handleScroll(e, currentSlide)
+      },
+      { passive: false }
+    )
     return function cleanup() {
-      window.removeEventListener('wheel', handleScroll)
+      window.removeEventListener('wheel', (e) => {
+        handleScroll(e, currentSlide)
+      },{ passive: false })
     }
   })
 
-  const handleScroll = React.useCallback((event) => {
+  const handleScroll = React.useCallback((event, cs) => {
+    const isScrollingDown = event.deltaY > 0 && cs < slides.length - 1
+    const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
 
-    const isScrollingDown = event.deltaY
-
-
-    if (event.deltaY > 0 && currentSlide < slides.length-1) {
-    event.preventDefault()
+    if (isScrollingDown) {
       console.log('scrolling down')
+      event.stopPropagation()
       updateSlide()
     }
-    console.log({currentSlide})
-    if(event.deltaY < 1 && currentSlide > 0) {
-      event.preventDefault()
-      setCurrentSlide(currentSlide - 1)
+    console.log({ cs })
+    if (isScrollingUp) {
+      event.stopPropagation()
+      setCurrentSlide(cs - 1)
       console.log('scrolling up')
     }
-
-    event.stopPropagation()
   }, [])
 
   if (!slides) {
