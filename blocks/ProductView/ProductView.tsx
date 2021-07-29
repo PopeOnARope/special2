@@ -223,7 +223,9 @@ const ProductBox: React.FC<Props> = ({
           {variant.image && (
             <Image
               src={peakingImage?.src || variant.image.src}
-              layout="fill"
+              layout="responsive"
+              width={700}
+              height={400}
               alt={title}
               priority
               quality={85}
