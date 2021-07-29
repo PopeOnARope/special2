@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ChevronUp } from '../../components/icons'
+import ReactScrollJacker from 'react-scroll-jacker'
 
+import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
 import { H1 } from '../../components/Typography'
 import { CSSTransition } from 'react-transition-group'
@@ -79,10 +80,43 @@ const Video = styled.video`
 `
 
 const ModelToggle = styled.div`
+  z-index: 3;
+  align-items: center;
   position: absolute;
+  display: flex;
+  flex-direction: row;
+  .toggle-switch {
+    border: 1px solid white;
+    width: 2rem;
+    height: 0px;
+    display: flex;
+    align-items: center;
+    .toggle-button {
+      position: absolute;
+      margin-left: ${({ currentModel }) => {
+        if (currentModel === 'model2') {
+          return '1.2rem;'
+        }
+      }};
+      background: white;
+      height: 1.2rem;
+      width: 0.75rem;
+      transition: 0.3s ease-in-out;
+    }
+  }
   button {
     color: white;
     padding: 15px;
+    &:focus {
+      outline: none;
+    }
+  }
+  align-self: flex-end;
+  margin-bottom: 2.25rem;
+  margin-right: 2rem;
+  @media (max-width: 768px) {
+    margin-right: 3rem;
+    margin-bottom: 8rem;
   }
 `
 
@@ -106,7 +140,6 @@ const TimeToggle = styled.div`
   }
 
   .toggle-switch {
-
     background: white;
     height: 0.75rem;
     width: 1.2rem;
@@ -144,43 +177,47 @@ const Carousel = (props) => {
     setHeight(window.innerHeight)
   }, [])
 
-  // React.useEffect(() => {
-  //   window.addEventListener(
-  //     'wheel',
-  //     (e) => {
-  //       handleScroll(e, currentSlide)
-  //     },
-  //     { passive: false }
-  //   )
-  //   return function cleanup() {
-  //     window.removeEventListener('wheel', (e) => {
-  //       handleScroll(e, currentSlide)
-  //     },{ passive: false })
-  //   }
-  // })
+  React.useEffect(() => {
+    const useHandleScroll = (e) => {
+        handleScroll(e, currentSlide)
+      }
 
-  // const handleScroll = React.useCallback((event, cs) => {
-  //   const isScrollingDown = event.deltaY > 1 && cs < slides.length
-  //   const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
-  //
-  //   if (isScrollingDown) {
-  //     console.log('scrolling down', event.deltaY)
-  //     //if scroll value is less than 100,
-  //     console.log({scrollValue, cs})
-  //     if(scrollValue<100){
-  //       setScrollValue(scrollValue+event.deltaY)
-  //     } else {
-  //       setScrollValue(0)
-  //       updateSlide()
-  //     event.stopPropagation()
-  //   }}
-  //   // console.log({ cs })
-  //   if (isScrollingUp) {
-  //     event.stopPropagation()
-  //     setCurrentSlide(cs - 1)
-  //     console.log('scrolling up', event.deltaY)
-  //   }
-  // }, [])
+    window.addEventListener(
+      'wheel',
+      useHandleScroll,
+      { passive: false }
+    )
+    return function cleanup() {
+      window.removeEventListener(
+        'wheel',
+        useHandleScroll
+      )
+    }
+  }, [])
+
+  const handleScroll = React.useCallback((event, cs) => {
+    const isScrollingDown = event.deltaY > 1 && cs < slides.length+1
+    const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
+
+    if (isScrollingDown) {
+      event.stopPropagation()
+      console.log('scrolling down', event.deltaY)
+      //if scroll value is less than 100,
+      console.log({ scrollValue, cs })
+      // if(scrollValue<100){
+      //   setScrollValue(scrollValue+event.deltaY)
+      // } else {
+      //   setScrollValue(0)
+      updateSlide()
+      // }
+    }
+    // console.log({ cs })
+    if (isScrollingUp) {
+      event.stopPropagation()
+      setCurrentSlide(cs - 1)
+      console.log('scrolling up', event.deltaY)
+    }
+  }, [])
 
   if (!slides) {
     return (
@@ -200,19 +237,19 @@ const Carousel = (props) => {
 
   function updateSlide() {
     const slide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1
+    // alert(currentSlide + '' +  slide)
     setCurrentSlide(slide)
   }
-  function updateModel(model) {
-    const slide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1
-    setCurrentSlide(slide)
-  }
+  // function updateModel(model) {
+  //   const slide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1
+  //   setCurrentSlide(slide)
+  // }
 
   const currentSlideVideos = slides[currentSlide].videos
     ? slides[currentSlide].videos[`${currentModel}${timeOfDay}`]
     : ''
 
   return (
-    // <CSSTransition>
     <Wrapper height={height}>
       <Video
         height={height}
@@ -231,7 +268,7 @@ const Carousel = (props) => {
           </Button>
         )}
       </div>
-      <ModelToggle>
+      <ModelToggle currentModel={currentModel}>
         <button
           onClick={() => {
             setCurrentModel('model1')
@@ -239,6 +276,10 @@ const Carousel = (props) => {
         >
           {slides[currentSlide].videos?.model1Name}
         </button>
+        <div className="toggle-switch">
+          <div className="toggle-button"></div>
+        </div>
+
         <button
           onClick={() => {
             setCurrentModel('model2')
@@ -287,7 +328,6 @@ const Carousel = (props) => {
         </ChevronDown>
       </NextButton>
     </Wrapper>
-    // </CSSTransition>
   )
 }
 
