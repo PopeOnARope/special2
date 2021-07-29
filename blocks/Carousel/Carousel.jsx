@@ -177,23 +177,23 @@ const Carousel = (props) => {
     setHeight(window.innerHeight)
   }, [])
 
-  React.useEffect(() => {
-    const useHandleScroll = (e) => {
-        handleScroll(e, currentSlide)
-      }
-
-    window.addEventListener(
-      'wheel',
-      useHandleScroll,
-      { passive: false }
-    )
-    return function cleanup() {
-      window.removeEventListener(
-        'wheel',
-        useHandleScroll
-      )
-    }
-  }, [])
+  // React.useEffect(() => {
+  //   const useHandleScroll = (e) => {
+  //       handleScroll(e, currentSlide)
+  //     }
+  //
+  //   window.addEventListener(
+  //     'wheel',
+  //     useHandleScroll,
+  //     { passive: false }
+  //   )
+  //   return function cleanup() {
+  //     window.removeEventListener(
+  //       'wheel',
+  //       useHandleScroll
+  //     )
+  //   }
+  // }, [])
 
   const handleScroll = React.useCallback((event, cs) => {
     const isScrollingDown = event.deltaY > 1 && cs < slides.length+1
