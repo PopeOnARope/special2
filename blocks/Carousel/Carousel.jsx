@@ -30,7 +30,7 @@ const Wrapper = styled.div`
       padding: 0px;
     }
     @media (max-width: 768px) {
-margin: 3rem;
+      margin: 3rem;
     }
   }
 `
@@ -66,7 +66,6 @@ const NextButton = styled.button`
       margin-bottom: 270px;
     }
   }
-
 `
 
 const Video = styled.video`
@@ -89,6 +88,47 @@ const ModelToggle = styled.div`
 
 const ChevronDown = styled.div`
   transform: rotate(180deg);
+`
+
+const TimeToggle = styled.div`
+  margin-top: -1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 28rem;
+  position: absolute;
+  border-right: 1px solid white;
+  button {
+    color: white;
+    padding: 0.5rem 1.25rem;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .toggle-switch {
+
+    background: white;
+    height: 0.75rem;
+    width: 1.2rem;
+    align-self: flex-end;
+    position: absolute;
+    transition: 0.3s ease-in-out;
+    margin-right: -0.7rem;
+    margin-top: ${({ timeOfDay }) => {
+      if (timeOfDay === 'Night') {
+        return '1rem;'
+      }
+      if (timeOfDay === 'Dusk') {
+        return '3.25rem;'
+      }
+      if (timeOfDay === 'Day') {
+        return '6rem;'
+      }
+      if (timeOfDay === 'Dawn') {
+        return '8.25rem;'
+      }
+    }};
+  }
 `
 
 const Carousel = (props) => {
@@ -206,6 +246,10 @@ const Carousel = (props) => {
         >
           {slides[currentSlide].videos?.model2Name}
         </button>
+      </ModelToggle>
+
+      <TimeToggle timeOfDay={timeOfDay}>
+        <div className="toggle-switch"></div>
         <button
           onClick={() => {
             setTimeOfDay('Night')
@@ -234,7 +278,7 @@ const Carousel = (props) => {
         >
           Dawn
         </button>
-      </ModelToggle>
+      </TimeToggle>
 
       <NextButton onClick={updateSlide}>
         {currentSlide + 1} out of {slides.length}{' '}
