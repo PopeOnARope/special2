@@ -83,6 +83,15 @@ const ProductBox: React.FC<Props> = ({
   const [color, setColor] = useState(variant.color)
   const [size, setSize] = useState(variant.size)
 
+  function IsJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   useEffect(() => {
     const newVariant = variants.find((variant) => {
       return (
@@ -226,7 +235,7 @@ const ProductBox: React.FC<Props> = ({
               layout="fill"
               //width={700}
               //height={400}
-             
+
               objectFit="cover"
               objectPosition="center"
               alt={title}
@@ -242,7 +251,7 @@ const ProductBox: React.FC<Props> = ({
         onClose={closeProductDetails}
         from="left"
       >
-        <ProductDetails details={(product.description) ? JSON.parse(product.description) : {}} />
+        <ProductDetails details={IsJsonString(product.description) ? JSON.parse(product.description) : {}} />
       </Sidebar>
     </React.Fragment>
   )
