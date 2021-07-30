@@ -223,12 +223,15 @@ const ProductBox: React.FC<Props> = ({
           {variant.image && (
             <Image
               src={peakingImage?.src || variant.image.src}
-              layout="responsive"
-              width={700}
-              height={400}
+              layout="fill"
+              //width={700}
+              //height={400}
+             
+              objectFit="cover"
+              objectPosition="center"
               alt={title}
               priority
-              quality={85}
+              quality={100}
               className="object-center object-cover pointer-events-none"
             />
           )}
@@ -239,7 +242,7 @@ const ProductBox: React.FC<Props> = ({
         onClose={closeProductDetails}
         from="left"
       >
-        {/*<ProductDetails details={(product.description) ? JSON.parse(product.description) : {}} />*/}
+        <ProductDetails details={(product.description) ? JSON.parse(product.description) : {}} />
       </Sidebar>
     </React.Fragment>
   )
