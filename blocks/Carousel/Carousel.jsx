@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import ReactScrollJacker from 'react-scroll-jacker'
 
 import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
