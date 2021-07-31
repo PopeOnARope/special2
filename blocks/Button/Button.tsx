@@ -39,16 +39,18 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
     {...rest}
     sx={{
       background: '#000',
+      background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+      transition: '.5s ease-out',
+      backgroundSize: '200%',
       color: '#eee',
-      border: '1px solid #000',
-      // height: '51px',
+      //height: '51px',
       width: '100%',
       minWidth: '300px',
       borderRadius: '0px',
       textAlign: 'left',
-      padding: '0.4rem 1.5rem',
+      padding: '0.7rem 1.5rem',
       fontSize: '1.125rem',
-      boxShadow: '5px 5px 15px 5px rgba(0,0,0,0.36)',
+      boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
       transition: '0.3s ease-in-out',
       display: 'flex',
       alignItems: 'center',
@@ -58,9 +60,8 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
       // ...styles,
 
       ' &:hover': {
-        padding: '0.35rem 1.45rem',
-        transition: '0.3s ease-in-out',
-        boxShadow: '5px 5px 15px 5px rgba(0,0,0,0.65)',
+        color:'#000',
+        backgroundPosition: 'left',
       },
 
       '@media screen and (min-width: 768px)': {

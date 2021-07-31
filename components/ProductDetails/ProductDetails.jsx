@@ -74,7 +74,7 @@ const data = {
   ],
 }
 
-const CartSidebarView = ({ details }) => {
+const ProductDetails = ({ details }) => {
   const detailsArr = Object.keys(details).map((key) => ({
     title: key,
     value: details[key],
@@ -82,7 +82,7 @@ const CartSidebarView = ({ details }) => {
   console.log({ detailsArr })
   const { navigationLinks, toggleSideNav } = useUI()
 const [shownDetails, setShownDetails] = React.useState('')
-return <div></div>
+//return <div></div>
 
   return (
     <Themed.div
@@ -106,7 +106,7 @@ return <div></div>
               <Button
                 onClick={()=>setShownDetails(item.title)}
                 sx={{
-                  fontSize: '67px',
+                  fontSize: '40px',
                   fontFamily: 'Value Sans Pro',
                   color: '#fff',
                   fontWeight: 400,
@@ -139,7 +139,15 @@ return <div></div>
                   <Cross height="54" width="54" style={{transform: 'rotate(45deg)'}} />
               </Button>
               <Collapse isOpened={shownDetails === item.title}>
-                <p>{item.value}</p>
+                <p
+                sx={{
+                  fontSize: '24px',
+                  fontFamily: 'Value Sans Pro',
+                  color: '#000',
+                  fontWeight: 400,
+                  lineHeight:'28px',
+                }}
+                >{item.value}</p>
               </Collapse>
             </Themed.div>
           )
@@ -149,4 +157,4 @@ return <div></div>
   )
 }
 
-export default CartSidebarView
+export default ProductDetails
