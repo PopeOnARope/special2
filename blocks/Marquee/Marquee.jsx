@@ -1,6 +1,7 @@
 import React from 'react'
 import Marquee from 'react-fast-marquee'
 
+
 const MarqueeComponent = ({ links }) => (
   <Marquee speed={20} style={{background: '#FFC391', marginTop: '0px'}} gradient={false}>
     {links.map((link) => (
