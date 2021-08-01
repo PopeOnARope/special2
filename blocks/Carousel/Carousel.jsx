@@ -173,7 +173,8 @@ const Carousel = (props) => {
   const [scrollValue, setScrollValue] = React.useState(0)
 
   React.useEffect(() => {
-    setHeight(window.innerHeight)
+    // const subtractor = window.innerWidth < 768 ? 42 : 20;
+    setHeight(window.innerHeight-42)
   }, [])
 
   // React.useEffect(() => {
