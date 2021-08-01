@@ -16,6 +16,8 @@ import '../blocks/Text/Text.builder'
 import '../blocks/Button/Button.builder'
 import '../blocks/Carousel/Carousel.builder'
 import '../blocks/Footer/Footer.builder'
+import '../blocks/Marquee/Marquee.builder'
+
 
 Builder.register('insertMenu', {
   name: 'Shopify Collections Components',
