@@ -123,13 +123,14 @@ const ChevronDown = styled.div`
 const SoundControl = styled.button`
   color: white;
   position: absolute;
-  margin-right: 0;
   align-self: flex-end;
   transform: rotate(-90deg);
-  margin-bottom: 50%;
+  margin-bottom: 32rem;
+  &:focus {
+    outline: none;
+  }
 `
 
-const Sound = styled.audio``
 
 const TimeToggle = styled.div`
   margin-top: -1rem;
@@ -270,7 +271,7 @@ const Carousel = (props) => {
       <SoundControl
         onClick={ toggle}
       >
-        Sound {playing ? 'on' : 'off'}
+        Sound Is {playing ? 'on' : 'off'}
       </SoundControl>
       <div className="content">
         <H1>{titleLine1}</H1>
