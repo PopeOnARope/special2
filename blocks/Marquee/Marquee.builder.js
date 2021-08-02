@@ -9,6 +9,11 @@ Builder.registerComponent(LazyText, {
   name: 'Marquee',
   inputs: [
     {
+      name: 'speed',
+      type: 'number',
+      defaultValue: 20
+    },
+    {
       name: 'links',
       type: 'list',
       defaultValue: [{ title: 'Title', url: '/' }],
