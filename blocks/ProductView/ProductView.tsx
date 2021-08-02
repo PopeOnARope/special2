@@ -118,7 +118,7 @@ const ProductBox: React.FC<Props> = ({
     }
   }
 
-  console.log({product})
+  console.log({ product })
 
   return (
     <React.Fragment>
@@ -142,8 +142,8 @@ const ProductBox: React.FC<Props> = ({
         />
       )}
       <div sx={{ position: 'relative', height: 902 }} className="type-wrapper">
-        <div  className='text-white absolute z-50 mt-1/3 rotate-90' style={{ marginLeft: '-2rem'}} >
-          <button style={{transform: 'rotate(90deg)', display: 'inline-flex'}} onClick={toggleProductDetails}>Details and Specs <ArrowLeft orientation='down' marginTop='0'/></button>
+        <div className='text-white absolute z-50 mt-1/3 rotate-90' style={{ marginLeft: '-2rem' }} >
+          <button style={{ transform: 'rotate(90deg)', display: 'inline-flex' }} onClick={toggleProductDetails}>Details and Specs <ArrowLeft orientation='down' marginTop='0' /></button>
         </div>
         <div
           sx={{
@@ -206,6 +206,16 @@ const ProductBox: React.FC<Props> = ({
               )}
             </Grid>
             <Button
+              sx={{
+                background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+                transition: '.5s ease-out',
+                backgroundSize: '200%',
+                ' &:hover': {
+                  boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
+                  color: '#000',
+                  backgroundPosition: 'left',
+                }
+              }}
               name="add-to-cart"
               disabled={loading}
               onClick={addToCart}
