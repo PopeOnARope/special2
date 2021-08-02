@@ -9,6 +9,11 @@ Builder.registerComponent(LazyText, {
   name: 'Carousel',
   inputs: [
     {
+      name: 'sound',
+      type: 'file',
+      allowedFileTypes: ['mp3', 'mpeg']
+    },
+    {
       name: 'slides',
       type: 'list',
       defaultValue: [{ title: 'Collection', buttonLabel: 'View Collection' }],

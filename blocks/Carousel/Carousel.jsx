@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import useAudio from './useAudio'
 import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
 import { H1 } from '../../components/Typography'
-import { CSSTransition } from 'react-transition-group'
-// import NextArrow from '../../assets/nextArrow.svg'
 
 const Wrapper = styled.div`
   height: ${({ height }) => height}px;
@@ -122,6 +120,16 @@ const ModelToggle = styled.div`
 const ChevronDown = styled.div`
   transform: rotate(180deg);
 `
+const SoundControl = styled.button`
+  color: white;
+  position: absolute;
+  margin-right: 0;
+  align-self: flex-end;
+  transform: rotate(-90deg);
+  margin-bottom: 50%;
+`
+
+const Sound = styled.audio``
 
 const TimeToggle = styled.div`
   margin-top: -1rem;
@@ -172,10 +180,13 @@ const Carousel = (props) => {
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
   const [scrollValue, setScrollValue] = React.useState(0)
 
+  const [playing, toggle] = useAudio(props.sound);
+
   React.useEffect(() => {
-    // const subtractor = window.innerWidth < 768 ? 42 : 20;
-    setHeight(window.innerHeight-42)
+    setHeight(window.innerHeight - 42)
   }, [])
+
+
 
   // React.useEffect(() => {
   //   const useHandleScroll = (e) => {
@@ -196,7 +207,7 @@ const Carousel = (props) => {
   // }, [])
 
   const handleScroll = React.useCallback((event, cs) => {
-    const isScrollingDown = event.deltaY > 1 && cs < slides.length+1
+    const isScrollingDown = event.deltaY > 1 && cs < slides.length + 1
     const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
 
     if (isScrollingDown) {
@@ -240,10 +251,7 @@ const Carousel = (props) => {
     // alert(currentSlide + '' +  slide)
     setCurrentSlide(slide)
   }
-  // function updateModel(model) {
-  //   const slide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1
-  //   setCurrentSlide(slide)
-  // }
+
 
   const currentSlideVideos = slides[currentSlide].videos
     ? slides[currentSlide].videos[`${currentModel}${timeOfDay}`]
@@ -259,6 +267,11 @@ const Carousel = (props) => {
         muted
         loop
       ></Video>
+      <SoundControl
+        onClick={ toggle}
+      >
+        Sound {playing ? 'on' : 'off'}
+      </SoundControl>
       <div className="content">
         <H1>{titleLine1}</H1>
         {titleLine2 && <H1 className="title2">{titleLine2}</H1>}
