@@ -39,9 +39,6 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
     {...rest}
     sx={{
       background: '#000',
-      background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-      transition: '.5s ease-out',
-      backgroundSize: '200%',
       color: '#eee',
       //height: '51px',
       width: '100%',
@@ -60,8 +57,7 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
       // ...styles,
 
       ' &:hover': {
-        color:'#000',
-        backgroundPosition: 'left',
+        boxShadow: '6px 13px 21px rgba(0,0,0,0.4)',
       },
 
       '@media screen and (min-width: 768px)': {
