@@ -129,7 +129,7 @@ Copy the public API key ("012345abcdef0123456789abcdef0123" in the example above
 
 This starter project uses dotenv files to configure environment variables.
 Open the files [.env.development](./.env.development) and
-[.env.production](./.env.production) in your favorite text editor, and
+[.env.production](.env.development) in your favorite text editor, and
 set the value of `BUILDER_PUBLIC_KEY` to the public key you just copied.
 You can ignore the other variables for now, we'll set them later.
 
@@ -173,7 +173,7 @@ Fill in the required keys and press "Connect your store"!
 
 ### 6. Configure the project to talk to Shopify
 
-Open up [.env.development](./.env.development) and [.env.production](./.env.production) again,
+Open up [.env.development](./.env.development) and [.env.production](.env.development) again,
 but this time set the other two Shopify keys.
 
 ```diff

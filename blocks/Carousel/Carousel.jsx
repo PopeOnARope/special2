@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import useAudio from './useAudio'
 import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
-import { H1 } from '../../components/Typography'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import Slide from './Slide'
 
@@ -74,24 +73,30 @@ const Carousel = (props) => {
     setHeight(window.innerHeight - 42)
   }, [])
 
-  const useHandleScroll = (e) => {
-    setCurrentSlide(currentSlide + 1 < slides.length ? currentSlide + 1 : 0)
-  }
   React.useEffect(() => {
+    const useHandleScroll = (event) => {
+      const isScrollingDown =
+        event.deltaY > 1 && currentSlide < slides.length + 1
+      const isScrollingUp =
+        event.deltaY < 1 && currentSlide > 0 && !window.scrollY
+      const isTop = !window.scrollY
+
+      console.log({ isScrollingUp, isScrollingDown, currentSlide })
+
+      if (isScrollingUp && currentSlide !== 0 && isTop) {
+        event.preventDefault()
+        setCurrentSlide(currentSlide - 1)
+      }
+      if (isScrollingDown && currentSlide < slides.length -1 && isTop) {
+        event.preventDefault()
+        setCurrentSlide(currentSlide + 1)
+      }
+
+      // setCurrentSlide(currentSlide + 1 < slides.length ? currentSlide + 1 : 0)
+    }
     window.addEventListener('wheel', useHandleScroll, { passive: false })
     return function cleanup() {
       window.removeEventListener('wheel', useHandleScroll)
-    }
-  })
-
-  const handleScroll = React.useCallback((event, cs) => {
-    const isScrollingDown = event.deltaY > 1 && cs < slides.length + 1
-    const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
-
-    if (isScrollingDown) {
-    }
-    // console.log({ cs })
-    if (isScrollingUp) {
     }
   })
 
@@ -100,10 +105,18 @@ const Carousel = (props) => {
   //   const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
   //
   //   if (isScrollingDown) {
+  //   }
+  //   if (isScrollingUp) {
+  //   }
+  // })
+
+  // const handleScroll = React.useCallback((event, cs) => {
+  //   const isScrollingDown = event.deltaY > 1 && cs < slides.length + 1
+  //   const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
+  //
+  //   if (isScrollingDown) {
   //     event.stopPropagation()
-  //     console.log('scrolling down', event.deltaY)
   //     //if scroll value is less than 100,
-  //     console.log({ scrollValue, cs })
   //     // if(scrollValue<100){
   //     //   setScrollValue(scrollValue+event.deltaY)
   //     // } else {
@@ -111,11 +124,9 @@ const Carousel = (props) => {
   //     updateSlide()
   //     // }
   //   }
-  //   // console.log({ cs })
   //   if (isScrollingUp) {
   //     event.stopPropagation()
   //     setCurrentSlide(cs - 1)
-  //     console.log('scrolling up', event.deltaY)
   //   }
   // }, [])
 
@@ -144,7 +155,6 @@ const Carousel = (props) => {
   const currentSlideVideos = slides[currentSlide].videos
     ? slides[currentSlide].videos[`${currentModel}${timeOfDay}`]
     : ''
-  console.log({ slides, slide: slides[currentSlide] })
   return (
     <Wrapper height={height}>
       <SoundControl onClick={toggle}>

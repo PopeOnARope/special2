@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import useAudio from './useAudio'
 import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
-import { H1 } from '../../components/Typography'
+import { H1, SecondaryH1 } from '../../components/Typography'
 import { CSSTransition } from 'react-transition-group'
 
 const Wrapper = styled.div`
@@ -34,10 +34,9 @@ const Wrapper = styled.div`
   }
 `
 
-
 const Video = styled.video`
   position: absolute;
-  transition:  visibility 0s, opacity 0.5s linear;
+  transition: visibility 0s, opacity 0.5s linear;
   z-index: 0;
   height: ${(props) => props.height}px;
   object-fit: cover;
@@ -46,9 +45,13 @@ const Video = styled.video`
   width: 100%;
   visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
 `
-const Image = styled.img`
-  object-fit: cover;
+
+const Image = styled.div`
+  background-image: ${({ src }) => `url(${src})`};
+  width: 100%;
+  height: ${(props) => props.height}px;
   position: absolute;
+  background-position: center;
 `
 
 const ModelToggle = styled.div`
@@ -66,10 +69,10 @@ const ModelToggle = styled.div`
     .toggle-button {
       position: absolute;
       margin-left: ${({ currentModel }) => {
-  if (currentModel === 'model2') {
-    return '1.2rem;'
-  }
-}};
+        if (currentModel === 'model2') {
+          return '1.2rem;'
+        }
+      }};
       background: white;
       height: 1.2rem;
       width: 0.75rem;
@@ -90,6 +93,11 @@ const ModelToggle = styled.div`
   @media (max-width: 768px) {
     margin-right: 3rem;
     margin-bottom: 8rem;
+  }
+
+  @media (max-width: 640px) {
+    margin-right: 3rem;
+    margin-bottom: 14rem;
   }
 `
 
@@ -112,10 +120,10 @@ const TimeToggle = styled.div`
     &:focus {
       outline: none;
     }
-    &:first-of-type{
+    &:first-of-type {
       padding-top: 0px;
     }
-    &:last-of-type{
+    &:last-of-type {
       padding-bottom: 0px;
     }
   }
@@ -129,66 +137,59 @@ const TimeToggle = styled.div`
     transition: 0.3s ease-in-out;
     margin-right: -0.7rem;
     margin-top: ${({ timeOfDay }) => {
-  if (timeOfDay === 'Night') {
-    return '0rem;'
-  }
-  if (timeOfDay === 'Dusk') {
-    return '1.8rem;'
-  }
-  if (timeOfDay === 'Day') {
-    return '3.5rem;'
-  }
-  if (timeOfDay === 'Dawn') {
-    return '5.5rem;'
-  }
-}};
+      if (timeOfDay === 'Night') {
+        return '0rem;'
+      }
+      if (timeOfDay === 'Dusk') {
+        return '1.8rem;'
+      }
+      if (timeOfDay === 'Day') {
+        return '3.5rem;'
+      }
+      if (timeOfDay === 'Dawn') {
+        return '5.5rem;'
+      }
+    }};
   }
 `
 
-const Slide = ({slide, height  }) => {
-
+const Slide = ({ slide, height }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
 
-
-  const {
-    image,
-    titleLine1,
-    titleLine2,
-    buttonLabel,
-    buttonUrl,
-  } = slide
+  const { image, titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
   const collectionAvailable = true
-
-
 
   const currentSlideVideos = slide.videos
     ? slide.videos[`${currentModel}${timeOfDay}`]
     : ''
 
   console.log({ slide })
-// return <div></div>
+  // return <div></div>
   return (
     <Wrapper height={height}>
-      {slide.videos && Object.keys(slide.videos).map((video) => (
-        <Video
-          height={height}
-          src={slide.videos[video]}
-          autoPlay
-          poster={slide.image}
-          muted
-          loop
-          show={currentSlideVideos === slide.videos[video]}
-        ></Video>
-      ))}
-      {!slide.videos && slide.image &&
-      <Image src={slide.image}></Image>
-      }
+      {slide.videos &&
+        Object.keys(slide.videos).map((video) => (
+          <Video
+            height={height}
+            src={slide.videos[video]}
+            autoPlay
+            poster={slide.image}
+            muted
+            loop
+            show={currentSlideVideos === slide.videos[video]}
+          ></Video>
+        ))}
+      {!slide.videos && slide.image && (
+        <Image src={slide.image} height={height} />
+      )}
 
       <div className="content">
         <H1>{titleLine1}</H1>
-        {titleLine2 && <H1 className="title2">{titleLine2}</H1>}
+        {titleLine2 && (
+          <SecondaryH1 className="title2">{titleLine2}</SecondaryH1>
+        )}
         {collectionAvailable && (
           <Button displayAs="link" href={buttonUrl}>
             {buttonLabel}
@@ -247,7 +248,6 @@ const Slide = ({slide, height  }) => {
           Dawn
         </button>
       </TimeToggle>
-
     </Wrapper>
   )
 }

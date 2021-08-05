@@ -16,4 +16,11 @@ export const SecondaryH1 = styled.h1`
   color: ${(props) => props.color || '#ffffff'};
   font-weight: 400;
   padding: 0px;
+  @media (max-width: 1024px) {
+    margin-top: -60px !important;
+  }
+  @media (max-width: 768px) {
+    margin-top: -50px !important;
+  }
+
 `
