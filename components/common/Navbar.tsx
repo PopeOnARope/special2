@@ -84,12 +84,7 @@ const Navbar: FC = () => {
             position: 'absolute',
           }}
         >
-          <Themed.h1
-            sx={{
-              fontSize: 20,
-              fontWeight: 'bold',
-            }}
-          >
+
             <Themed.a
               as={Link}
               href="/"
@@ -102,20 +97,7 @@ const Navbar: FC = () => {
               <SpecialLogo fill={navPrimaryColor} />
             </Themed.a>
 
-            {logo && logo.text && !logo.image && (
-              <Themed.a
-                as={Link}
-                href="/"
-                sx={{
-                  letterSpacing: -1,
-                  textDecoration: `none`,
-                  paddingLeft: '5px',
-                }}
-              >
-                {logo.text}
-              </Themed.a>
-            )}
-          </Themed.h1>
+
         </Themed.div>
         <Themed.div
           sx={{

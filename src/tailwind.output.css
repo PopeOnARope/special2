@@ -2233,10 +2233,6 @@ video {
   max-width: 42rem;
 }
 
-.max-w-3xl {
-  max-width: 48rem;
-}
-
 .object-cover {
   -o-object-fit: cover;
      object-fit: cover;
@@ -2289,6 +2285,10 @@ video {
   position: relative;
 }
 
+.resize {
+  resize: both;
+}
+
 .text-center {
   text-align: center;
 }
@@ -2317,6 +2317,10 @@ video {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.visible {
+  visibility: visible;
 }
 
 .w-64 {
@@ -2363,6 +2367,10 @@ video {
 
 .transition {
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+}
+
+.ease-out {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
 .ease-in-out {
@@ -5077,6 +5085,10 @@ html {
 
   .md\:max-w-lg {
     max-width: 32rem;
+  }
+
+  .md\:max-w-3xl {
+    max-width: 48rem;
   }
 
   .md\:p-0 {
