@@ -243,9 +243,6 @@ const ProductBox: React.FC<Props> = ({
             <Image
               src={peakingImage?.src || variant.image.src}
               layout="fill"
-              //width={700}
-              //height={400}
-
               objectFit="cover"
               objectPosition="center"
               alt={title}

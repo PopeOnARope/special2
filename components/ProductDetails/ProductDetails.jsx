@@ -81,8 +81,8 @@ const ProductDetails = ({ details }) => {
   }))
   console.log({ detailsArr })
   const { navigationLinks, toggleSideNav } = useUI()
-const [shownDetails, setShownDetails] = React.useState('')
-//return <div></div>
+  const [shownDetails, setShownDetails] = React.useState('')
+  //return <div></div>
 
   return (
     <Themed.div
@@ -104,7 +104,7 @@ const [shownDetails, setShownDetails] = React.useState('')
               }}
             >
               <Button
-                onClick={()=>setShownDetails(item.title)}
+                onClick={() => setShownDetails(item.title)}
                 sx={{
                   fontSize: '40px',
                   fontFamily: 'Value Sans Pro',
@@ -128,6 +128,7 @@ const [shownDetails, setShownDetails] = React.useState('')
 
                   },
                   '&:hover': { color: '#000' },
+                  '&:selected': { color: '#000' },
                   '&:hover svg': {
 
                     color: '#000',
@@ -136,17 +137,19 @@ const [shownDetails, setShownDetails] = React.useState('')
                 }}
               >
                 {item.title}
-                  <Cross height="54" width="54" style={{transform: 'rotate(45deg)'}} />
+                <Cross height="54" width="54" style={{ transform: 'rotate(45deg)' }} />
               </Button>
               <Collapse isOpened={shownDetails === item.title}>
                 <p
-                sx={{
-                  fontSize: '24px',
-                  fontFamily: 'Value Sans Pro',
-                  color: '#000',
-                  fontWeight: 400,
-                  lineHeight:'28px',
-                }}
+                  sx={{
+                    fontSize: '24px',
+                    fontFamily: 'Value Sans Pro',
+                    color: '#000',
+                    fontWeight: 400,
+                    lineHeight: '28px',
+                    padding: '8px 16px',
+                    width: '50%',
+                  }}
                 >{item.value}</p>
               </Collapse>
             </Themed.div>
