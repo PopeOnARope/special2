@@ -16,8 +16,9 @@ const Navbar: FC = () => {
   const [announcement, setAnnouncement] = useState()
   const [isWindowTop, setIsWindowTop] = useState(true)
   const { theme } = useThemeUI()
-  const { logo, toggleSideNav, navPrimaryColor, navSecondaryColor } = useUI()
+  const { logo, toggleSideNav, navPrimaryColor, navSecondaryColor, displaySideNav, displayCart } = useUI()
   const cart = useCart()
+  const isScrollingInPage = !isWindowTop && !displayCart && !displaySideNav
 
   useEffect(() => {
     async function fetchContent() {
@@ -43,14 +44,15 @@ const Navbar: FC = () => {
   // })
 
   const navItemStyles = {
-    background: 'none',
+    background: isScrollingInPage ? 'white' :  'none',
+
     border: navPrimaryColor,
-    color: navPrimaryColor,
+    color: isScrollingInPage ? 'black' :  navPrimaryColor,
     transition: 'all 0.25s',
     ' svg': {
       transition: 'all 0.25s',
-      fill: navPrimaryColor,
-      stroke: navPrimaryColor,
+      fill: isScrollingInPage ? 'black' :  navPrimaryColor,
+      stroke: isScrollingInPage ? 'black' :  navPrimaryColor,
     },
   }
 
@@ -76,8 +78,8 @@ const Navbar: FC = () => {
         sx={{
           margin: `0`,
           // maxWidth: 1920,
-          padding: '10px 30px',
-          background: isWindowTop ? 'none' : navSecondaryColor,
+          padding: '0rem 1rem',
+          background: isScrollingInPage ? 'white' : 'none',
           transition: 'background 0.3s',
           display: 'flex',
           justifyContent: 'space-between',
@@ -127,7 +129,7 @@ const Navbar: FC = () => {
               paddingLeft: '5px',
             }}
           >
-            <SpecialLogo fill={navPrimaryColor} />
+            <SpecialLogo fill={isScrollingInPage ?   'black' : navPrimaryColor} />
           </Themed.a>
         </Themed.div>
         <Themed.div
@@ -138,7 +140,7 @@ const Navbar: FC = () => {
             justifyContent: ['space-between', 'flex-end'],
           }}
         >
-          <UserNav />
+          <UserNav isScrollingInPage={isScrollingInPage} />
         </Themed.div>
       </Themed.div>
     </React.Fragment>
