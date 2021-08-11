@@ -1,8 +1,8 @@
-/* 
+/*
   prepareVariantsWithOptions()
 
   This function changes the structure of the variants to
-  more easily get at their options. The original data 
+  more easily get at their options. The original data
   structure looks like this:
 
   {
@@ -54,7 +54,7 @@ export function prepareVariantsWithOptions(
 export const getPrice = (price: string, currency: string) =>
   Intl.NumberFormat(undefined, {
     currency,
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 0,
     style: 'currency',
   }).format(parseFloat(price ? price : '0'))
 

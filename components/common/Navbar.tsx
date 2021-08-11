@@ -14,8 +14,9 @@ import { Hamburger, SpecialLogo } from '@components/icons'
 
 const Navbar: FC = () => {
   const [announcement, setAnnouncement] = useState()
+  const [isWindowTop, setIsWindowTop] = useState(true)
   const { theme } = useThemeUI()
-  const { logo, toggleSideNav, navPrimaryColor} = useUI()
+  const { logo, toggleSideNav, navPrimaryColor, navSecondaryColor } = useUI()
   const cart = useCart()
 
   useEffect(() => {
@@ -34,6 +35,12 @@ const Navbar: FC = () => {
     fetchContent()
   }, [cart?.lineItems])
 
+  const [bg, setBg] = React.useState('none')
+  // React.useEffect(()=>{
+  //   window.addEventListener('scroll', ()=>{
+  //     if(!window.scrollY)
+  //   })
+  // })
 
   const navItemStyles = {
     background: 'none',
@@ -47,6 +54,21 @@ const Navbar: FC = () => {
     },
   }
 
+  React.useEffect(() => {
+    function updateScrollTop() {
+      const _isWindowTop = !window.scrollY
+      const { scrollY } = window
+      if (_isWindowTop !== isWindowTop) {
+        console.log(isWindowTop)
+        setIsWindowTop(_isWindowTop)
+      }
+    }
+    window.addEventListener('scroll', updateScrollTop, { passive: false })
+    return function cleanup() {
+      window.removeEventListener('scroll', updateScrollTop)
+    }
+  })
+
   return (
     <React.Fragment>
       <Themed.div
@@ -55,12 +77,14 @@ const Navbar: FC = () => {
           margin: `0`,
           // maxWidth: 1920,
           padding: '10px 30px',
+          background: isWindowTop ? 'none' : navSecondaryColor,
+          transition: 'background 0.3s',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
           height: '100px',
-          position: 'absolute',
+          position: 'fixed',
           zIndex: '1000',
           ' a': {
             ...navItemStyles,
@@ -75,7 +99,17 @@ const Navbar: FC = () => {
             justifyContent: 'space-evenly',
           }}
         >
-          <Button sx={{ ...navItemStyles, padding: '0', height: '100%', '&:focus': { outline: 0} }} onClick={toggleSideNav}><Hamburger height='25px' /></Button>
+          <Button
+            sx={{
+              ...navItemStyles,
+              padding: '0',
+              height: '100%',
+              '&:focus': { outline: 0 },
+            }}
+            onClick={toggleSideNav}
+          >
+            <Hamburger height="25px" />
+          </Button>
         </Themed.div>
         <Themed.div
           sx={{
@@ -84,20 +118,17 @@ const Navbar: FC = () => {
             position: 'absolute',
           }}
         >
-
-            <Themed.a
-              as={Link}
-              href="/"
-              sx={{
-                letterSpacing: -1,
-                textDecoration: `none`,
-                paddingLeft: '5px',
-              }}
-            >
-              <SpecialLogo fill={navPrimaryColor} />
-            </Themed.a>
-
-
+          <Themed.a
+            as={Link}
+            href="/"
+            sx={{
+              letterSpacing: -1,
+              textDecoration: `none`,
+              paddingLeft: '5px',
+            }}
+          >
+            <SpecialLogo fill={navPrimaryColor} />
+          </Themed.a>
         </Themed.div>
         <Themed.div
           sx={{

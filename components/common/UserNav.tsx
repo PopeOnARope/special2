@@ -20,9 +20,9 @@ const UserNav: FC<Props> = () => {
   return (
     <Themed.div sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
       <Button sx={{ ...navItemStyles, '&:focus': { outline: 0} }} onClick={toggleCart} aria-label="Cart">
-        <Bag/>
-        {/*<Themed.div sx={{ border: `1px solid ${navPrimaryColor}`, padding: '0px 15px'  }}>0</Themed.div>*/}
-        {/*Bag*/}
+        {/*<Bag/>*/}
+        <Themed.div sx={{ border: `1px solid ${navPrimaryColor}`, padding: '0px 15px'  }}>0</Themed.div>
+        Bag
       </Button>
       {/*<Button sx={{ ...navItemStyles, '&:focus': { outline: 0} }} aria-label="Login">*/}
       {/*  <NounEyes sx={{ margin: 0 }} />*/}

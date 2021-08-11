@@ -7,6 +7,7 @@ export interface State {
   displayCart: boolean
   displaySideNav: boolean
   navPrimaryColor?: string
+  navSecondaryColor?: string
   navigationLinks?: Array<{ link: string; title: string }>
   logo?: { image?: string; text: string; width: number; height: number }
   toggleCart?: any
@@ -49,10 +50,16 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
       ? 'black'
       : 'white'
 
+  const navSecondaryColor =
+    asPath.includes('collection') || asPath.includes('product')
+      ? '#E5E5E5'
+      : 'black'
+
   const [state, setState] = React.useState({
     ...initialState,
     ...siteSettings,
-    navPrimaryColor
+    navPrimaryColor,
+    navSecondaryColor
   })
 
   // const navTheme =
@@ -68,19 +75,24 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
       ...state,
       displayCart: true,
       navPrimaryColor: 'black',
+      navSecondaryColor:'#E5E5E5',
     }))
   const closeCart = () =>
     setState((state) => ({
       ...state,
       displayCart: false,
       navPrimaryColor,
+      navSecondaryColor
     }))
   const toggleCart = () =>(
     setState((prev) => ({
       ...prev,
       displayCart: !prev.displayCart,
       displaySideNav: false,
-      navPrimaryColor: prev.displayCart ? navPrimaryColor : 'black'
+      navPrimaryColor: prev.displayCart ? navPrimaryColor : 'black',
+      navSecondaryColor: prev.displayCart ? navSecondaryColor : '#E5E5E5',
+
+
     })))
 
   const openSideNav = () =>
@@ -88,38 +100,46 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
       ...state,
       displaySideNav: true,
       navPrimaryColor: 'black',
+      navSecondaryColor: '#E5E5E5'
     }))
   const closeSideNav = () =>
     setState((state) => ({
       ...state,
       displaySideNav: false,
       navPrimaryColor,
+      navSecondaryColor
     }))
   const toggleSideNav = () =>(
     setState((prev) => ({
       ...prev,
       displaySideNav: !prev.displaySideNav,
       displayCart: false,
-      navPrimaryColor: prev.displaySideNav ? navPrimaryColor : 'black'
+      navPrimaryColor: prev.displaySideNav ? navPrimaryColor : 'black',
+      navSecondaryColor: prev.displayCart ? navSecondaryColor : '#E5E5E5',
     })))
   const openProductDetails = () =>
     setState((state) => ({
       ...state,
       displayProductDetails: true,
       navPrimaryColor: 'black',
+      navSecondaryColor: '#E5E5E5',
+
     }))
   const closeProductDetails = () =>
     setState((state) => ({
       ...state,
       displayProductDetails: false,
       navPrimaryColor,
+      navSecondaryColor
     }))
   const toggleProductDetails = () =>(
     setState((prev) => ({
       ...prev,
       displayProductDetails: !prev.displayProductDetails,
       displayCart: false,
-      navPrimaryColor: prev.displayProductDetails ? navPrimaryColor : 'black'
+      navPrimaryColor: prev.displayProductDetails ? navPrimaryColor : 'black',
+      navSecondaryColor: prev.displayProductDetails ? navSecondaryColor : '#E5E5E5',
+
     })))
 
   const value = {

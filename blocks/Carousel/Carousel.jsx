@@ -81,14 +81,14 @@ const Carousel = (props) => {
         event.deltaY < 1 && currentSlide > 0 && !window.scrollY
       const isTop = !window.scrollY
 
-      console.log({ isScrollingUp, isScrollingDown, currentSlide })
+      console.log({ isScrollingUp, isScrollingDown, currentSlide, isTop, event })
 
       if (isScrollingUp && currentSlide !== 0 && isTop) {
-        event.preventDefault()
+        event.stopPropagation()
         setCurrentSlide(currentSlide - 1)
       }
       if (isScrollingDown && currentSlide < slides.length -1 && isTop) {
-        event.preventDefault()
+        event.stopPropagation()
         setCurrentSlide(currentSlide + 1)
       }
 
@@ -100,35 +100,6 @@ const Carousel = (props) => {
     }
   })
 
-  // const handleScroll = React.useCallback((event, cs) => {
-  //   const isScrollingDown = event.deltaY > 1 && cs < slides.length + 1
-  //   const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
-  //
-  //   if (isScrollingDown) {
-  //   }
-  //   if (isScrollingUp) {
-  //   }
-  // })
-
-  // const handleScroll = React.useCallback((event, cs) => {
-  //   const isScrollingDown = event.deltaY > 1 && cs < slides.length + 1
-  //   const isScrollingUp = event.deltaY < 1 && cs > 0 && !window.scrollY
-  //
-  //   if (isScrollingDown) {
-  //     event.stopPropagation()
-  //     //if scroll value is less than 100,
-  //     // if(scrollValue<100){
-  //     //   setScrollValue(scrollValue+event.deltaY)
-  //     // } else {
-  //     //   setScrollValue(0)
-  //     updateSlide()
-  //     // }
-  //   }
-  //   if (isScrollingUp) {
-  //     event.stopPropagation()
-  //     setCurrentSlide(cs - 1)
-  //   }
-  // }, [])
 
   if (!slides) {
     return (
