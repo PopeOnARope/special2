@@ -44,8 +44,7 @@ const Navbar: FC = () => {
   // })
 
   const navItemStyles = {
-    background: isScrollingInPage ? 'white' :  'none',
-
+    background:'none',
     border: navPrimaryColor,
     color: isScrollingInPage ? 'black' :  navPrimaryColor,
     transition: 'all 0.25s',
@@ -79,13 +78,13 @@ const Navbar: FC = () => {
           margin: `0`,
           // maxWidth: 1920,
           padding: '0rem 1rem',
-          background: isScrollingInPage ? 'white' : 'none',
+          background: isScrollingInPage ? 'rgba(255,255,255,0.5)' : 'none',
           transition: 'background 0.3s',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
-          height: '100px',
+          height: '5rem',
           position: 'fixed',
           zIndex: '1000',
           ' a': {
@@ -137,7 +136,7 @@ const Navbar: FC = () => {
             display: 'flex',
             minWidth: 140,
             width: '100%',
-            justifyContent: ['space-between', 'flex-end'],
+            justifyContent: 'flex-end',
           }}
         >
           <UserNav isScrollingInPage={isScrollingInPage} />

@@ -12,6 +12,15 @@ const Wrapper = styled.div`
     background-color: transparent;
     border-bottom: 2px solid black;
     width: 100%;
+    ${(props) => {
+      if (props.value?.length) {
+        return `& + .label-text {
+      font-size: 20px;
+      margin-top: 34px;
+      font-weight: 500;
+      }`
+      }
+    }}
 
     &:active,
     &:focus {
@@ -23,16 +32,24 @@ const Wrapper = styled.div`
       }
     }
   }
-  .label-text{
+  .label-text {
     z-index: 1;
     position: absolute;
     transition: all 0.3s;
   }
 `
-const TextInput = ({ label, name, onChange }) => (
-  <Wrapper>
-    <input />
-    <label className="label-text">{label}</label>
-  </Wrapper>
-)
+const TextInput = ({ label, name, onChange }) => {
+  const [value, setValue] = React.useState('')
+
+  return (
+    <Wrapper value={value}>
+      <input
+        onChange={(e) => {
+          setValue(e.currentTarget.value)
+        }}
+      />
+      <label className="label-text">{label}</label>
+    </Wrapper>
+  )
+}
 export default TextInput
