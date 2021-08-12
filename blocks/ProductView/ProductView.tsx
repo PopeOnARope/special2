@@ -36,14 +36,20 @@ interface ButtonProps {
   onClick?: any
 }
 const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
-  <button onClick={onClick} className='focus:outline-none'>
-    <div sx={{ color: 'white', transform: 'rotate(90deg)' }} className='hover:pr-20'>
+  <button onClick={onClick} className="focus:outline-none">
+    <div
+      sx={{
+        color: 'white',
+        transform: 'rotate(90deg)',
+      }}
+      className="hover:pr-20"
+    >
       <ChevronUp />
     </div>
   </button>
 )
 const PreviousButton: React.FC<ButtonProps> = ({ onClick }) => (
-  <button onClick={onClick} className='focus:outline-none'>
+  <button onClick={onClick} className="focus:outline-none">
     <div sx={{ color: 'white', transform: 'rotate(270deg)' }}>
       <ChevronUp />
     </div>
@@ -74,7 +80,13 @@ const ProductBox: React.FC<Props> = ({
     variants,
   ])
 
-  const { openCart, toggleProductDetails, displayProductDetails, closeProductDetails } = useUI()
+  const {
+    openCart,
+    toggleProductDetails,
+    displayProductDetails,
+    closeProductDetails,
+  } = useUI()
+
   const [peakingImage, setPeakingImage] = useState(
     null as { src: string } | null
   )
@@ -85,11 +97,11 @@ const ProductBox: React.FC<Props> = ({
 
   function IsJsonString(str) {
     try {
-      JSON.parse(str);
+      JSON.parse(str)
     } catch (e) {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
 
   useEffect(() => {
@@ -141,10 +153,32 @@ const ProductBox: React.FC<Props> = ({
           }}
         />
       )}
-      <div sx={{ position: 'relative', height: 902 }} className="type-wrapper">
-        <div className='text-white absolute z-50 mt-1/3 rotate-90' style={{ marginLeft: '-2rem' }} >
-          <button style={{ transform: 'rotate(90deg)', display: 'inline-flex' }} onClick={toggleProductDetails}>Details and Specs <ArrowLeft orientation='down' marginTop='0' /></button>
+
+      {/* TODO: remove the minimum height of innerLayout so there is no overflow in height */}
+      <div
+        sx={{
+          position: 'relative',
+          height: '100vh',
+          width: '100vw',
+          backgroundColor: 'black',
+        }}
+        className="type-wrapper"
+      >
+        <div
+          className="text-white absolute mt-1/3 z-50 hover:cursor-pointer"
+          style={{ marginLeft: '-2rem' }}
+        >
+          <button
+            style={{
+              transform: 'rotate(90deg)',
+              display: 'flex',
+            }}
+            onClick={toggleProductDetails}
+          >
+            Details and Specs <ArrowLeft orientation="down" marginTop="0" />
+          </button>
         </div>
+
         <div
           sx={{
             display: 'flex',
@@ -158,7 +192,6 @@ const ProductBox: React.FC<Props> = ({
             padding: 32,
           }}
         >
-
           <div className="flex flex-row justify-between items-start w-full h-1/2">
             <PreviousButton
               onClick={() => {
@@ -207,14 +240,15 @@ const ProductBox: React.FC<Props> = ({
             </Grid>
             <Button
               sx={{
-                background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+                background:
+                  'linear-gradient(to left, #000 50%, #FFC391 50%) right',
                 transition: '.5s ease-out',
                 backgroundSize: '200%',
                 ' &:hover': {
                   boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
                   color: '#000',
                   backgroundPosition: 'left',
-                }
+                },
               }}
               name="add-to-cart"
               disabled={loading}
@@ -226,7 +260,6 @@ const ProductBox: React.FC<Props> = ({
               </span>
             </Button>
           </div>
-
         </div>
         <div
           sx={{
@@ -261,7 +294,13 @@ const ProductBox: React.FC<Props> = ({
         onClose={closeProductDetails}
         from="left"
       >
-        <ProductDetails details={IsJsonString(product.description) ? JSON.parse(product.description) : {}} />
+        <ProductDetails
+          details={
+            IsJsonString(product.description)
+              ? JSON.parse(product.description)
+              : {}
+          }
+        />
       </Sidebar>
     </React.Fragment>
   )

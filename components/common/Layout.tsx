@@ -75,12 +75,7 @@ const InnerLayout: React.FC<{
       ...colorOverrides,
     },
   }
-  const {
-    displayCart,
-    closeCart,
-    displaySideNav,
-    closeSideNav,
-  } = useUI()
+  const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
     <ThemeProvider theme={theme}>
@@ -91,7 +86,7 @@ const InnerLayout: React.FC<{
           px: 0,
           // maxWidth: 1920,
           minWidth: '60vw',
-          minHeight: 800,
+          // minHeight: 800,
         }}
       >
         <main>{children}</main>

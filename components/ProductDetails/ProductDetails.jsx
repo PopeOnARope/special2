@@ -79,10 +79,10 @@ const ProductDetails = ({ details }) => {
     title: key,
     value: details[key],
   }))
-  console.log({ detailsArr })
+  console.log({ details })
   const { navigationLinks, toggleSideNav } = useUI()
-const [shownDetails, setShownDetails] = React.useState('')
-//return <div></div>
+  const [shownDetails, setShownDetails] = React.useState('')
+  //return <div></div>
 
   return (
     <Themed.div
@@ -104,7 +104,7 @@ const [shownDetails, setShownDetails] = React.useState('')
               }}
             >
               <Button
-                onClick={()=>setShownDetails(item.title)}
+                onClick={() => setShownDetails(item.title)}
                 sx={{
                   fontSize: '40px',
                   fontFamily: 'Value Sans Pro',
@@ -125,29 +125,33 @@ const [shownDetails, setShownDetails] = React.useState('')
                     marginLeft: 10,
 
                     color: '#fff',
-
                   },
                   '&:hover': { color: '#000' },
                   '&:hover svg': {
-
                     color: '#000',
                     opacity: 1,
                   },
                 }}
               >
                 {item.title}
-                  <Cross height="54" width="54" style={{transform: 'rotate(45deg)'}} />
+                <Cross
+                  height="54"
+                  width="54"
+                  style={{ transform: 'rotate(45deg)' }}
+                />
               </Button>
               <Collapse isOpened={shownDetails === item.title}>
                 <p
-                sx={{
-                  fontSize: '24px',
-                  fontFamily: 'Value Sans Pro',
-                  color: '#000',
-                  fontWeight: 400,
-                  lineHeight:'28px',
-                }}
-                >{item.value}</p>
+                  sx={{
+                    fontSize: '24px',
+                    fontFamily: 'Value Sans Pro',
+                    color: '#000',
+                    fontWeight: 400,
+                    lineHeight: '28px',
+                  }}
+                >
+                  {item.value}
+                </p>
               </Collapse>
             </Themed.div>
           )
