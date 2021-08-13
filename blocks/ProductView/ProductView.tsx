@@ -165,8 +165,12 @@ const ProductBox: React.FC<Props> = ({
         className="type-wrapper"
       >
         <div
-          className="text-white absolute mt-1/3 z-50 hover:cursor-pointer"
-          style={{ marginLeft: '-2rem' }}
+          className="text-white absolute z-50 hover:cursor-pointer"
+          style={{
+            marginLeft: '-2rem',
+            marginBottom: '45vh',
+            alignSelf: 'flex-end',
+          }}
         >
           <button
             style={{
@@ -216,49 +220,56 @@ const ProductBox: React.FC<Props> = ({
               }}
             />
           </div>
-          <div>
-            <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
-            <Grid columns={2}>
-              {colors?.length && (
-                <OptionPicker
-                  key="Color"
-                  name="Color"
-                  options={colors}
-                  selected={color}
-                  onChange={(event) => setColor(event.target.value)}
-                />
-              )}
-              {sizes?.length && (
-                <OptionPicker
-                  key="Size"
-                  name="Size"
-                  options={sizes}
-                  selected={size}
-                  onChange={(event) => setSize(event.target.value)}
-                />
-              )}
-            </Grid>
-            <Button
-              sx={{
-                background:
-                  'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-                transition: '.5s ease-out',
-                backgroundSize: '200%',
-                ' &:hover': {
-                  boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
-                  color: '#000',
-                  backgroundPosition: 'left',
-                },
-              }}
-              name="add-to-cart"
-              disabled={loading}
-              onClick={addToCart}
-            >
-              <span className="flex flex-row justify-between mr-2">
-                <span>Bag {loading && <LoadingDots />}</span>
-                {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
-              </span>
-            </Button>
+          <div className='flex flex-col w-full items-end justify-end'>
+            <div className="w-full md:w-1/2 lg:w-1/3 text-center md:text-left">
+              <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
+              <Grid columns={2}>
+                {colors?.length && (
+                  <OptionPicker
+                    key="Color"
+                    name="Color"
+                    options={colors}
+                    selected={color}
+                    onChange={(event) => setColor(event.target.value)}
+                  />
+                )}
+                {sizes?.length && (
+                  <OptionPicker
+                    key="Size"
+                    name="Size"
+                    options={sizes}
+                    selected={size}
+                    onChange={(event) => setSize(event.target.value)}
+                  />
+                )}
+              </Grid>
+              <Button
+                style={{width: '100%'}}
+                sx={{
+
+                  background:
+                    'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+                  transition: '.5s ease-out',
+                  backgroundSize: '200%',
+                  ' &:hover': {
+                    boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
+                    color: '#000',
+                    backgroundPosition: 'left',
+                  },
+                }}
+                name="add-to-cart"
+                disabled={loading}
+                onClick={addToCart}
+              >
+                <span className="flex flex-row justify-between mr-2">
+                  <span>Bag {loading && <LoadingDots />}</span>
+                  {getPrice(
+                    variant.priceV2.amount,
+                    variant.priceV2.currencyCode
+                  )}
+                </span>
+              </Button>
+            </div>
           </div>
         </div>
         <div
