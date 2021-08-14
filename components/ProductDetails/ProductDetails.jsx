@@ -79,15 +79,15 @@ const ProductDetails = ({ details }) => {
     title: key,
     value: details[key],
   }))
-  console.log({ details })
   const { navigationLinks, toggleSideNav } = useUI()
   const [shownDetails, setShownDetails] = React.useState('')
+
   //return <div></div>
 
   return (
     <Themed.div
       sx={{
-        height: '100%',
+        height: '100vh',
         background: '#FFC391',
         padding: '126px 46px',
         display: 'flex',
@@ -104,7 +104,9 @@ const ProductDetails = ({ details }) => {
               }}
             >
               <Button
-                onClick={() => setShownDetails(item.title)}
+                onClick={() =>
+                  setShownDetails(shownDetails === item.title ? '' : item.title)
+                }
                 sx={{
                   fontSize: '40px',
                   fontFamily: 'Value Sans Pro',

@@ -1,7 +1,7 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 //@ts-nocheck
-import React, { useMemo, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect, useRef } from 'react'
 import { Themed, jsx } from 'theme-ui'
 import { Grid } from '@theme-ui/components'
 
@@ -20,23 +20,34 @@ import { LoadingDots, Sidebar } from '@components/ui'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
 import Button from '../../blocks/Button/Button'
 
-const CustomSlider = ({ itemsCount = 1, index = 0 }) => {
+import Slider from 'react-slick'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+
+const CustomSlider = ({
+  itemsCount = 1,
+  index = 0,
+  style = { position: 'absolute' },
+}) => {
+  // TODO: Add animation when moving slide
   return (
     <div
-      sx={{
-        width: '100%',
-        height: '10px',
-        position: 'absolute',
-        top: 0,
-        zIndex: 50,
-      }}
+      sx={[
+        {
+          width: '100%',
+          height: 'auto',
+          top: 0,
+          zIndex: 50,
+        },
+        style,
+      ]}
     >
       {itemsCount > 1 ? (
         <div
           sx={{
             backgroundColor: '#FFC391',
             width: `${100 / itemsCount}%`,
-            height: '10px',
+            height: '5px',
             marginLeft: `${(100 / itemsCount) * index}%`,
           }}
         ></div>
@@ -46,7 +57,7 @@ const CustomSlider = ({ itemsCount = 1, index = 0 }) => {
 }
 
 const NextButton = ({ onClick }) => (
-  <button onClick={onClick} className="focus:outline-none">
+  <button onClick={onClick} s className="focus:outline-none">
     <div
       sx={{
         color: 'white',
@@ -78,18 +89,19 @@ const ProductBox = ({
   const [currentImage, setCurrentImage] = useState(0)
   const numberOfImage = 5
 
+  const mainSliderRef = useRef()
+  const [mainSlideIndex, setMainSlideIndex] = useState(0)
+
   const getNextImage = (num) => {
     var nextIndex = currentImage + num
 
     if (nextIndex < 0) {
-      nextIndex = numberOfImage
+      nextIndex = numberOfImage - 1
     }
 
     if (nextIndex >= numberOfImage) {
       nextIndex = 0
     }
-
-    console.log(nextIndex)
 
     setCurrentImage(nextIndex)
   }
@@ -159,12 +171,20 @@ const ProductBox = ({
     }
   }
 
+  const handleMainSliderChange = (index) => {
+    setMainSlideIndex(index)
+  }
+
   console.log('product.images.length')
   console.log(product.images.length)
   console.log('***************')
 
   console.log('variants')
   console.log(variants.length)
+  console.log('***************')
+
+  console.log('variant.priceV2')
+  console.log(variant.priceV2)
   console.log('***************')
 
   if (variant.image) {
@@ -203,18 +223,146 @@ const ProductBox = ({
         />
       )}
 
+      {/* Top-most divider */}
       <div
         sx={{
           position: 'relative',
           height: '100vh',
           width: '100vw',
-          backgroundColor: 'black',
+          // backgroundColor: 'black',
+          overflowX: 'hidden',
+          overflowY: 'hidden',
         }}
         className="type-wrapper"
       >
-        <CustomSlider itemsCount={numberOfImage} index={currentImage} />
+        <Slider
+          ref={mainSliderRef}
+          infinite
+          speed={500}
+          slidesToShow={1}
+          slidesToScroll={1}
+          swipeToSlide={false}
+          arrows={false}
+          afterChange={handleMainSliderChange}
+        >
+          <div
+            sx={{
+              display: 'flex',
+              height: '100vh',
+              width: '100vw',
+              position: 'relative',
+            }}
+          >
+            <Image
+              src={peakingImage?.src || variant.image.src}
+              objectFit="cover"
+              objectPosition="center"
+              alt={title}
+              priority
+              quality={100}
+              layout="fill"
+              className="object-center object-cover"
+            />
+            <CustomSlider itemsCount={numberOfImage} index={currentImage} />
+          </div>
+          <div>
+            <ProductDetails
+              details={
+                IsJsonString(product.description)
+                  ? JSON.parse(product.description)
+                  : {}
+              }
+            />
+          </div>
+        </Slider>
 
         <div
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            alignItems: 'center',
+            marginBottom: '200px',
+            marginLeft: '-70px',
+            transform: 'rotate(90deg)',
+            color: 'white',
+            cursor: 'pointer',
+            width: '200px',
+            minWidth: '200px',
+            textAlign: 'right',
+            // TODO: Remove button outline
+            ' &:select:focus': {
+              outline: 'none',
+            },
+          }}
+        >
+          {mainSlideIndex === 0 ? (
+            <button onClick={() => mainSliderRef?.current.slickPrev()}>
+              Details and Specs <ArrowLeft orientation="down" marginTop="0" />
+            </button>
+          ) : (
+            <button onClick={() => mainSliderRef?.current.slickNext()}>
+              <ArrowLeft orientation="right" marginTop="10" />
+            </button>
+          )}
+        </div>
+
+        <div
+          sx={{
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            marginBottom: '50px',
+            marginRight: '70px',
+          }}
+        >
+          <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
+          <Grid columns={2}>
+            {colors?.length && (
+              <OptionPicker
+                key="Color"
+                name="Color"
+                options={colors}
+                selected={color}
+                onChange={(event) => setColor(event.target.value)}
+              />
+            )}
+            {sizes?.length && (
+              <OptionPicker
+                key="Size"
+                name="Size"
+                options={sizes}
+                selected={size}
+                onChange={(event) => setSize(event.target.value)}
+              />
+            )}
+          </Grid>
+          <Button
+            sx={{
+              background:
+                'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+              transition: '.5s ease-out',
+              backgroundSize: '200%',
+              ' &:hover': {
+                boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
+                color: '#000',
+                backgroundPosition: 'left',
+              },
+            }}
+            name="add-to-cart"
+            disabled={loading}
+            onClick={addToCart}
+          >
+            <span className="flex flex-row justify-between mr-2">
+              <span>Bag {loading && <LoadingDots />}</span>
+              {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
+            </span>
+          </Button>
+          <br />
+          <p sx={{ color: 'white' }}>Limited Edition of 200</p>
+        </div>
+
+        {/* <div
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -241,8 +389,6 @@ const ProductBox = ({
               }}
             />
 
-            <button onClick={() => getNextImage(1)}>Next</button>
-
             <NextButton
               onClick={() => {
                 const img = peakingImage || variant.image
@@ -257,13 +403,14 @@ const ProductBox = ({
             />
 
             <div
-              className="text-white hover:cursor-pointer"
               style={{
                 position: 'absolute',
                 bottom: 0,
                 left: 0,
                 marginLeft: '-6rem',
                 transform: 'rotate(90deg)',
+                color: 'white',
+                cursor: 'pointer',
               }}
             >
               <button
@@ -276,57 +423,16 @@ const ProductBox = ({
               </button>
             </div>
           </div>
-          <div>
-            <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
-            <Grid columns={2}>
-              {colors?.length && (
-                <OptionPicker
-                  key="Color"
-                  name="Color"
-                  options={colors}
-                  selected={color}
-                  onChange={(event) => setColor(event.target.value)}
-                />
-              )}
-              {sizes?.length && (
-                <OptionPicker
-                  key="Size"
-                  name="Size"
-                  options={sizes}
-                  selected={size}
-                  onChange={(event) => setSize(event.target.value)}
-                />
-              )}
-            </Grid>
-            <Button
-              sx={{
-                background:
-                  'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-                transition: '.5s ease-out',
-                backgroundSize: '200%',
-                ' &:hover': {
-                  boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
-                  color: '#000',
-                  backgroundPosition: 'left',
-                },
-              }}
-              name="add-to-cart"
-              disabled={loading}
-              onClick={addToCart}
-            >
-              <span className="flex flex-row justify-between mr-2">
-                <span>Bag {loading && <LoadingDots />}</span>
-                {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
-              </span>
-            </Button>
-          </div>
+
+          
         </div>
+
         <div
           sx={{
             border: '1px solid gray',
             padding: 2,
             marginBottom: 2,
-            position: 'absolute',
+            position: 'relative',
             zIndex: '0',
             width: '100%',
             height: '100%',
@@ -344,9 +450,9 @@ const ProductBox = ({
               className="object-center object-cover"
             />
           )}
-        </div>
+        </div> */}
       </div>
-      <Sidebar
+      {/* <Sidebar
         open={displayProductDetails}
         onClose={closeProductDetails}
         from="left"
@@ -358,7 +464,7 @@ const ProductBox = ({
               : {}
           }
         />
-      </Sidebar>
+      </Sidebar> */}
     </React.Fragment>
   )
 }
