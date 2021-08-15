@@ -2131,10 +2131,6 @@ video {
   flex-direction: column;
 }
 
-.items-start {
-  align-items: flex-start;
-}
-
 .items-center {
   align-items: center;
 }
@@ -2161,10 +2157,6 @@ video {
 
 .h-40 {
   height: 10rem;
-}
-
-.h-1\/2 {
-  height: 50%;
 }
 
 .text-3xl {
@@ -2227,16 +2219,6 @@ video {
 
 .max-w-2xl {
   max-width: 42rem;
-}
-
-.object-cover {
-  -o-object-fit: cover;
-     object-fit: cover;
-}
-
-.object-center {
-  -o-object-position: center;
-     object-position: center;
 }
 
 .focus\:outline-none:focus {
@@ -3758,6 +3740,10 @@ html {
 
   .sm\:flex {
     display: flex;
+  }
+
+  .sm\:mr-1 {
+    margin-right: 0.25rem;
   }
 
   .sm\:w-80 {

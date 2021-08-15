@@ -19,63 +19,11 @@ import Image from 'next/image'
 import { LoadingDots, Sidebar } from '@components/ui'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
 import Button from '../../blocks/Button/Button'
+import ImageCarousel from '@components/common/ImageCarousel'
 
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
-
-const CustomSlider = ({
-  itemsCount = 1,
-  index = 0,
-  style = { position: 'absolute' },
-}) => {
-  // TODO: Add animation when moving slide
-  return (
-    <div
-      sx={[
-        {
-          width: '100%',
-          height: 'auto',
-          top: 0,
-          zIndex: 50,
-        },
-        style,
-      ]}
-    >
-      {itemsCount > 1 ? (
-        <div
-          sx={{
-            backgroundColor: '#FFC391',
-            width: `${100 / itemsCount}%`,
-            height: '5px',
-            marginLeft: `${(100 / itemsCount) * index}%`,
-          }}
-        ></div>
-      ) : null}
-    </div>
-  )
-}
-
-const NextButton = ({ onClick }) => (
-  <button onClick={onClick} s className="focus:outline-none">
-    <div
-      sx={{
-        color: 'white',
-        transform: 'rotate(90deg)',
-      }}
-      className="hover:pr-20"
-    >
-      <ChevronUp />
-    </div>
-  </button>
-)
-const PreviousButton = ({ onClick }) => (
-  <button onClick={onClick} className="focus:outline-none">
-    <div sx={{ color: 'white', transform: 'rotate(270deg)' }}>
-      <ChevronUp />
-    </div>
-  </button>
-)
 
 const ProductBox = ({
   product,
@@ -86,25 +34,9 @@ const ProductBox = ({
   const addItem = useAddItemToCart()
 
   const [loading, setLoading] = useState(false)
-  const [currentImage, setCurrentImage] = useState(0)
-  const numberOfImage = 5
 
   const mainSliderRef = useRef()
   const [mainSlideIndex, setMainSlideIndex] = useState(0)
-
-  const getNextImage = (num) => {
-    var nextIndex = currentImage + num
-
-    if (nextIndex < 0) {
-      nextIndex = numberOfImage - 1
-    }
-
-    if (nextIndex >= numberOfImage) {
-      nextIndex = 0
-    }
-
-    setCurrentImage(nextIndex)
-  }
 
   const colors = product?.options
     ?.find((option) => option?.name?.toLowerCase() === 'color')
@@ -119,9 +51,12 @@ const ProductBox = ({
     [product?.variants]
   )
 
-  const images = useMemo(() => prepareVariantsImages(variants, 'color'), [
-    variants,
-  ])
+  // TODO: return when getting variants is working
+  // const images = useMemo(() => prepareVariantsImages(variants, 'color'), [
+  //   variants,
+  // ])
+
+  const [images, setImages] = useState([])
 
   const {
     openCart,
@@ -130,11 +65,22 @@ const ProductBox = ({
     closeProductDetails,
   } = useUI()
 
-  const [peakingImage, setPeakingImage] = useState(null)
-
   const [variant, setVariant] = useState(variants[0] || {})
   const [color, setColor] = useState(variant.color)
   const [size, setSize] = useState(variant.size)
+
+  // TODO: temporary setting up images because prepareVariantsImages is not working
+  useEffect(() => {
+    if (variant != null) {
+      var imgArr = []
+      imgArr.push(variant.image.src)
+      imgArr.push('https://m.media-amazon.com/images/I/31ugsNrg7+L._AC_.jpg')
+      imgArr.push('https://m.media-amazon.com/images/I/31xfGPIol8L._AC_.jpg')
+      imgArr.push('https://m.media-amazon.com/images/I/31PBTfWT5BL._AC_.jpg')
+
+      setImages(imgArr)
+    }
+  }, [variant])
 
   function IsJsonString(str) {
     try {
@@ -145,6 +91,7 @@ const ProductBox = ({
     return true
   }
 
+  //TODO: What does this do?
   useEffect(() => {
     const newVariant = variants.find((variant) => {
       return (
@@ -181,10 +128,6 @@ const ProductBox = ({
 
   console.log('variants')
   console.log(variants.length)
-  console.log('***************')
-
-  console.log('variant.priceV2')
-  console.log(variant.priceV2)
   console.log('***************')
 
   if (variant.image) {
@@ -229,7 +172,6 @@ const ProductBox = ({
           position: 'relative',
           height: '100vh',
           width: '100vw',
-          // backgroundColor: 'black',
           overflowX: 'hidden',
           overflowY: 'hidden',
         }}
@@ -237,33 +179,16 @@ const ProductBox = ({
       >
         <Slider
           ref={mainSliderRef}
-          infinite
           speed={500}
           slidesToShow={1}
           slidesToScroll={1}
-          swipeToSlide={false}
           arrows={false}
+          dots={false}
+          swipe={false}
           afterChange={handleMainSliderChange}
         >
-          <div
-            sx={{
-              display: 'flex',
-              height: '100vh',
-              width: '100vw',
-              position: 'relative',
-            }}
-          >
-            <Image
-              src={peakingImage?.src || variant.image.src}
-              objectFit="cover"
-              objectPosition="center"
-              alt={title}
-              priority
-              quality={100}
-              layout="fill"
-              className="object-center object-cover"
-            />
-            <CustomSlider itemsCount={numberOfImage} index={currentImage} />
+          <div>
+            <ImageCarousel images={images} />
           </div>
           <div>
             <ProductDetails
@@ -276,6 +201,7 @@ const ProductBox = ({
           </div>
         </Slider>
 
+        {/* Details and Specs */}
         <div
           sx={{
             position: 'absolute',
@@ -290,14 +216,15 @@ const ProductBox = ({
             width: '200px',
             minWidth: '200px',
             textAlign: 'right',
-            // TODO: Remove button outline
-            ' &:select:focus': {
-              outline: 'none',
-            },
           }}
         >
           {mainSlideIndex === 0 ? (
-            <button onClick={() => mainSliderRef?.current.slickPrev()}>
+            <button
+              onClick={() => {
+                console.log(mainSliderRef)
+                mainSliderRef?.current.slickPrev()
+              }}
+            >
               Details and Specs <ArrowLeft orientation="down" marginTop="0" />
             </button>
           ) : (
@@ -313,7 +240,7 @@ const ProductBox = ({
             bottom: 0,
             right: 0,
             marginBottom: '50px',
-            marginRight: '70px',
+            marginRight: '2%',
           }}
         >
           <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
@@ -337,6 +264,8 @@ const ProductBox = ({
               />
             )}
           </Grid>
+
+          {/* Add to cart button */}
           <Button
             sx={{
               background:
@@ -361,110 +290,7 @@ const ProductBox = ({
           <br />
           <p sx={{ color: 'white' }}>Limited Edition of 200</p>
         </div>
-
-        {/* <div
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            zIndex: '20',
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            padding: 32,
-          }}
-        >
-          <div className="flex flex-row relative justify-between items-start w-full h-1/2">
-            <PreviousButton
-              onClick={() => {
-                const img = peakingImage || variant.image
-                const peakingImageIndex = product.images.indexOf(img)
-                const newPeakingImageIndex =
-                  peakingImageIndex === 0
-                    ? product.images.length - 1
-                    : peakingImageIndex - 1
-                setPeakingImage(product.images[newPeakingImageIndex])
-                getNextImage(-1)
-              }}
-            />
-
-            <NextButton
-              onClick={() => {
-                const img = peakingImage || variant.image
-                const peakingImageIndex = product.images.indexOf(img)
-                const newPeakingImageIndex =
-                  peakingImageIndex === product.images.length - 1
-                    ? 0
-                    : peakingImageIndex + 1
-                setPeakingImage(product.images[newPeakingImageIndex])
-                getNextImage(1)
-              }}
-            />
-
-            <div
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                marginLeft: '-6rem',
-                transform: 'rotate(90deg)',
-                color: 'white',
-                cursor: 'pointer',
-              }}
-            >
-              <button
-                style={{
-                  display: 'flex',
-                }}
-                onClick={toggleProductDetails}
-              >
-                Details and Specs <ArrowLeft orientation="down" marginTop="0" />
-              </button>
-            </div>
-          </div>
-
-          
-        </div>
-
-        <div
-          sx={{
-            border: '1px solid gray',
-            padding: 2,
-            marginBottom: 2,
-            position: 'relative',
-            zIndex: '0',
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          {variant.image && (
-            <Image
-              src={peakingImage?.src || variant.image.src}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-              alt={title}
-              priority
-              quality={100}
-              className="object-center object-cover"
-            />
-          )}
-        </div> */}
       </div>
-      {/* <Sidebar
-        open={displayProductDetails}
-        onClose={closeProductDetails}
-        from="left"
-      >
-        <ProductDetails
-          details={
-            IsJsonString(product.description)
-              ? JSON.parse(product.description)
-              : {}
-          }
-        />
-      </Sidebar> */}
     </React.Fragment>
   )
 }
