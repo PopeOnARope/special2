@@ -8,7 +8,12 @@ module.exports = bundleAnalyzer({
   },
   target: 'serverless',
   images: {
-    domains: ['cdn.shopify.com', 'cdn.builder.io', 'via.placeholder.com'],
+    domains: [
+      'cdn.shopify.com',
+      'cdn.builder.io',
+      'via.placeholder.com',
+      'm.media-amazon.com',
+    ],
   },
   async headers() {
     return [

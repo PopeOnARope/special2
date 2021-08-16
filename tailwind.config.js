@@ -2,6 +2,7 @@ module.exports = {
   variants: {
     extend: {
       padding: ['hover'],
+      transform: ['hover', 'focus'],
     },
   },
 
