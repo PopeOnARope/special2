@@ -118,7 +118,7 @@ const Arrows = ({ refs }) => {
   )
 }
 
-const ImageCarousel = ({ images }) => {
+const ImageCarousel = ({ images = null, videos = null }) => {
   const [index, setIndex] = useState(0)
   const sliderRef = useRef()
 
@@ -141,32 +141,63 @@ const ImageCarousel = ({ images }) => {
     setIndex(slideIndex)
   }
 
+  if (videos === null && images === null) return <div></div>
+
   return (
     <Fragment>
       <Slider {...settings}>
-        {images.map((image, index) => (
-          <div key={index}>
-            <Image
-              src={image}
-              layout="fill"
-              objectFit="contain"
-              objectPosition="center"
-            />
-            <div
-              style={{
-                width: '100vw',
-                height: '100vh',
-                position: 'relative',
-                display: 'flex',
-                alignItems: 'center',
-                zIndex: 0,
-              }}
-            ></div>
-            <Arrows refs={sliderRef} />
-          </div>
-        ))}
+        {images &&
+          images.map((image, index) => (
+            <div key={index}>
+              <Image
+                src={image}
+                layout="fill"
+                objectFit="contain"
+                objectPosition="center"
+              />
+              <div
+                style={{
+                  width: '100vw',
+                  height: '100vh',
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  zIndex: 0,
+                }}
+              ></div>
+              <Arrows refs={sliderRef} />
+            </div>
+          ))}
+        {videos &&
+          videos.map((video, index) => (
+            <div key={index}>
+              <video
+                width="100%"
+                height="auto"
+                autoPlay
+                muted
+                src={video}
+                loop
+              />
+              <div
+                style={{
+                  width: '100vw',
+                  height: '100vh',
+                  position: 'relative',
+                  display: 'flex',
+                  alignItems: 'center',
+                  zIndex: 0,
+                }}
+              ></div>
+              <Arrows refs={sliderRef} />
+            </div>
+          ))}
       </Slider>
-      <CustomSlider refs={sliderRef} timer={3000} itemsCount={images.length} />
+      <CustomSlider
+        refs={sliderRef}
+        timer={3000}
+        itemsCount={images?.length || videos?.length}
+      />
     </Fragment>
   )
 }

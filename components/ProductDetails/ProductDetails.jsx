@@ -89,12 +89,39 @@ const ProductDetails = ({ details }) => {
       sx={{
         height: '100vh',
         background: '#FFC391',
-        padding: '126px 46px',
+        padding: '118px 45px 30px 45px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between',
+        ' @media(max-width: 500px)': {
+          padding: '86px 22px 20px 22px',
+          width: '100%',
+        },
       }}
     >
+      <Themed.div
+        sx={{
+          height: '140px',
+          width: '737px',
+          ' @media(max-width: 500px)': {
+            width: '100%',
+          },
+        }}
+      >
+        <p
+          sx={{
+            fontSize: '24px',
+            fontWeight: 400,
+            ' @media(max-width: 500px)': {
+              fontSize: '16px',
+            },
+          }}
+        >
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s when an unknown printer took a galley.
+        </p>
+      </Themed.div>
+
       <Themed.div>
         {detailsArr?.map((item) => {
           return (
@@ -115,7 +142,9 @@ const ProductDetails = ({ details }) => {
                   background: 'none',
                   display: 'flex',
                   alignItems: 'center',
+                  textAlign: 'left',
                   transition: 'all 0.25s',
+                  paddingLeft: 0,
                   '&:focus': {
                     outline: 'none',
                   },
@@ -133,12 +162,17 @@ const ProductDetails = ({ details }) => {
                     color: '#000',
                     opacity: 1,
                   },
+
+                  ' @media (max-width: 500px)': {
+                    fontSize: '2rem',
+                    textAlign: 'left',
+                  },
                 }}
               >
                 {item.title}
                 <Cross
-                  height="54"
-                  width="54"
+                  height="5%"
+                  width="5%"
                   style={{ transform: 'rotate(45deg)' }}
                 />
               </Button>

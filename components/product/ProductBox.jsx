@@ -57,6 +57,12 @@ const ProductBox = ({
   // ])
 
   const [images, setImages] = useState([])
+  const [videos, setVideos] = useState([
+    'https://cdn.builder.io/o/assets%2Fd58e15993bf84115968f2dd035ee71a4%2Fa8fc0c4a35a34628828dcf64deec758c?alt=media&token=f0c034f1-4acb-45a2-b5e0-20d1b6d5ad2e&apiKey=d58e15993bf84115968f2dd035ee71a4',
+    'https://cdn.builder.io/o/assets%2Fd58e15993bf84115968f2dd035ee71a4%2Ff6431164aa9e4ab0904581c073ca0926?alt=media&token=11b84553-39e1-460d-a996-cd5233ab6601&apiKey=d58e15993bf84115968f2dd035ee71a4',
+    'https://cdn.builder.io/o/assets%2Fd58e15993bf84115968f2dd035ee71a4%2Fc27bbf065c5e4f7988461cd250a3d100?alt=media&token=d54a587c-c32a-40fa-b5f4-b51a402a1c20&apiKey=d58e15993bf84115968f2dd035ee71a4',
+    'https://cdn.builder.io/o/assets%2Fd58e15993bf84115968f2dd035ee71a4%2Fde7a11f08c3d41b6aef74626b61909d5?alt=media&token=28487a27-48d5-4ae8-ba3e-2449369b1fb4&apiKey=d58e15993bf84115968f2dd035ee71a4',
+  ])
 
   const {
     openCart,
@@ -172,8 +178,8 @@ const ProductBox = ({
           position: 'relative',
           height: '100vh',
           width: '100vw',
-          // overflowX: 'hidden',
-          // overflowY: 'hidden',
+          overflowX: 'hidden',
+          overflowY: 'hidden',
         }}
         className="type-wrapper"
       >
@@ -188,7 +194,7 @@ const ProductBox = ({
           afterChange={handleMainSliderChange}
         >
           <div>
-            <ImageCarousel images={images} />
+            <ImageCarousel images={null} videos={videos} />
           </div>
           <div>
             <ProductDetails
@@ -245,7 +251,6 @@ const ProductBox = ({
             marginBottom: '5%',
             marginRight: '2%',
             marginLeft: '2%',
-            // width: '200px',
             '@media (max-width: 500px)': {
               width: '96%',
               textAlign: 'center',
