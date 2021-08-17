@@ -1,7 +1,19 @@
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useEffect, useRef, useState } from 'react'
 import Slider from 'react-slick'
 import Image from 'next/image'
 import { ChevronUp } from '@components/icons'
+import { makeStyles } from '@material-ui/core/styles'
+import LinearProgress from '@material-ui/core/LinearProgress'
+
+const useStyles = makeStyles({
+  colorPrimary: {
+    backgroundColor: 'transparent',
+  },
+  bar: {
+    borderRadius: 5,
+    backgroundColor: '#FFC391',
+  },
+})
 
 const NextButton = ({ onClick }) => (
   <button onClick={onClick} className="focus:outline-none">
@@ -18,14 +30,43 @@ const NextButton = ({ onClick }) => (
 )
 const PreviousButton = ({ onClick }) => (
   <button onClick={onClick} className="focus:outline-none">
-    <div style={{ color: 'white', transform: 'rotate(270deg)' }}>
+    <div
+      style={{
+        color: 'white',
+        transform: 'rotate(270deg)',
+      }}
+    >
       <ChevronUp />
     </div>
   </button>
 )
 
-const CustomSlider = ({ itemsCount = 1, index = 0 }) => {
-  // TODO: Add animation when moving slide
+const CustomSlider = ({ itemsCount = 1, refs, timer = 3000 }) => {
+  const classes = useStyles()
+  const [width, setWidth] = useState(10)
+  const [color, setColor] = useState('primary')
+
+  const repetitions = 100 // 100ms
+  const numberOfSections = timer / repetitions
+  const widthPerSection = 20 / numberOfSections
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (width <= 45) {
+        setWidth(widthPerSection + width)
+      } else {
+        refs.current.slickNext()
+        setWidth(10) // If bar doesn't return to start on time, reduce this
+      }
+
+      if (width < 20) {
+        setColor('white')
+      } else {
+        setColor('primary')
+      }
+    }, 100)
+  }, [width])
+
   return (
     <div
       style={{
@@ -37,14 +78,18 @@ const CustomSlider = ({ itemsCount = 1, index = 0 }) => {
       }}
     >
       {itemsCount > 1 ? (
-        <div
-          style={{
-            backgroundColor: '#FFC391',
-            width: `${100 / itemsCount}%`,
-            height: '5px',
-            marginLeft: `${(100 / itemsCount) * index}%`,
+        <LinearProgress
+          classes={{
+            colorPrimary: classes.colorPrimary,
+            bar: classes.bar,
           }}
-        ></div>
+          variant="determinate"
+          color={color}
+          value={width}
+          style={{
+            backgroundColor: 'transparent',
+          }}
+        />
       ) : null}
     </div>
   )
@@ -55,6 +100,8 @@ const Arrows = ({ refs }) => {
     <div
       style={{
         position: 'absolute',
+        top: 0,
+        left: 0,
         marginTop: '50vh',
         height: '10px',
         width: '96%',
@@ -62,6 +109,7 @@ const Arrows = ({ refs }) => {
         marginLeft: '2%',
         marginRight: '2%',
         display: 'flex',
+        color: 'white',
       }}
     >
       <PreviousButton onClick={() => refs.current.slickPrev()} />
@@ -77,8 +125,6 @@ const ImageCarousel = ({ images }) => {
   const settings = {
     afterChange: (slideIndex) => handleAfterChange(slideIndex),
     arrows: false,
-    autoplay: true,
-    autoplaySpeed: 3000,
     dots: false,
     fade: true,
     infinite: true,
@@ -100,19 +146,27 @@ const ImageCarousel = ({ images }) => {
       <Slider {...settings}>
         {images.map((image, index) => (
           <div key={index}>
-            <Image src={image} layout="fill" objectFit="contain" />
+            <Image
+              src={image}
+              layout="fill"
+              objectFit="contain"
+              objectPosition="center"
+            />
             <div
               style={{
+                width: '100vw',
                 height: '100vh',
                 position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                zIndex: 0,
               }}
-            >
-              <CustomSlider itemsCount={images.length} index={index} />
-              <Arrows refs={sliderRef} />
-            </div>
+            ></div>
+            <Arrows refs={sliderRef} />
           </div>
         ))}
       </Slider>
+      <CustomSlider refs={sliderRef} timer={3000} itemsCount={images.length} />
     </Fragment>
   )
 }

@@ -172,8 +172,8 @@ const ProductBox = ({
           position: 'relative',
           height: '100vh',
           width: '100vw',
-          overflowX: 'hidden',
-          overflowY: 'hidden',
+          // overflowX: 'hidden',
+          // overflowY: 'hidden',
         }}
         className="type-wrapper"
       >
@@ -209,12 +209,12 @@ const ProductBox = ({
             left: 0,
             alignItems: 'center',
             marginBottom: '200px',
-            marginLeft: '-70px',
+            marginLeft: '-50px',
             transform: 'rotate(90deg)',
             color: 'white',
             cursor: 'pointer',
-            width: '200px',
-            minWidth: '200px',
+            width: '150px',
+            minWidth: '150px',
             textAlign: 'right',
           }}
         >
@@ -225,7 +225,9 @@ const ProductBox = ({
                 mainSliderRef?.current.slickPrev()
               }}
             >
-              Details and Specs <ArrowLeft orientation="down" marginTop="0" />
+              <span style={{ display: 'flex' }}>
+                Details and Specs <ArrowLeft orientation="down" marginTop="0" />
+              </span>
             </button>
           ) : (
             <button onClick={() => mainSliderRef?.current.slickNext()}>
@@ -234,13 +236,20 @@ const ProductBox = ({
           )}
         </div>
 
+        {/* Add to cart button */}
         <div
           sx={{
             position: 'absolute',
             bottom: 0,
             right: 0,
-            marginBottom: '50px',
+            marginBottom: '5%',
             marginRight: '2%',
+            marginLeft: '2%',
+            // width: '200px',
+            '@media (max-width: 500px)': {
+              width: '96%',
+              textAlign: 'center',
+            },
           }}
         >
           <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
@@ -265,7 +274,6 @@ const ProductBox = ({
             )}
           </Grid>
 
-          {/* Add to cart button */}
           <Button
             sx={{
               background:

@@ -3742,12 +3742,12 @@ html {
     display: flex;
   }
 
-  .sm\:mr-1 {
-    margin-right: 0.25rem;
-  }
-
   .sm\:w-80 {
     width: 20rem;
+  }
+
+  .sm\:w-full {
+    width: 100%;
   }
 }
 
