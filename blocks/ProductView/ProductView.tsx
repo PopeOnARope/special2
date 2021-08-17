@@ -22,6 +22,8 @@ import NoSSR from '@components/common/NoSSR'
 import { LoadingDots, Sidebar } from '@components/ui'
 import ProductLoader from './ProductLoader'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import styled from 'styled-components'
 
 interface Props {
   className?: string
@@ -35,6 +37,8 @@ interface Props {
 interface ButtonProps {
   onClick?: any
 }
+
+
 const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
   <button onClick={onClick} className="focus:outline-none">
     <div
@@ -44,14 +48,14 @@ const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
       }}
       className="hover:pr-20"
     >
-      <ChevronUp />
+      <ChevronUp width='50' height='50'/>
     </div>
   </button>
 )
 const PreviousButton: React.FC<ButtonProps> = ({ onClick }) => (
   <button onClick={onClick} className="focus:outline-none">
     <div sx={{ color: 'white', transform: 'rotate(270deg)' }}>
-      <ChevronUp />
+      <ChevronUp width='50' height='50'/>
     </div>
   </button>
 )
@@ -165,13 +169,19 @@ const ProductBox: React.FC<Props> = ({
         className="type-wrapper"
       >
         <div
-          className="text-white absolute mt-1/3 z-50 hover:cursor-pointer"
-          style={{ marginLeft: '-2rem' }}
+          className="text-white absolute z-50 hover:cursor-pointer"
+          style={{
+            marginLeft: '-2rem',
+            marginTop: '65vh',
+            alignSelf: 'flex-end',
+          }}
         >
           <button
             style={{
               transform: 'rotate(90deg)',
               display: 'flex',
+              flexDirection: 'inherit'
+
             }}
             onClick={toggleProductDetails}
           >
@@ -196,7 +206,9 @@ const ProductBox: React.FC<Props> = ({
             <PreviousButton
               onClick={() => {
                 const img = peakingImage || variant.image
-                const peakingImageIndex = product.images.indexOf(img)
+                const peakingImageIndex = product.images
+                  .map((_image) => _image.id === img.id)
+                  .indexOf(true)
                 const newPeakingImageIndex =
                   peakingImageIndex === 0
                     ? product.images.length - 1
@@ -207,7 +219,9 @@ const ProductBox: React.FC<Props> = ({
             <NextButton
               onClick={() => {
                 const img = peakingImage || variant.image
-                const peakingImageIndex = product.images.indexOf(img)
+                const peakingImageIndex = product.images
+                  .map((_image) => _image.id === img.id)
+                  .indexOf(true)
                 const newPeakingImageIndex =
                   peakingImageIndex === product.images.length - 1
                     ? 0
@@ -216,49 +230,55 @@ const ProductBox: React.FC<Props> = ({
               }}
             />
           </div>
-          <div>
-            <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
-            <Grid columns={2}>
-              {colors?.length && (
-                <OptionPicker
-                  key="Color"
-                  name="Color"
-                  options={colors}
-                  selected={color}
-                  onChange={(event) => setColor(event.target.value)}
-                />
-              )}
-              {sizes?.length && (
-                <OptionPicker
-                  key="Size"
-                  name="Size"
-                  options={sizes}
-                  selected={size}
-                  onChange={(event) => setSize(event.target.value)}
-                />
-              )}
-            </Grid>
-            <Button
-              sx={{
-                background:
-                  'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-                transition: '.5s ease-out',
-                backgroundSize: '200%',
-                ' &:hover': {
-                  boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
-                  color: '#000',
-                  backgroundPosition: 'left',
-                },
-              }}
-              name="add-to-cart"
-              disabled={loading}
-              onClick={addToCart}
-            >
-              <span className="flex flex-row justify-between mr-2">
-                <span>Bag {loading && <LoadingDots />}</span>
-                {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
-              </span>
-            </Button>
+          <div className="flex flex-col w-full items-end justify-end">
+            <div className="w-full md:w-1/2 lg:w-1/3 text-center md:text-left">
+              <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
+              <Grid columns={2}>
+                {colors?.length && (
+                  <OptionPicker
+                    key="Color"
+                    name="Color"
+                    options={colors}
+                    selected={color}
+                    onChange={(event) => setColor(event.target.value)}
+                  />
+                )}
+                {sizes?.length && (
+                  <OptionPicker
+                    key="Size"
+                    name="Size"
+                    options={sizes}
+                    selected={size}
+                    onChange={(event) => setSize(event.target.value)}
+                  />
+                )}
+              </Grid>
+              <Button
+                style={{ width: '100%' }}
+                sx={{
+                  background:
+                    'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+                  transition: '.5s ease-out',
+                  backgroundSize: '200%',
+                  ' &:hover': {
+                    boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
+                    color: '#000',
+                    backgroundPosition: 'left',
+                  },
+                }}
+                name="add-to-cart"
+                disabled={loading}
+                onClick={addToCart}
+              >
+                <span className="flex flex-row justify-between mr-2">
+                  <span>Bag {loading && <LoadingDots />}</span>
+                  {getPrice(
+                    variant.priceV2.amount,
+                    variant.priceV2.currencyCode
+                  )}
+                </span>
+              </Button>
+            </div>
           </div>
         </div>
         <div
@@ -270,22 +290,48 @@ const ProductBox: React.FC<Props> = ({
             zIndex: '0',
             width: '100%',
             height: '100%',
+            ' .slide-enter': {
+            opacity: 0
+            //transform: translatex(40px)
+          },
+          '  .slide-enter-active': {
+            opacity: 1,
+            //transform: translateY(0px)
+            transition: 'all 0.3s'
+          },
+           ' .slide-exit': {
+            opacity: 1
+            //transform: translateY(0px)
+          },
+           ' .slide-exit-active': {
+            opacity: 0,
+            //transform: translateY(-40px)
+            transition: 'all 0.3s'
+          }
           }}
         >
           {variant.image && (
-            <Image
-              src={peakingImage?.src || variant.image.src}
-              layout="fill"
-              //width={700}
-              //height={400}
-
-              objectFit="cover"
-              objectPosition="center"
-              alt={title}
-              priority
-              quality={100}
-              className="object-center object-cover pointer-events-none"
-            />
+            <SwitchTransition mode="out-in">
+              <CSSTransition
+                key={peakingImage?.src || variant?.image?.src}
+                classNames="slide"
+                timeout={300}
+                mode='in-out'
+              >
+                <Image
+                  src={peakingImage?.src || variant.image.src}
+                  layout="fill"
+                  //width={700}
+                  //height={400}
+                  objectFit="cover"
+                  objectPosition="center"
+                  alt={title}
+                  priority
+                  quality={100}
+                  className="object-center object-cover pointer-events-none"
+                />
+              </CSSTransition>
+            </SwitchTransition>
           )}
         </div>
       </div>
@@ -314,7 +360,6 @@ const ProductView: React.FC<{
   product: string | ShopifyBuy.Product
   renderSeo?: boolean
   description?: string
-  ['Artistry Eyewear']?: string
   title?: string
 }> = ({ product, ...props }) => {
   return (

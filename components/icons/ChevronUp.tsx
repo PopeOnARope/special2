@@ -12,7 +12,7 @@ const ChevronUp = ({ ...props }) => {
       shapeRendering="geometricPrecision"
       {...props}
     >
-      <path d="M18 15l-6-6-6 6" />
+      <path d="M18 15l-6-6-6 6" {...props}/>
     </svg>
   )
 }
