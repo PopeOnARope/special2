@@ -41,30 +41,98 @@ const PreviousButton = ({ onClick }) => (
   </button>
 )
 
+// const CustomSlider = ({ itemsCount = 1, refs, timer = 3000 }) => {
+//   const classes = useStyles()
+//   const [width, setWidth] = useState(10)
+//   const [color, setColor] = useState('primary')
+
+//   const repetitions = 100 // 100ms
+//   const numberOfSections = timer / repetitions
+//   const widthPerSection = 20 / numberOfSections
+
+//   useEffect(() => {
+//     setTimeout(() => {
+//       if (width <= 45) {
+//         setWidth(widthPerSection + width)
+//       } else {
+//         refs.current.slickNext()
+//         setWidth(10) // If bar doesn't return to start on time, reduce this
+//       }
+
+//       if (width < 20) {
+//         setColor('white')
+//       } else {
+//         setColor('primary')
+//       }
+//     }, 100)
+//   }, [width])
+
+//   return (
+//     <div
+//       style={{
+//         position: 'absolute',
+//         top: 0,
+//         left: 0,
+//         width: '100%',
+//         height: '5px',
+//       }}
+//     >
+//       {itemsCount > 1 ? (
+//         <LinearProgress
+//           classes={{
+//             colorPrimary: classes.colorPrimary,
+//             bar: classes.bar,
+//           }}
+//           variant="determinate"
+//           color={color}
+//           value={width}
+//           style={{
+//             backgroundColor: 'transparent',
+//           }}
+//         />
+//       ) : null}
+//     </div>
+//   )
+// }
+
 const CustomSlider = ({ itemsCount = 1, refs, timer = 3000 }) => {
-  const classes = useStyles()
-  const [width, setWidth] = useState(10)
-  const [color, setColor] = useState('primary')
+  const [width, setWidth] = useState(20)
+  const [transitionSpeed, setTransitionSpeed] = useState(3)
 
-  const repetitions = 100 // 100ms
-  const numberOfSections = timer / repetitions
-  const widthPerSection = 20 / numberOfSections
+  const widthPerSection = 20 / itemsCount
 
+  // For some reasons, progressbar shows up only between 20% to 40%
   useEffect(() => {
-    setTimeout(() => {
-      if (width <= 45) {
-        setWidth(widthPerSection + width)
-      } else {
+    if (width >= 25 && width <= 40) {
+      setTimeout(() => {
+        setWidth(width + widthPerSection)
+        setTransitionSpeed(timer / 1000)
         refs.current.slickNext()
-        setWidth(10) // If bar doesn't return to start on time, reduce this
+      }, timer)
+    } else {
+      if (width >= 45) {
+        refs.current.slickNext()
+        setTimeout(() => {
+          setTransitionSpeed(0)
+        }, 100)
+
+        setTimeout(() => {
+          setWidth(18)
+        }, 100)
       }
 
       if (width < 20) {
-        setColor('white')
-      } else {
-        setColor('primary')
+        setTimeout(() => {
+          setWidth(width + 1)
+        }, 100)
       }
-    }, 100)
+
+      if (width === 20) {
+        setWidth(width + widthPerSection)
+        setTransitionSpeed(timer / 1000)
+        refs.current.slickNext()
+      }
+    }
   }, [width])
 
   return (
@@ -75,21 +143,19 @@ const CustomSlider = ({ itemsCount = 1, refs, timer = 3000 }) => {
         left: 0,
         width: '100%',
         height: '5px',
+        backgroundColor: 'transparent',
       }}
     >
       {itemsCount > 1 ? (
-        <LinearProgress
-          classes={{
-            colorPrimary: classes.colorPrimary,
-            bar: classes.bar,
-          }}
-          variant="determinate"
-          color={color}
-          value={width}
+        <div
           style={{
-            backgroundColor: 'transparent',
+            backgroundColor: '#FFC391',
+            width: `${width}%`,
+            height: '5px',
+            transition: `width ${transitionSpeed}s linear`,
+            borderRadius: '5px',
           }}
-        />
+        ></div>
       ) : null}
     </div>
   )
@@ -124,6 +190,8 @@ const ImageCarousel = ({ images = null, videos = null }) => {
 
   const settings = {
     afterChange: (slideIndex) => handleAfterChange(slideIndex),
+    // autoplay: true,
+    // autoplaySpeed: 3000,
     arrows: false,
     dots: false,
     fade: true,
@@ -178,6 +246,11 @@ const ImageCarousel = ({ images = null, videos = null }) => {
                 muted
                 src={video}
                 loop
+                style={{
+                  height: '100vh',
+                  width: '100%',
+                  objectFit: 'cover',
+                }}
               />
               <div
                 style={{
@@ -197,6 +270,7 @@ const ImageCarousel = ({ images = null, videos = null }) => {
         refs={sliderRef}
         timer={3000}
         itemsCount={images?.length || videos?.length}
+        index={index}
       />
     </Fragment>
   )
