@@ -12,7 +12,7 @@ interface Props {
 
 const UserNav: FC<Props> = ({isScrollingInPage}) => {
   const cart = useCart()
-  const totalItems = cart?.lineItems?.map(item=>item.quantity).reduce((num, tot)=> num + tot)
+  const totalItems = cart?.lineItems?.map(item=>item.quantity).reduce((num, tot)=> num + tot, 0)
 
   const { toggleCart, toggleSideNav, navPrimaryColor, displaySideNav } = useUI()
   const PC = isScrollingInPage ?   'black' : navPrimaryColor
