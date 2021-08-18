@@ -4,7 +4,7 @@ const ArrowLeft = ({orientation, ...props }) => {
     rotation = 270
   }
   if(orientation === 'right') {
-    rotation = 90
+    rotation = 180
   }
   if(orientation === 'up') {
     rotation = 135

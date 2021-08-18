@@ -67,7 +67,7 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
   >
     <span className="w-full">{children}</span>
     <span>
-      <ArrowLeft transform="rotate(180)" />
+      <ArrowLeft orientation='right' />
     </span>
   </Tag>
 )

@@ -97,7 +97,7 @@ const ModelToggle = styled.div`
 
   @media (max-width: 640px) {
     margin-right: 3rem;
-    margin-bottom: 14rem;
+    //margin-bottom: 14rem;
   }
 `
 
@@ -109,7 +109,7 @@ const TimeToggle = styled.div`
   //margin-top: -1rem;
   display: flex;
   flex-direction: column;
-  margin-bottom: 40vh;
+  margin-bottom: ${({height})=>.5*height+'px'};
   //margin-top: auto;
   position: absolute;
   border-right: 1px solid white;
@@ -196,7 +196,7 @@ const Slide = ({ slide, height }) => {
           </Button>
         )}
       </div>
-      <ModelToggle currentModel={currentModel}>
+      <ModelToggle currentModel={currentModel} height={height}>
         <button
           onClick={() => {
             setCurrentModel('model1')
@@ -217,7 +217,7 @@ const Slide = ({ slide, height }) => {
         </button>
       </ModelToggle>
 
-      <TimeToggle timeOfDay={timeOfDay}>
+      <TimeToggle timeOfDay={timeOfDay} height={height}>
         <div className="toggle-switch"></div>
         <button
           onClick={() => {

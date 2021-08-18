@@ -41,9 +41,9 @@ const SoundControl = styled.button`
   align-self: flex-end;
   transform: rotate(-90deg);
   width: 5rem;
-  margin-bottom: 45vh;
+  margin-bottom: ${({height})=>.5*height+'px'};
   float: right;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   &:focus {
     outline: none;
   }
@@ -128,7 +128,7 @@ const Carousel = (props) => {
     : ''
   return (
     <Wrapper height={height}>
-      <SoundControl onClick={toggle}>
+      <SoundControl onClick={toggle} height={height}>
         Sound Is {playing ? 'on' : 'off'}
       </SoundControl>
       <SwitchTransition mode="out-in">
