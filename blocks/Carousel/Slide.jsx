@@ -97,7 +97,7 @@ const ModelToggle = styled.div`
 
   @media (max-width: 640px) {
     margin-right: 3rem;
-    //margin-bottom: 14rem;
+    margin-bottom: 14rem;
   }
 `
 
@@ -106,12 +106,14 @@ const ChevronDown = styled.div`
 `
 
 const TimeToggle = styled.div`
-  //margin-top: -1rem;
+  margin-top: 11rem;
   display: flex;
   flex-direction: column;
-  margin-bottom: ${({height})=>.5*height+'px'};
+  //margin-bottom: ${({ height }) => 0.5 * height + 'px'};
   //margin-top: auto;
   position: absolute;
+  //align-self: center;
+  z-index: 3;
   border-right: 1px solid white;
   button {
     color: white;
@@ -136,6 +138,9 @@ const TimeToggle = styled.div`
     position: absolute;
     transition: 0.3s ease-in-out;
     margin-right: -0.7rem;
+    // hack for mobile, why do we need this?
+    margin-left: 0.7rem;
+    display: inline-block;
     margin-top: ${({ timeOfDay }) => {
       if (timeOfDay === 'Night') {
         return '0rem;'
@@ -169,6 +174,39 @@ const Slide = ({ slide, height }) => {
   // return <div></div>
   return (
     <Wrapper height={height}>
+      <div className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3" style={{height: `${height}px`}}>
+        <TimeToggle timeOfDay={timeOfDay}>
+          <div className="toggle-switch"></div>
+          <button
+            onClick={() => {
+              setTimeOfDay('Night')
+            }}
+          >
+            Night
+          </button>
+          <button
+            onClick={() => {
+              setTimeOfDay('Dusk')
+            }}
+          >
+            Dusk
+          </button>
+          <button
+            onClick={() => {
+              setTimeOfDay('Day')
+            }}
+          >
+            Day
+          </button>{' '}
+          <button
+            onClick={() => {
+              setTimeOfDay('Dawn')
+            }}
+          >
+            Dawn
+          </button>
+        </TimeToggle>
+      </div>
       {slide.videos &&
         Object.keys(slide.videos).map((video) => (
           <Video
@@ -178,8 +216,11 @@ const Slide = ({ slide, height }) => {
             poster={slide.image}
             muted
             loop
+            playsInline
             show={currentSlideVideos === slide.videos[video]}
-          ></Video>
+          >
+            <source src={slide.videos[video]} type='video/mp4'/>
+          </Video>
         ))}
       {!slide.videos && slide.image && (
         <Image src={slide.image} height={height} />
@@ -216,38 +257,6 @@ const Slide = ({ slide, height }) => {
           {slide.videos?.model2Name}
         </button>
       </ModelToggle>
-
-      <TimeToggle timeOfDay={timeOfDay} height={height}>
-        <div className="toggle-switch"></div>
-        <button
-          onClick={() => {
-            setTimeOfDay('Night')
-          }}
-        >
-          Night
-        </button>
-        <button
-          onClick={() => {
-            setTimeOfDay('Dusk')
-          }}
-        >
-          Dusk
-        </button>
-        <button
-          onClick={() => {
-            setTimeOfDay('Day')
-          }}
-        >
-          Day
-        </button>{' '}
-        <button
-          onClick={() => {
-            setTimeOfDay('Dawn')
-          }}
-        >
-          Dawn
-        </button>
-      </TimeToggle>
     </Wrapper>
   )
 }

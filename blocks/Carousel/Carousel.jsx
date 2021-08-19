@@ -38,10 +38,9 @@ const SoundControl = styled.button`
   color: white;
   z-index: 3;
   position: absolute;
-  align-self: flex-end;
+  align-self: center;
   transform: rotate(-90deg);
   width: 5rem;
-  margin-bottom: ${({height})=>.5*height+'px'};
   float: right;
   font-size: 0.8rem;
   &:focus {
