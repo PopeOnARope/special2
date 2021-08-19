@@ -2149,6 +2149,10 @@ video {
   align-items: center;
 }
 
+.items-baseline {
+  align-items: baseline;
+}
+
 .justify-items-start {
   justify-items: start;
 }
@@ -2179,10 +2183,6 @@ video {
 
 .h-1\/2 {
   height: 50%;
-}
-
-.text-2xl {
-  font-size: 1.5rem;
 }
 
 .text-4xl {
@@ -5090,6 +5090,10 @@ html {
 
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:justify-start {
+    justify-content: flex-start;
   }
 
   .md\:justify-center {

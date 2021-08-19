@@ -295,9 +295,9 @@ const ProductBox: React.FC<Props> = ({
         className="w-full md:w-3/5 lg:w-1/2 xl:w-2/5 text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content"
         style={{ bottom: '0', right: '0' }}
       >
-        <div className='flex flex-row items-end mb-2'>
+        <div className='justify-center md:justify-start flex flex-row items-end mb-2 items-baseline'>
         <h1 className="mb-0 pb-0 text-4xl text-white mb-0 pb-0 font-extrabold">{product.metafields[0]?.data?.collectionName}</h1>
-          <h2 className='mb-0 pb-0 text-2xl text-white'>__{title}</h2>
+          <h2 className='mb-0 pb-0 text-md text-white'>__{title}</h2>
         </div>
         <Grid columns={2}>
           {colors?.length && (
