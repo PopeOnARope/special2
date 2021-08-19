@@ -9,6 +9,7 @@ interface Props {
   open: boolean
   onClose: () => void
   from: string
+  zIndex: number
 }
 
 const Sidebar: FC<Props> = ({
@@ -16,6 +17,7 @@ const Sidebar: FC<Props> = ({
   open = false,
   onClose,
   from = 'right',
+  zIndex=6
 }) => {
   const width = useResponsiveValue(['100%', 500])
   return (
@@ -32,7 +34,7 @@ const Sidebar: FC<Props> = ({
         },
       }}
       overlayProps={{
-        style: { zIndex: 100 },
+        style: { zIndex: zIndex || 100 },
       }}
       contentTransition={{
         from: {

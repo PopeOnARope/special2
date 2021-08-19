@@ -92,10 +92,26 @@ export async function getProduct(
     ).then((res) => res.json())
   ).results
 
+  const metafieldQuery = qs.stringify({
+    limit: 1,
+    apiKey: config.apiKey,
+    query: {
+      data:  {
+          product: { $eq: productsContent[0].handle },
+        },
+    },
+  })
+
+  const productsMetaFieldsContent = (
+    await fetch(
+      `https://cdn.builder.io/api/v2/content/product-metafield?${metafieldQuery}`
+    ).then((res) => res.json())
+  ).results
+
   if (options.withContent) {
     return productsContent[0]
   }
-  return productsContent[0]?.data
+  return {...productsContent[0]?.data, metafields: productsMetaFieldsContent}
 }
 
 /**

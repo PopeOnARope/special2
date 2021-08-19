@@ -35,7 +35,7 @@ export function prepareVariantsWithOptions(
   return variants.map((variant) => {
     // TODO: look into types, prob need update in @types/shopify-buy
     // convert the options to a dictionary instead of an array
-    const optionsDictionary = variant.selectedOptions?.reduce(
+    const optionsDictionary = variant?.selectedOptions?.reduce(
       (options: any, option: any) => {
         options[`${option?.name?.toLowerCase()}`] = option?.value
         return options

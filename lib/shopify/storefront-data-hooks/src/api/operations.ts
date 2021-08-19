@@ -19,6 +19,8 @@ export function getProduct(
   config: ShopifyBuy.Config,
   options: { id?: string; handle?: string }
 ) {
+
+  
   const client = buildClient(config)
   if (options.handle) {
     return client.product.fetchByHandle(options.handle)

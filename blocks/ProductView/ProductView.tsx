@@ -38,7 +38,6 @@ interface ButtonProps {
   onClick?: any
 }
 
-
 const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
   <button onClick={onClick} className="focus:outline-none">
     <div
@@ -48,14 +47,14 @@ const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
       }}
       className="hover:pr-20"
     >
-      <ChevronUp width='50' height='50'/>
+      <ChevronUp width="50" height="50" />
     </div>
   </button>
 )
 const PreviousButton: React.FC<ButtonProps> = ({ onClick }) => (
   <button onClick={onClick} className="focus:outline-none">
     <div sx={{ color: 'white', transform: 'rotate(270deg)' }}>
-      <ChevronUp width='50' height='50'/>
+      <ChevronUp width="50" height="50" />
     </div>
   </button>
 )
@@ -157,7 +156,6 @@ const ProductBox: React.FC<Props> = ({
           }}
         />
       )}
-
       {/* TODO: remove the minimum height of innerLayout so there is no overflow in height */}
       <div
         sx={{
@@ -180,8 +178,7 @@ const ProductBox: React.FC<Props> = ({
             style={{
               transform: 'rotate(90deg)',
               display: 'flex',
-              flexDirection: 'inherit'
-
+              flexDirection: 'inherit',
             }}
             onClick={toggleProductDetails}
           >
@@ -193,7 +190,7 @@ const ProductBox: React.FC<Props> = ({
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            zIndex: '20',
+            zIndex: '5',
             position: 'absolute',
             width: '100%',
             height: '100%',
@@ -230,56 +227,6 @@ const ProductBox: React.FC<Props> = ({
               }}
             />
           </div>
-          <div className="flex flex-col w-full items-end justify-end">
-            <div className="w-full md:w-1/2 lg:w-1/3 text-center md:text-left">
-              <h1 className="text-3xl text-white mb-0 pb-0">{title}</h1>
-              <Grid columns={2}>
-                {colors?.length && (
-                  <OptionPicker
-                    key="Color"
-                    name="Color"
-                    options={colors}
-                    selected={color}
-                    onChange={(event) => setColor(event.target.value)}
-                  />
-                )}
-                {sizes?.length && (
-                  <OptionPicker
-                    key="Size"
-                    name="Size"
-                    options={sizes}
-                    selected={size}
-                    onChange={(event) => setSize(event.target.value)}
-                  />
-                )}
-              </Grid>
-              <Button
-                style={{ width: '100%' }}
-                sx={{
-                  background:
-                    'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-                  transition: '.5s ease-out',
-                  backgroundSize: '200%',
-                  ' &:hover': {
-                    boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
-                    color: '#000',
-                    backgroundPosition: 'left',
-                  },
-                }}
-                name="add-to-cart"
-                disabled={loading}
-                onClick={addToCart}
-              >
-                <span className="flex flex-row justify-between mr-2">
-                  <span>Bag {loading && <LoadingDots />}</span>
-                  {getPrice(
-                    variant.priceV2.amount,
-                    variant.priceV2.currencyCode
-                  )}
-                </span>
-              </Button>
-            </div>
-          </div>
         </div>
         <div
           sx={{
@@ -291,23 +238,19 @@ const ProductBox: React.FC<Props> = ({
             width: '100%',
             height: '100%',
             ' .slide-enter': {
-            opacity: 0
-            //transform: translatex(40px)
-          },
-          '  .slide-enter-active': {
-            opacity: 1,
-            //transform: translateY(0px)
-            transition: 'all 0.3s'
-          },
-           ' .slide-exit': {
-            opacity: 1
-            //transform: translateY(0px)
-          },
-           ' .slide-exit-active': {
-            opacity: 0,
-            //transform: translateY(-40px)
-            transition: 'all 0.3s'
-          }
+              opacity: 0,
+            },
+            '  .slide-enter-active': {
+              opacity: 1,
+              transition: 'all 0.3s',
+            },
+            ' .slide-exit': {
+              opacity: 1,
+            },
+            ' .slide-exit-active': {
+              opacity: 0,
+              transition: 'all 0.3s',
+            },
           }}
         >
           {variant.image && (
@@ -316,7 +259,7 @@ const ProductBox: React.FC<Props> = ({
                 key={peakingImage?.src || variant?.image?.src}
                 classNames="slide"
                 timeout={300}
-                mode='in-out'
+                mode="in-out"
               >
                 <Image
                   src={peakingImage?.src || variant.image.src}
@@ -339,15 +282,66 @@ const ProductBox: React.FC<Props> = ({
         open={displayProductDetails}
         onClose={closeProductDetails}
         from="left"
+        zIndex={8}
       >
         <ProductDetails
           details={
-            IsJsonString(product.description)
-              ? JSON.parse(product.description)
-              : {}
+            product.metafields && product.metafields[0]?.data?.detailsAndSpecs
           }
         />
       </Sidebar>
+      {/*CONTENT SECTION*/}
+      <div
+        className="w-full md:w-3/5 lg:w-1/2 xl:w-2/5 text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content"
+        style={{ bottom: '0', right: '0' }}
+      >
+        <div className='flex flex-row items-end mb-2'>
+        <h1 className="mb-0 pb-0 text-4xl text-white mb-0 pb-0 font-extrabold">{product.metafields[0]?.data?.collectionName}</h1>
+          <h2 className='mb-0 pb-0 text-2xl text-white'>__{title}</h2>
+        </div>
+        <Grid columns={2}>
+          {colors?.length && (
+            <OptionPicker
+              key="Color"
+              name="Color"
+              options={colors}
+              selected={color}
+              onChange={(event) => setColor(event.target.value)}
+            />
+          )}
+          {sizes?.length && (
+            <OptionPicker
+              key="Size"
+              name="Size"
+              options={sizes}
+              selected={size}
+              onChange={(event) => setSize(event.target.value)}
+            />
+          )}
+        </Grid>
+        <Button
+          style={{ width: '100%' }}
+          sx={{
+            background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+            transition: '.5s ease-out',
+            backgroundSize: '200%',
+            ' &:hover': {
+              boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
+              color: '#000',
+              backgroundPosition: 'left',
+            },
+          }}
+          name="add-to-cart"
+          disabled={loading}
+          onClick={addToCart}
+        >
+          <span className="flex flex-row justify-between mr-2">
+            <span>Bag {loading && <LoadingDots />}</span>
+            {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
+          </span>
+        </Button>
+        <p className='text-white mt-4'>{product.metafields[0]?.data?.editionInfo}</p>
+      </div>
     </React.Fragment>
   )
 }

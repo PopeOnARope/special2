@@ -100,10 +100,11 @@ const InnerLayout: React.FC<{
         }
         onClose={closeCart}
         from="right"
+        zIndex={1000}
       >
         <CartSidebarView />
       </Sidebar>
-      <Sidebar open={displaySideNav} onClose={closeSideNav} from="left">
+      <Sidebar open={displaySideNav} onClose={closeSideNav} from="left" zIndex={1000}>
         <SideNav />
       </Sidebar>
 
