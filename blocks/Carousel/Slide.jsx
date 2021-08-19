@@ -97,6 +97,7 @@ const ModelToggle = styled.div`
 
   @media (max-width: 640px) {
     margin-right: 3rem;
+    margin-top: -14rem;
     margin-bottom: 14rem;
   }
 `
