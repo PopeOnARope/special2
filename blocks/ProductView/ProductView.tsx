@@ -346,10 +346,6 @@ const ProductBox: React.FC<Props> = ({
   )
 }
 
-// interface CustomProduct extends ShopifyBuy.Product {
-//   ['Artistry Eyewear']?: string
-// }
-
 const ProductView: React.FC<{
   product: string | ShopifyBuy.Product
   renderSeo?: boolean
