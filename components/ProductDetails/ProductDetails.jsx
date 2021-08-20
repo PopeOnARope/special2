@@ -9,72 +9,6 @@ import { Cross } from '@components/icons'
 import Collapse from 'react-collapse'
 import { toCapitalizedWords } from '../../blocks/utils'
 
-const data = {
-  sections: [
-    {
-      title: 'websites',
-      links: [
-        {
-          title: 'Shop',
-          url: '#',
-        },
-        {
-          title: 'About',
-          url: '#',
-        },
-        {
-          title: 'Sustainability and Giving Back',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Contact',
-      links: [
-        {
-          title: 'Friends@spec__ial.com',
-          url: '#',
-        },
-        {
-          title: 'FAQ',
-          url: '#',
-        },
-        {
-          title: 'Shipping & Returns',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Social',
-      links: [
-        {
-          title: 'Facebook',
-          url: '#',
-        },
-        {
-          title: 'Instagram',
-          url: '#',
-        },
-      ],
-    },
-  ],
-  bottomLinks: [
-    {
-      title: 'Terms and Conditions',
-      url: '#',
-    },
-    {
-      title: 'More Info',
-      url: '#',
-    },
-    {
-      title: 'Title',
-      url: '#',
-    },
-  ],
-}
-
 const Detail = ({shownDetails, item, setShownDetails})=>(
   <div className="w-full">
     <Button
@@ -84,6 +18,7 @@ const Detail = ({shownDetails, item, setShownDetails})=>(
           : setShownDetails(item.title)
       }}
       sx={{
+
         fontSize: '2.75rem',
         fontFamily: 'Value Sans Pro',
         color: '#fff',
@@ -110,6 +45,7 @@ const Detail = ({shownDetails, item, setShownDetails})=>(
           color: '#000',
           opacity: 1,
         },
+        // ' @media (max-width: 768px)'
       }}
     >
       {item.title}
@@ -122,7 +58,7 @@ const Detail = ({shownDetails, item, setShownDetails})=>(
     <Collapse isOpened={shownDetails === item.title}>
       <p
         sx={{
-          fontSize: '1.75rem',
+          fontSize: '1.25rem',
           fontFamily: 'Value Sans Pro',
           color: '#000',
           fontWeight: 400,
@@ -136,7 +72,7 @@ const Detail = ({shownDetails, item, setShownDetails})=>(
   </div>
 )
 
-const ProductDetails = ({ details }) => {
+const ProductDetails = ({ details, productDescription }) => {
   const detailsArr = Object.keys(details).map((key) => ({
     title: toCapitalizedWords(key),
     value: details[key],
@@ -157,6 +93,7 @@ const ProductDetails = ({ details }) => {
         justifyContent: 'space-between',
       }}
     >
+      <p>{productDescription}</p>
       <div className="flex flex-col lg:flex-row">
         <div className="flex flex-col w-full lg:w-1/2">
           {detailsArr?.map((item, idx) => {
