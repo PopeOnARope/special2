@@ -77,7 +77,7 @@ const Navbar: FC = () => {
         sx={{
           margin: `0`,
           // maxWidth: 1920,
-          padding: '0rem 1rem',
+          padding: '0rem 1.25rem',
           background: isScrollingInPage ? 'rgba(255,255,255,0.5)' : 'none',
           transition: 'background 0.3s',
           display: 'flex',
@@ -90,6 +90,7 @@ const Navbar: FC = () => {
           ' a': {
             ...navItemStyles,
           },
+
         }}
       >
         <Themed.div

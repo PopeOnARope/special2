@@ -95,7 +95,7 @@ const CartSidebarView = () => {
               <Themed.a
                 href={link.link}
                 sx={{
-                  fontSize: '67px',
+                  fontSize: '4rem',
                   fontFamily: 'Value Sans Pro',
                   color: '#fff',
                   fontWeight: 400,
@@ -108,16 +108,22 @@ const CartSidebarView = () => {
                     marginLeft: 0,
                     color: '#fff',
                     opacity: 0,
+                    height: '3rem',
+                    width: '3rem'
                   },
                   '&:hover svg': {
-                    marginLeft: 20,
+                    marginLeft: 10,
                     color: '#000',
                     opacity: 1,
                   },
+                  ' @media (max-width: 768px)': {
+                    fontSize: '3rem',
+                    margin: '0rem'
+                  }
                 }}
               >
                 {link.title}
-                <ArrowLeft height="67" width="67" />
+                <ArrowLeft  />
               </Themed.a>
             </Themed.div>
           )

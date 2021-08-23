@@ -69,6 +69,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
               layout={imgLayout}
               loading={imgLoading}
               priority={imgPriority}
+
+              objectFit="cover"
+              objectPosition="center"
             />
 
         </div>

@@ -7,7 +7,7 @@ import { Grid } from '@theme-ui/components'
 import Button from '../Button/Button'
 
 import Thumbnail from '@components/common/Thumbnail'
-import { ArrowLeft, ChevronUp } from '../../components/icons'
+import { ArrowLeft, ChevronUp, Plus } from '../../components/icons'
 import OptionPicker from '@components/common/OptionPicker'
 import { NextSeo } from 'next-seo'
 import { useUI } from '@components/ui/context'
@@ -47,14 +47,14 @@ const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
       }}
       className="hover:pr-20"
     >
-      <ChevronUp width="50" height="50" />
+      <ChevronUp width="40" height="40" />
     </div>
   </button>
 )
 const PreviousButton: React.FC<ButtonProps> = ({ onClick }) => (
   <button onClick={onClick} className="focus:outline-none">
     <div sx={{ color: 'white', transform: 'rotate(270deg)' }}>
-      <ChevronUp width="50" height="50" />
+      <ChevronUp width="40" height="40" />
     </div>
   </button>
 )
@@ -133,8 +133,6 @@ const ProductBox: React.FC<Props> = ({
     }
   }
 
-  console.log({ product })
-
   return (
     <React.Fragment>
       {renderSeo && (
@@ -166,12 +164,17 @@ const ProductBox: React.FC<Props> = ({
         }}
         className="type-wrapper"
       >
-        <div
+        <Themed.div
           className="text-white absolute z-50 hover:cursor-pointer"
-          style={{
+          sx={{
             marginLeft: '-2rem',
-            marginTop: '65vh',
+            position: 'absolute',
+            bottom: '10rem',
             alignSelf: 'flex-end',
+            zIndex:6,
+            ' @media (max-width: 768px)': {
+              bottom: '18rem'
+            }
           }}
         >
           <button
@@ -179,12 +182,15 @@ const ProductBox: React.FC<Props> = ({
               transform: 'rotate(90deg)',
               display: 'flex',
               flexDirection: 'inherit',
+
             }}
+            className='active:outline-none focus:outline-none'
             onClick={toggleProductDetails}
           >
-            Details and Specs <ArrowLeft orientation="down" marginTop="0" />
+            Details and Specs
+            <ArrowLeft orientation="down"/>
           </button>
-        </div>
+        </Themed.div>
 
         <div
           sx={{
@@ -194,12 +200,14 @@ const ProductBox: React.FC<Props> = ({
             position: 'absolute',
             width: '100%',
             height: '100%',
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-            padding: 32,
+            justifyContent: 'space-around',
+            padding: '1rem',
+            ' @media (max-width: 768px)': {
+              px: 0
+            }
           }}
         >
-          <div className="flex flex-row justify-between items-start w-full h-1/2">
+          <div className="flex flex-row justify-between items-start">
             <PreviousButton
               onClick={() => {
                 const img = peakingImage || variant.image
@@ -264,8 +272,6 @@ const ProductBox: React.FC<Props> = ({
                 <Image
                   src={peakingImage?.src || variant.image.src}
                   layout="fill"
-                  //width={700}
-                  //height={400}
                   objectFit="cover"
                   objectPosition="center"
                   alt={title}
@@ -286,7 +292,11 @@ const ProductBox: React.FC<Props> = ({
       >
         <ProductDetails
           details={
-            product.metafields && product.metafields[0]?.data?.detailsAndSpecs
+            product.metafields && product.metafields[0]?.data?.productDetails
+          }
+          productDescription={
+            product.metafields &&
+            product.metafields[0]?.data?.productDescription
           }
         />
       </Sidebar>
@@ -295,9 +305,11 @@ const ProductBox: React.FC<Props> = ({
         className="w-full md:w-3/5 lg:w-1/2 xl:w-2/5 text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content"
         style={{ bottom: '0', right: '0' }}
       >
-        <div className='justify-center md:justify-start flex flex-row items-end mb-2 items-baseline'>
-        <h1 className="mb-0 pb-0 text-4xl text-white mb-0 pb-0 font-extrabold">{product.metafields[0]?.data?.collectionName}</h1>
-          <h2 className='mb-0 pb-0 text-md text-white'>__{title}</h2>
+        <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">
+          <h1 className="mb-0 pb-0 text-4xl text-white mb-0 pb-0 font-extrabold">
+            {product.metafields[0]?.data?.collectionName}
+          </h1>
+          <h2 className="mb-0 pb-0 text-md text-white">__{title}</h2>
         </div>
         <Grid columns={2}>
           {colors?.length && (
@@ -331,6 +343,7 @@ const ProductBox: React.FC<Props> = ({
               backgroundPosition: 'left',
             },
           }}
+          icon={<Plus/>}
           name="add-to-cart"
           disabled={loading}
           onClick={addToCart}
@@ -340,7 +353,9 @@ const ProductBox: React.FC<Props> = ({
             {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
           </span>
         </Button>
-        <p className='text-white mt-4'>{product.metafields[0]?.data?.editionInfo}</p>
+        <p className="text-white mt-4">
+          {product.metafields[0]?.data?.editionInfo}
+        </p>
       </div>
     </React.Fragment>
   )

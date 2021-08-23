@@ -97,7 +97,7 @@ export async function getProduct(
     apiKey: config.apiKey,
     query: {
       data:  {
-          product: { $eq: productsContent[0].handle },
+          product: { $eq: productsContent[0]?.handle },
         },
     },
   })

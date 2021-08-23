@@ -4,20 +4,25 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   margin: 32px;
   font-family: Value Sans Pro;
-  font-size: 18px;
-  .checkbox-custom, .radio-custom {
+  label {
+    font-size: 1.2rem !important;
+  }
+  .checkbox-custom,
+  .radio-custom {
     opacity: 0;
     position: absolute;
   }
 
-  .checkbox-custom, .checkbox-custom-label{
+  .checkbox-custom,
+  .checkbox-custom-label {
     display: inline-block;
     vertical-align: middle;
     margin: 5px;
     cursor: pointer;
   }
 
-  .checkbox-custom-label, .radio-custom-label {
+  .checkbox-custom-label,
+  .radio-custom-label {
     position: relative;
   }
 
@@ -39,9 +44,11 @@ const Wrapper = styled.div`
     box-shadow: inset 0px 0px 0px 4px #fff;
   }
 
-
   .checkbox-custom:focus + .checkbox-custom-label {
     outline: 1px solid #ddd; /* focus style */
+  }
+  @media (max-width: 768px) {
+    margin-top: 0;
   }
 `
 const Checkbox = ({ label, name, onChange }) => (

@@ -7,7 +7,7 @@ export function useCartCount() {
     return 0
   }
 
-  const count = cart.lineItems.reduce((totalCount, lineItem) => {
+  const count = cart?.lineItems?.reduce((totalCount, lineItem) => {
     return totalCount + lineItem.quantity
   }, 0)
 

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   font-family: Value Sans Pro;
-  font-size: 20px;
+  font-size: 1.5rem;
   position: relative;
   height: 76px;
   input {
@@ -16,8 +16,10 @@ const Wrapper = styled.div`
       if (props.value?.length) {
         return `& + .label-text {
       font-size: 20px;
-      margin-top: 34px;
-      font-weight: 500;
+        font-size: 1.25rem;
+        margin-top: 2.8rem;
+        color: #333;
+        font-weight: 500;
       }`
       }
     }}
@@ -27,8 +29,9 @@ const Wrapper = styled.div`
       outline: none;
 
       & + .label-text {
-        font-size: 20px;
-        margin-top: 34px;
+        font-size: 1.25rem;
+        margin-top: 2.8rem;
+        color: #333;
       }
     }
   }

@@ -34,7 +34,7 @@ const Tag: React.FC<TagProps> = ({ displayAs, children, ...rest }) => {
   )
 }
 
-const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
+const _Button: React.FC<ButtonProps> = ({ children, styles, icon, ...rest }) => (
   <Tag
     {...rest}
     sx={{
@@ -66,9 +66,7 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, ...rest }) => (
     }}
   >
     <span className="w-full">{children}</span>
-    <span>
-      <ArrowLeft orientation='right' />
-    </span>
+    <span>{icon ? icon : <ArrowLeft orientation="right" />}</span>
   </Tag>
 )
 
