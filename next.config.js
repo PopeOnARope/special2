@@ -26,9 +26,9 @@ module.exports = bundleAnalyzer({
   },
   env: {
     // expose env to the browser
-    SHOPIFY_STOREFRONT_API_TOKEN: 'dd0057d1e48d2d61ca8ec27b07d3c5e6',
-    SHOPIFY_STORE_DOMAIN: 'somecoolsunglasses.myshopify.com',
-    BUILDER_PUBLIC_KEY: 'd58e15993bf84115968f2dd035ee71a4',
+    SHOPIFY_STOREFRONT_API_TOKEN: process.env.SHOPIFY_STOREFRONT_API_TOKEN,
+    SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
+    BUILDER_PUBLIC_KEY: process.env.BUILDER_PUBLIC_KEY,
     IS_DEMO: false,
   },
   i18n: {
