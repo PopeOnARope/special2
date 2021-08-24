@@ -58,6 +58,7 @@ const Checkbox = ({ label, name, onChange }) => (
       className="checkbox-custom"
       name="checkbox-2"
       type="checkbox"
+      onChange={(e)=>{onChange(e)}}
     />
     <label htmlFor="checkbox-2" className="checkbox-custom-label">
       {label}

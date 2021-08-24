@@ -49,6 +49,7 @@ const TextInput = ({ label, name, onChange }) => {
       <input
         onChange={(e) => {
           setValue(e.currentTarget.value)
+          onChange(e)
         }}
       />
       <label className="label-text">{label}</label>

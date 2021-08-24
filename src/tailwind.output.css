@@ -2091,6 +2091,26 @@ video {
   margin-bottom: 0;
 }
 
+html {
+  font-size: 12px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.ReactCollapse--collapse {
+  transition: height 500ms;
+}
+
 .border-purple-400 {
   --border-opacity: 1;
   border-color: #ac94fa;
@@ -2179,6 +2199,10 @@ video {
 
 .font-extrabold {
   font-weight: 800;
+}
+
+.text-lg {
+  font-size: 1.125rem;
 }
 
 .text-4xl {
@@ -2527,26 +2551,6 @@ video {
 
 .w-763 {
   width: 763px;
-}
-
-html {
-  font-size: 12px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 1024px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.ReactCollapse--collapse {
-  transition: height 500ms;
 }
 
 @media (min-width: 640px) {
@@ -7713,3 +7717,4 @@ html {
     width: 40%;
   }
 }
+

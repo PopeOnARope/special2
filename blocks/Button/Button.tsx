@@ -63,6 +63,9 @@ const _Button: React.FC<ButtonProps> = ({ children, styles, icon, ...rest }) => 
       '@media screen and (min-width: 768px)': {
         width: styles?.width || '432px',
       },
+      ' &:disabled': {
+        background: '#666'
+      }
     }}
   >
     <span className="w-full">{children}</span>

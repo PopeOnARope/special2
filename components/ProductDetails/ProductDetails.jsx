@@ -103,7 +103,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             color: '#000',
             fontWeight: 400,
             lineHeight: '2rem',
-            marginLeft: '1.25rem',
+            // marginLeft: '1.25rem',
 
           }}
         >
