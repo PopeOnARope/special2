@@ -52,9 +52,22 @@ restrictedRegister(
           {
             name: 'overlayColor',
             type: 'color',
+            defaultValue: 'rgba(255,255,255,1)'
           },
         ],
       },
+      {
+        name: 'collection',
+        type: 'text',
+        defaultValue: 'Collection'
+      },
+      {
+        name: 'title',
+        type: 'text',
+        defaultValue: 'Title'
+      },
+      { name: 'edition', type: 'text',
+      defaultValue: 'Edition'},
     ],
     image: 'https://unpkg.com/css.gg@2.0.0/icons/svg/inpicture.svg',
     description:

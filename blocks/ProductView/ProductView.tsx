@@ -67,9 +67,10 @@ const ProductBox: React.FC<Props> = ({
   overlayColor,
   renderSeo = true,
   seoDescription = product.description,
-  title = product.title,
+  title,
+  edition,
+  collection
 
-  ...rest
 }) => {
   console.log({ description, details, images, overlayColor })
   const [loading, setLoading] = useState(false)
@@ -99,7 +100,7 @@ const ProductBox: React.FC<Props> = ({
 
   const [peakingImage, setPeakingImage] = useState( {image:'', overlayColor: 'white'})
 
-  useEffect(()=>{setPeakingImage(images[0])}, [])
+  useEffect(()=>{images && setPeakingImage(images[0])}, [])
 
   const [variant, setVariant] = useState(variants[0] || {})
   // const [color, setColor] = useState(variant.color)
@@ -303,8 +304,7 @@ const ProductBox: React.FC<Props> = ({
         <ProductDetails
           details={details}
           productDescription={
-            product.metafields &&
-            product.metafields[0]?.data?.productDescription
+            description
           }
         />
       </Sidebar>
@@ -318,7 +318,7 @@ const ProductBox: React.FC<Props> = ({
             className="mb-0 pb-0 text-4xl mb-0 pb-0 font-extrabold"
             style={{ color: peakingImage?.overlayColor || 'white' }}
           >
-            {product.metafields[0]?.data?.collectionName}
+            {collection}
           </h1>
           <h2
             className="mb-0 pb-0 text-md"
@@ -354,7 +354,7 @@ const ProductBox: React.FC<Props> = ({
           className="mt-4"
           style={{ color: peakingImage?.overlayColor || 'white' }}
         >
-          {product.metafields[0]?.data?.editionInfo}
+          {edition}
         </p>
       </div>
     </React.Fragment>
