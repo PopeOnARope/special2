@@ -15,6 +15,47 @@ restrictedRegister(
   LazyProductView,
   {
     name: 'ProductView',
+    inputs: [
+      {
+        name: 'description',
+        type: 'longText',
+        defaultValue: 'enter a long description of this item here!',
+      },
+      {
+        name: 'details',
+        type: 'list',
+        defaultValue: [{ title: 'Title', url: '#' }],
+        subFields: [
+          {
+            name: 'title',
+            type: 'string',
+          },
+          {
+            name: 'value',
+            type: 'string',
+          },
+        ],
+      },
+
+      {
+        name: 'images',
+        type: 'list',
+        subFields: [
+          {
+            name: 'image',
+            type: 'file',
+          },
+          {
+            name: 'altText',
+            type: 'text',
+          },
+          {
+            name: 'overlayColor',
+            type: 'color',
+          },
+        ],
+      },
+    ],
     image: 'https://unpkg.com/css.gg@2.0.0/icons/svg/inpicture.svg',
     description:
       'Product details, should only be used in product page template, dynamically bind to product in context.',
@@ -26,6 +67,7 @@ restrictedRegister(
       },
     },
   },
+
   ['product-page', 'theme']
 )
 

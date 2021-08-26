@@ -2251,10 +2251,6 @@ html {
   margin-bottom: 1rem;
 }
 
-.ml-6 {
-  margin-left: 1.5rem;
-}
-
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -3812,10 +3808,6 @@ html {
 
   .sm\:prose-2xl > :last-child {
     margin-bottom: 0;
-  }
-
-  .sm\:w-80 {
-    width: 20rem;
   }
 }
 

@@ -36,52 +36,59 @@ interface Props {
 
 interface ButtonProps {
   onClick?: any
+  overlayColor?: string
 }
 
-const NextButton: React.FC<ButtonProps> = ({ onClick }) => (
+const NextButton: React.FC<ButtonProps> = ({ onClick, overlayColor }) => (
   <button onClick={onClick} className="focus:outline-none">
     <div
       sx={{
-        color: 'white',
         transform: 'rotate(90deg)',
       }}
       className="hover:pr-20"
     >
-      <ChevronUp width="40" height="40" />
+      <ChevronUp width="40" height="40" stroke={overlayColor || 'white'} />
     </div>
   </button>
 )
-const PreviousButton: React.FC<ButtonProps> = ({ onClick }) => (
+const PreviousButton: React.FC<ButtonProps> = ({ onClick, overlayColor }) => (
   <button onClick={onClick} className="focus:outline-none">
-    <div sx={{ color: 'white', transform: 'rotate(270deg)' }}>
-      <ChevronUp width="40" height="40" />
+    <div sx={{ transform: 'rotate(270deg)' }}>
+      <ChevronUp width="40" height="40" stroke={overlayColor || 'white'} />
     </div>
   </button>
 )
 
 const ProductBox: React.FC<Props> = ({
   product,
+  description,
+  details,
+  images,
+  overlayColor,
   renderSeo = true,
-  description = product.description,
+  seoDescription = product.description,
   title = product.title,
+
+  ...rest
 }) => {
+  console.log({ description, details, images, overlayColor })
   const [loading, setLoading] = useState(false)
   const addItem = useAddItemToCart()
-  const colors: string[] | undefined = product?.options
-    ?.find((option) => option?.name?.toLowerCase() === 'color')
-    ?.values?.map((op) => op.value as string)
-
-  const sizes: string[] | undefined = product?.options
-    ?.find((option) => option?.name?.toLowerCase() === 'size')
-    ?.values?.map((op) => op.value as string)
-
+  // const colors: string[] | undefined = product?.options
+  //   ?.find((option) => option?.name?.toLowerCase() === 'color')
+  //   ?.values?.map((op) => op.value as string)
+  //
+  // const sizes: string[] | undefined = product?.options
+  //   ?.find((option) => option?.name?.toLowerCase() === 'size')
+  //   ?.values?.map((op) => op.value as string)
+  //
   const variants = useMemo(
     () => prepareVariantsWithOptions(product?.variants),
     [product?.variants]
   )
-  const images = useMemo(() => prepareVariantsImages(variants, 'color'), [
-    variants,
-  ])
+  // const images = useMemo(() => prepareVariantsImages(variants, 'color'), [
+  //   variants,
+  // ])
 
   const {
     openCart,
@@ -90,13 +97,13 @@ const ProductBox: React.FC<Props> = ({
     closeProductDetails,
   } = useUI()
 
-  const [peakingImage, setPeakingImage] = useState(
-    null as { src: string } | null
-  )
+  const [peakingImage, setPeakingImage] = useState( {image:'', overlayColor: 'white'})
+
+  useEffect(()=>{setPeakingImage(images[0])}, [])
 
   const [variant, setVariant] = useState(variants[0] || {})
-  const [color, setColor] = useState(variant.color)
-  const [size, setSize] = useState(variant.size)
+  // const [color, setColor] = useState(variant.color)
+  // const [size, setSize] = useState(variant.size)
 
   function IsJsonString(str) {
     try {
@@ -107,28 +114,26 @@ const ProductBox: React.FC<Props> = ({
     return true
   }
 
-  useEffect(() => {
-    const newVariant = variants.find((variant) => {
-      return (
-        (variant.size === size || !size) && (variant.color === color || !color)
-      )
-    })
-
-    if (variant.id !== newVariant?.id) {
-      setVariant(newVariant)
-      setPeakingImage(null)
-    }
-  }, [size, color, variants, variant.id])
+  // useEffect(() => {
+  //   const newVariant = variants.find((variant) => {
+  //     return (
+  //       (variant.size === size || !size) && (variant.color === color || !color)
+  //     )
+  //   })
+  //
+  //   if (variant.id !== newVariant?.id) {
+  //     setVariant(newVariant)
+  //     setPeakingImage(null)
+  //   }
+  // }, [size, color, variants, variant.id])
 
   const addToCart = async () => {
     setLoading(true)
     try {
       await addItem(variant.id, 1)
-      console.log('item added')
       openCart()
       setLoading(false)
     } catch (err) {
-      console.log({ err })
       setLoading(false)
     }
   }
@@ -138,11 +143,11 @@ const ProductBox: React.FC<Props> = ({
       {renderSeo && (
         <NextSeo
           title={title}
-          description={description}
+          description={seoDescription}
           openGraph={{
             type: 'website',
             title: title,
-            description: description,
+            description: seoDescription,
             images: [
               {
                 url: product.images?.[0]?.src!,
@@ -171,10 +176,10 @@ const ProductBox: React.FC<Props> = ({
             position: 'absolute',
             bottom: '10rem',
             alignSelf: 'flex-end',
-            zIndex:6,
+            zIndex: 6,
             ' @media (max-width: 768px)': {
-              bottom: '18rem'
-            }
+              bottom: '18rem',
+            },
           }}
         >
           <button
@@ -182,13 +187,16 @@ const ProductBox: React.FC<Props> = ({
               transform: 'rotate(90deg)',
               display: 'flex',
               flexDirection: 'inherit',
-
+              color: peakingImage?.overlayColor || 'white',
             }}
-            className='active:outline-none focus:outline-none'
+            className="active:outline-none focus:outline-none"
             onClick={toggleProductDetails}
           >
             Details and Specs
-            <ArrowLeft orientation="down"/>
+            <ArrowLeft
+              orientation="down"
+              stroke={peakingImage?.overlayColor || 'white'}
+            />
           </button>
         </Themed.div>
 
@@ -203,35 +211,37 @@ const ProductBox: React.FC<Props> = ({
             justifyContent: 'space-around',
             padding: '1rem',
             ' @media (max-width: 768px)': {
-              px: 0
-            }
+              px: 0,
+            },
           }}
         >
           <div className="flex flex-row justify-between items-start">
             <PreviousButton
+              overlayColor={peakingImage?.overlayColor}
               onClick={() => {
-                const img = peakingImage || variant.image
-                const peakingImageIndex = product.images
+                const img = peakingImage || images[0]
+                const peakingImageIndex = images
                   .map((_image) => _image.id === img.id)
                   .indexOf(true)
                 const newPeakingImageIndex =
                   peakingImageIndex === 0
-                    ? product.images.length - 1
+                    ? images.length - 1
                     : peakingImageIndex - 1
-                setPeakingImage(product.images[newPeakingImageIndex])
+                setPeakingImage(images[newPeakingImageIndex])
               }}
             />
             <NextButton
+              overlayColor={peakingImage?.overlayColor}
               onClick={() => {
-                const img = peakingImage || variant.image
-                const peakingImageIndex = product.images
+                const img = peakingImage || images[0]
+                const peakingImageIndex = images
                   .map((_image) => _image.id === img.id)
                   .indexOf(true)
                 const newPeakingImageIndex =
-                  peakingImageIndex === product.images.length - 1
+                  peakingImageIndex === images.length - 1
                     ? 0
                     : peakingImageIndex + 1
-                setPeakingImage(product.images[newPeakingImageIndex])
+                setPeakingImage(images[newPeakingImageIndex])
               }}
             />
           </div>
@@ -261,16 +271,16 @@ const ProductBox: React.FC<Props> = ({
             },
           }}
         >
-          {variant.image && (
+          {peakingImage.image && (
             <SwitchTransition mode="out-in">
               <CSSTransition
-                key={peakingImage?.src || variant?.image?.src}
+                key={peakingImage}
                 classNames="slide"
                 timeout={300}
                 mode="in-out"
               >
                 <Image
-                  src={peakingImage?.src || variant.image.src}
+                  src={peakingImage.image}
                   layout="fill"
                   objectFit="cover"
                   objectPosition="center"
@@ -291,9 +301,7 @@ const ProductBox: React.FC<Props> = ({
         zIndex={8}
       >
         <ProductDetails
-          details={
-            product.metafields && product.metafields[0]?.data?.productDetails
-          }
+          details={details}
           productDescription={
             product.metafields &&
             product.metafields[0]?.data?.productDescription
@@ -306,31 +314,20 @@ const ProductBox: React.FC<Props> = ({
         style={{ bottom: '0', right: '0' }}
       >
         <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">
-          <h1 className="mb-0 pb-0 text-4xl text-white mb-0 pb-0 font-extrabold">
+          <h1
+            className="mb-0 pb-0 text-4xl mb-0 pb-0 font-extrabold"
+            style={{ color: peakingImage?.overlayColor || 'white' }}
+          >
             {product.metafields[0]?.data?.collectionName}
           </h1>
-          <h2 className="mb-0 pb-0 text-md text-white">__{title}</h2>
+          <h2
+            className="mb-0 pb-0 text-md"
+            style={{ color: peakingImage?.overlayColor || 'white' }}
+          >
+            __{title}
+          </h2>
         </div>
-        <Grid columns={2}>
-          {colors?.length && (
-            <OptionPicker
-              key="Color"
-              name="Color"
-              options={colors}
-              selected={color}
-              onChange={(event) => setColor(event.target.value)}
-            />
-          )}
-          {sizes?.length && (
-            <OptionPicker
-              key="Size"
-              name="Size"
-              options={sizes}
-              selected={size}
-              onChange={(event) => setSize(event.target.value)}
-            />
-          )}
-        </Grid>
+
         <Button
           style={{ width: '100%' }}
           sx={{
@@ -343,7 +340,7 @@ const ProductBox: React.FC<Props> = ({
               backgroundPosition: 'left',
             },
           }}
-          icon={<Plus/>}
+          icon={<Plus />}
           name="add-to-cart"
           disabled={loading}
           onClick={addToCart}
@@ -353,7 +350,10 @@ const ProductBox: React.FC<Props> = ({
             {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
           </span>
         </Button>
-        <p className="text-white mt-4">
+        <p
+          className="mt-4"
+          style={{ color: peakingImage?.overlayColor || 'white' }}
+        >
           {product.metafields[0]?.data?.editionInfo}
         </p>
       </div>

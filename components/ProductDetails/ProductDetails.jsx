@@ -36,14 +36,13 @@ const Wrapper = styled.div`
 `
 
 const Detail = ({ shownDetails, item, setShownDetails }) => {
-  const detail = item.detail || item.newField
   return (
     <div className="w-full">
       <Button
         onClick={() => {
-          shownDetails === detail?.key
+          shownDetails === item.title
             ? setShownDetails('')
-            : setShownDetails(detail?.key)
+            : setShownDetails(item.title)
         }}
         sx={{
           fontSize: '2.75rem',
@@ -76,14 +75,14 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
           },
         }}
       >
-        {detail?.key}
+        {item?.title}
         <SwitchTransition mode="out-in">
           <CSSTransition
-            key={shownDetails == detail?.key}
+            title={shownDetails == item?.title}
             classNames="icon"
             timeout={300}
           >
-            {shownDetails === detail?.key ? (
+            {shownDetails === item.title ? (
               <Minus height="25" width="25" />
             ) : (
               <Cross
@@ -95,7 +94,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
           </CSSTransition>
         </SwitchTransition>
       </Button>
-      <Collapse isOpened={shownDetails === detail?.key}>
+      <Collapse isOpened={shownDetails === item.title}>
         <p
           sx={{
             fontSize: '1.25rem',
@@ -107,7 +106,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
 
           }}
         >
-          {detail?.value}
+          {item.value}
         </p>
       </Collapse>
     </div>
@@ -166,8 +165,7 @@ const ProductDetails = ({ details, productDescription }) => {
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
                     isShownDetails={
-                      shownDetails === item?.detail?.key ||
-                      shownDetails === item?.newField?.key
+                      shownDetails === item?.title
                     }
                   />
                 )

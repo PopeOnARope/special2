@@ -96,9 +96,9 @@ export async function getProduct(
     limit: 1,
     apiKey: config.apiKey,
     query: {
-      data:  {
-          product: { $eq: productsContent[0]?.handle },
-        },
+      data: {
+        product: { $eq: productsContent[0]?.handle },
+      },
     },
   })
 
@@ -111,7 +111,7 @@ export async function getProduct(
   if (options.withContent) {
     return productsContent[0]
   }
-  return {...productsContent[0]?.data, metafields: productsMetaFieldsContent}
+  return { ...productsContent[0]?.data, metafields: productsMetaFieldsContent }
 }
 
 /**
@@ -159,8 +159,10 @@ export async function searchCollections(
     },
     { allowDots: true }
   )
-
+  console.log('**************')
+  console.log({config})
   const collectionsContent = (
+
     await fetch(
       `https://cdn.builder.io/api/v2/content/${
         config.collectionsModel
@@ -182,6 +184,8 @@ export async function getAllCollectionPaths(
   limit?: number
 ): Promise<string[]> {
   const collections: any[] = await getAllCollections(config, limit)
+  console.log('****************')
+  console.log({ collections })
   return collections?.map((entry) => entry.handle) || []
 }
 
