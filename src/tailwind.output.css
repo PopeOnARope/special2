@@ -2201,6 +2201,10 @@ html {
   font-weight: 800;
 }
 
+.h-2 {
+  height: 0.5rem;
+}
+
 .text-lg {
   font-size: 1.125rem;
 }

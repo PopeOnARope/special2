@@ -69,8 +69,7 @@ const ProductBox: React.FC<Props> = ({
   seoDescription = product.description,
   title,
   edition,
-  collection
-
+  collection,
 }) => {
   console.log({ description, details, images, overlayColor })
   const [loading, setLoading] = useState(false)
@@ -98,9 +97,25 @@ const ProductBox: React.FC<Props> = ({
     closeProductDetails,
   } = useUI()
 
-  const [peakingImage, setPeakingImage] = useState( {image:'', overlayColor: 'white'})
+  const [peakingImage, setPeakingImage] = useState({
+    image: '',
+    overlayColor: 'white',
+  })
 
-  useEffect(()=>{images && setPeakingImage(images[0])}, [])
+  const [height, setHeight] = React.useState(780)
+
+  React.useEffect(() => {
+    setHeight(window.innerHeight)
+  }, [])
+
+  useEffect(() => {
+    images && setPeakingImage(images[0])
+  }, [])
+
+  const peakingImageIndex = images
+    ?.map((_image) => _image.image === peakingImage.image)
+    .indexOf(true)
+  console.log({ peakingImageIndex })
 
   const [variant, setVariant] = useState(variants[0] || {})
   // const [color, setColor] = useState(variant.color)
@@ -161,15 +176,26 @@ const ProductBox: React.FC<Props> = ({
         />
       )}
       {/* TODO: remove the minimum height of innerLayout so there is no overflow in height */}
+
       <div
         sx={{
           position: 'relative',
-          height: '100vh',
+          height: height,
           width: '100vw',
           backgroundColor: 'black',
         }}
         className="type-wrapper"
       >
+        <div className="w-full h-2 absolute z-100">
+          <div
+            style={{
+              background: '#ffc391',
+              width: `${(peakingImageIndex + 1) * (100 / images.length)}%`,
+              height: '100%',
+              transition: 'all 0.5s cubic-bezier( 0.4, 0.02, 0.53, 1 )',
+            }}
+          ></div>
+        </div>
         <Themed.div
           className="text-white absolute z-50 hover:cursor-pointer"
           sx={{
@@ -220,10 +246,6 @@ const ProductBox: React.FC<Props> = ({
             <PreviousButton
               overlayColor={peakingImage?.overlayColor}
               onClick={() => {
-                const img = peakingImage || images[0]
-                const peakingImageIndex = images
-                  .map((_image) => _image.id === img.id)
-                  .indexOf(true)
                 const newPeakingImageIndex =
                   peakingImageIndex === 0
                     ? images.length - 1
@@ -234,10 +256,6 @@ const ProductBox: React.FC<Props> = ({
             <NextButton
               overlayColor={peakingImage?.overlayColor}
               onClick={() => {
-                const img = peakingImage || images[0]
-                const peakingImageIndex = images
-                  .map((_image) => _image.id === img.id)
-                  .indexOf(true)
                 const newPeakingImageIndex =
                   peakingImageIndex === images.length - 1
                     ? 0
@@ -275,7 +293,7 @@ const ProductBox: React.FC<Props> = ({
           {peakingImage.image && (
             <SwitchTransition mode="out-in">
               <CSSTransition
-                key={peakingImage}
+                key={peakingImage.image}
                 classNames="slide"
                 timeout={300}
                 mode="in-out"
@@ -301,12 +319,7 @@ const ProductBox: React.FC<Props> = ({
         from="left"
         zIndex={8}
       >
-        <ProductDetails
-          details={details}
-          productDescription={
-            description
-          }
-        />
+        <ProductDetails details={details} productDescription={description} />
       </Sidebar>
       {/*CONTENT SECTION*/}
       <div
