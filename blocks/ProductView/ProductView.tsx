@@ -186,7 +186,7 @@ const ProductBox: React.FC<Props> = ({
         }}
         className="type-wrapper"
       >
-        <div className="w-full h-2 absolute" style={{zIndex: '1000'}}>
+        <div className="w-full h-2 absolute" style={{ zIndex: '1000' }}>
           <div
             style={{
               background: '#ffc391',
@@ -242,27 +242,27 @@ const ProductBox: React.FC<Props> = ({
             },
           }}
         >
-          <div className="flex flex-row justify-between items-start">
-            <PreviousButton
-              overlayColor={peakingImage?.overlayColor}
-              onClick={() => {
-                const newPeakingImageIndex =
-                  peakingImageIndex === 0
-                    ? images.length - 1
-                    : peakingImageIndex - 1
-                setPeakingImage(images[newPeakingImageIndex])
-              }}
-            />
-            <NextButton
-              overlayColor={peakingImage?.overlayColor}
-              onClick={() => {
-                const newPeakingImageIndex =
-                  peakingImageIndex === images.length - 1
-                    ? 0
-                    : peakingImageIndex + 1
-                setPeakingImage(images[newPeakingImageIndex])
-              }}
-            />
+          <div className={`flex flex-row ${peakingImageIndex !== 0 ? 'justify-between' : 'justify-end'}  items-start`}>
+            {peakingImageIndex !== 0 && (
+              <PreviousButton
+                overlayColor={peakingImage?.overlayColor}
+                onClick={() => {
+                  const newPeakingImageIndex =
+                    peakingImageIndex === 0
+                      ? images.length - 1
+                      : peakingImageIndex - 1
+                  setPeakingImage(images[newPeakingImageIndex])
+                }}
+              />
+            )}
+            {peakingImageIndex !== images.length - 1 && (
+              <NextButton
+                overlayColor={peakingImage?.overlayColor}
+                onClick={() => {
+                  setPeakingImage(images[peakingImageIndex + 1])
+                }}
+              />
+            )}
           </div>
         </div>
         <div
