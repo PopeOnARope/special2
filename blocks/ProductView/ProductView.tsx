@@ -186,7 +186,7 @@ const ProductBox: React.FC<Props> = ({
         }}
         className="type-wrapper"
       >
-        <div className="w-full h-2 absolute z-100">
+        <div className="w-full h-2 absolute" style={{zIndex: '1000'}}>
           <div
             style={{
               background: '#ffc391',
