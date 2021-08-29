@@ -7,7 +7,7 @@ import { ArrowLeft } from '@components/icons'
 import { withChildren } from '@builder.io/react'
 import Footer from '../../blocks/Footer/Footer'
 
-const SideNav = ({ children }) => {
+const SideNav = () => {
   const { navigationLinks, footerSections, bottomLinks, toggleSideNav } = useUI()
   return (
     <Themed.div
