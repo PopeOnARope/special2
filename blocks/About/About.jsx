@@ -46,14 +46,14 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             : setShownDetails(item.title)
         }}
         sx={{
-          fontSize: '2.75rem',
+          fontSize: '2.25rem',
           fontFamily: 'Value Sans Pro',
           color: '#fff',
           textAlign: 'left',
-          fontWeight: 700,
+          fontWeight: 600,
           background: 'none',
           display: 'inherit',
-          padding: '0',
+          padding: '0.5rem 0',
           transition: 'all 0.25s',
           '&:focus': {
             outline: 'none',
