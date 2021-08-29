@@ -147,7 +147,7 @@ const ProductBox: React.FC<Props> = ({
     setLoading(true)
     try {
       await addItem(variant.id, 1)
-      openCart()
+      // openCart()
       setLoading(false)
     } catch (err) {
       setLoading(false)

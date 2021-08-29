@@ -45,6 +45,7 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
   children,
 }) => {
   const { asPath } = useRouter()
+  console.log({siteSettings})
   const navPrimaryColor =
     asPath.includes('collection') || asPath.includes('product')
       ? 'black'
@@ -62,13 +63,6 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
     navSecondaryColor
   })
 
-  // const navTheme =
-  //   state.displayCart ||
-  //   state.displaySideNav ||
-  //   asPath.includes('collection') ||
-  //   asPath.includes('product')
-  //     ? { primaryColor: 'black' }
-  //     : { primaryColor: 'white' }
 
   const openCart = () =>
     setState((state) => ({

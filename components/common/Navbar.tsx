@@ -10,13 +10,21 @@ import { jsx, Themed, useThemeUI, Button } from 'theme-ui'
 import { useUI } from '@components/ui/context'
 import Image from 'next/image'
 import Searchbar from './Searchbar'
-import { Hamburger, SpecialLogo } from '@components/icons'
+import { Cross, Hamburger, SpecialLogo } from '@components/icons'
+import { CSSTransition, SwitchTransition, Transition } from 'react-transition-group'
 
 const Navbar: FC = () => {
   const [announcement, setAnnouncement] = useState()
   const [isWindowTop, setIsWindowTop] = useState(true)
   const { theme } = useThemeUI()
-  const { logo, toggleSideNav, navPrimaryColor, navSecondaryColor, displaySideNav, displayCart } = useUI()
+  const {
+    logo,
+    toggleSideNav,
+    navPrimaryColor,
+    navSecondaryColor,
+    displaySideNav,
+    displayCart,
+  } = useUI()
   const cart = useCart()
   const isScrollingInPage = !isWindowTop && !displayCart && !displaySideNav
 
@@ -44,14 +52,14 @@ const Navbar: FC = () => {
   // })
 
   const navItemStyles = {
-    background:'none',
+    background: 'none',
     border: navPrimaryColor,
-    color: isScrollingInPage ? 'black' :  navPrimaryColor,
+    color: isScrollingInPage ? 'black' : navPrimaryColor,
     transition: 'all 0.25s',
     ' svg': {
       transition: 'all 0.25s',
-      fill: isScrollingInPage ? 'black' :  navPrimaryColor,
-      stroke: isScrollingInPage ? 'black' :  navPrimaryColor,
+      fill: isScrollingInPage ? 'black' : navPrimaryColor,
+      stroke: isScrollingInPage ? 'black' : navPrimaryColor,
     },
   }
 
@@ -90,7 +98,6 @@ const Navbar: FC = () => {
           ' a': {
             ...navItemStyles,
           },
-
         }}
       >
         <Themed.div
@@ -110,7 +117,16 @@ const Navbar: FC = () => {
             }}
             onClick={toggleSideNav}
           >
-            <Hamburger height="25px" />
+            <SwitchTransition mode="out-in">
+              <CSSTransition key={displaySideNav} classNames="in-out" timeout={300}>
+                {!displaySideNav ? (
+                  <Hamburger height="25px" />
+                ) : (
+                  <Cross height="25px" />
+                )}
+
+              </CSSTransition>
+            </SwitchTransition>
           </Button>
         </Themed.div>
         <Themed.div
@@ -129,7 +145,7 @@ const Navbar: FC = () => {
               paddingLeft: '5px',
             }}
           >
-            <SpecialLogo fill={isScrollingInPage ?   'black' : navPrimaryColor} />
+            <SpecialLogo fill={isScrollingInPage ? 'black' : navPrimaryColor} />
           </Themed.a>
         </Themed.div>
         <Themed.div

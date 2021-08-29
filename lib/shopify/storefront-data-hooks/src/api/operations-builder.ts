@@ -89,6 +89,7 @@ export async function getProduct(
   const productsContent = (
     await fetch(
       `https://cdn.builder.io/api/v2/content/${config.productsModel}?${query}`
+
     ).then((res) => res.json())
   ).results
 

@@ -81,7 +81,7 @@ restrictedRegister(
     },
   },
 
-  ['product-page', 'theme']
+  ['product-page', 'theme', 'shopify-product']
 )
 
 restrictedRegister(

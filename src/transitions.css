@@ -1,0 +1,14 @@
+.in-out-enter {
+  opacity: 0;
+}
+.in-out-enter-active {
+  opacity: 1;
+  transition: all 0.3s;
+}
+.in-out-exit {
+  opacity: 1;
+}
+.in-out-exit-active {
+  opacity: 0;
+  transition: all 0.3s;
+}

@@ -17,6 +17,7 @@ import '../blocks/Button/Button.builder'
 import '../blocks/Carousel/Carousel.builder'
 import '../blocks/Footer/Footer.builder'
 import '../blocks/Marquee/Marquee.builder'
+import '../blocks/Signup/Signup.builder'
 
 
 Builder.register('insertMenu', {
@@ -24,7 +25,7 @@ Builder.register('insertMenu', {
   items: [{ name: 'CollectionBox', label: 'Collection stuff' }, { name: 'ProductCollectionGrid'}, { name: 'CollectionView' }]
 });
 
-Builder.register('insertMenu', {
+ Builder.register('insertMenu', {
   name: 'Shopify Products Components',
   items: [{ name: 'ProductGrid' } , { name: 'ProductBox'}, { name: 'ProductView'}]
 });
