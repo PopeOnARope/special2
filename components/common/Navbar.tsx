@@ -11,7 +11,11 @@ import { useUI } from '@components/ui/context'
 import Image from 'next/image'
 import Searchbar from './Searchbar'
 import { Cross, Hamburger, SpecialLogo } from '@components/icons'
-import { CSSTransition, SwitchTransition, Transition } from 'react-transition-group'
+import {
+  CSSTransition,
+  SwitchTransition,
+  Transition,
+} from 'react-transition-group'
 
 const Navbar: FC = () => {
   const [announcement, setAnnouncement] = useState()
@@ -78,6 +82,8 @@ const Navbar: FC = () => {
     }
   })
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     <React.Fragment>
       <Themed.div
@@ -117,16 +123,11 @@ const Navbar: FC = () => {
             }}
             onClick={toggleSideNav}
           >
-            <SwitchTransition mode="out-in">
-              <CSSTransition key={displaySideNav} classNames="in-out" timeout={300}>
-                {!displaySideNav ? (
-                  <Hamburger height="25px" />
-                ) : (
-                  <Cross height="25px" />
-                )}
-
-              </CSSTransition>
-            </SwitchTransition>
+            {!displaySideNav ? (
+              <Hamburger height="25px" />
+            ) : (
+              <Cross height="25px" />
+            )}
           </Button>
         </Themed.div>
         <Themed.div
