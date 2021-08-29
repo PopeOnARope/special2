@@ -85,8 +85,6 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
       displaySideNav: false,
       navPrimaryColor: prev.displayCart ? navPrimaryColor : 'black',
       navSecondaryColor: prev.displayCart ? navSecondaryColor : '#E5E5E5',
-
-
     })))
 
   const openSideNav = () =>

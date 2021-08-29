@@ -18,6 +18,8 @@ import '../blocks/Carousel/Carousel.builder'
 import '../blocks/Footer/Footer.builder'
 import '../blocks/Marquee/Marquee.builder'
 import '../blocks/Signup/Signup.builder'
+import '../blocks/About/About.builder'
+
 
 
 Builder.register('insertMenu', {
