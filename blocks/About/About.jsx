@@ -13,7 +13,7 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   height: 100%;
   background: #ffc391;
-  padding: 5rem 46px;
+  padding: 0rem 46px;
   display: inherit;
 
   .icon-enter {
@@ -46,7 +46,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             : setShownDetails(item.title)
         }}
         sx={{
-          fontSize: '2.25rem',
+          fontSize: '2rem',
           fontFamily: 'Value Sans Pro',
           color: '#fff',
           textAlign: 'left',
@@ -83,7 +83,8 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
         {item?.title}
         <SwitchTransition mode="out-in">
           <CSSTransition
-            title={shownDetails == item?.title}
+            title={shownDetails === item?.title}
+            key={shownDetails === item?.title}
             classNames="icon"
             timeout={300}
           >
