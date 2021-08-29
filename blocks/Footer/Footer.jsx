@@ -19,7 +19,7 @@ const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
       <div className="max-h-52 md:max-h-64 ml-10 flex flex-col flex-wrap md:flex-row md:flex-nowrap" style={{maxWidth: '64rem'}}>
         {sections?.map((section) => (
           <div className="md:w-1/3 flex flex-col justify-items-start mb-4">
-            <h5 className={`uppercase text-gray-400 font-bold mb-3 ${headerColor==='white' && 'text-white'}`} >
+            <h5 className={`uppercase font-bold mb-3  ${headerColor==='white' ? 'text-white' : 'text-gray-500'}`} >
               {section.title}
             </h5>
 
@@ -34,7 +34,7 @@ const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
       <div className="float-right flex flex-row mb-4">
         {bottomLinks?.map((link) => (
           <div className="mx-5">
-            <a className={`text-gray-500 ${headerColor==='white' && 'text-white'}`} href={link.url} >
+            <a className={` ${headerColor==='white' ? 'text-white' : 'text-gray-500'}`} href={link.url} >
               {link.title}
             </a>
           </div>
