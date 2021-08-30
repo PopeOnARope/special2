@@ -18,7 +18,7 @@ restrictedRegister(
     inputs: [
       {
         name: 'description',
-        type: 'longText',
+        type: 'richText',
         defaultValue: 'enter a long description of this item here!',
       },
       {
