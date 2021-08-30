@@ -105,8 +105,8 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             // marginLeft: '1.25rem',
 
           }}
+          dangerouslySetInnerHTML={item.value}
         >
-          {item.value}
         </p>
       </Collapse>
     </div>
