@@ -3,27 +3,21 @@
 //@ts-nocheck
 import React, { useMemo, useState, useEffect } from 'react'
 import { Themed, jsx } from 'theme-ui'
-import { Grid } from '@theme-ui/components'
 import Button from '../Button/Button'
 
-import Thumbnail from '@components/common/Thumbnail'
 import { ArrowLeft, ChevronUp, Plus } from '../../components/icons'
-import OptionPicker from '@components/common/OptionPicker'
 import { NextSeo } from 'next-seo'
 import { useUI } from '@components/ui/context'
-import { useAddItemToCart } from '@lib/shopify/storefront-data-hooks'
+import { useAddItemToCart, useCheckoutUrl } from '@lib/shopify/storefront-data-hooks'
 import {
   prepareVariantsWithOptions,
-  prepareVariantsImages,
   getPrice,
 } from '@lib/shopify/storefront-data-hooks/src/utils/product'
 import Image from 'next/image'
-import NoSSR from '@components/common/NoSSR'
 import { LoadingDots, Sidebar } from '@components/ui'
 import ProductLoader from './ProductLoader'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import styled from 'styled-components'
+import { useSwipeable } from 'react-swipeable'
 
 interface Props {
   className?: string
@@ -112,45 +106,42 @@ const ProductBox: React.FC<Props> = ({
     .indexOf(true)
   console.log({ peakingImageIndex })
 
-  const [variant, setVariant] = useState(variants[0] || {})
-  // const [color, setColor] = useState(variant.color)
-  // const [size, setSize] = useState(variant.size)
-
-  function IsJsonString(str) {
-    try {
-      JSON.parse(str)
-    } catch (e) {
-      return false
-    }
-    return true
+  function handlePrevious() {
+    const newPeakingImageIndex =
+      peakingImageIndex === 0 ? images.length - 1 : peakingImageIndex - 1
+    setPeakingImage(images[newPeakingImageIndex])
   }
 
-  // useEffect(() => {
-  //   const newVariant = variants.find((variant) => {
-  //     return (
-  //       (variant.size === size || !size) && (variant.color === color || !color)
-  //     )
-  //   })
-  //
-  //   if (variant.id !== newVariant?.id) {
-  //     setVariant(newVariant)
-  //     setPeakingImage(null)
-  //   }
-  // }, [size, color, variants, variant.id])
+  function handleNext() {
+    setPeakingImage(images[peakingImageIndex + 1])
+  }
+
+  const handlers = useSwipeable({
+    onSwipedLeft: handleNext,
+    onSwipedRight: handlePrevious,
+    preventDefaultTouchmoveEvent: false,
+    trackMouse: true
+  });
+
+  const [variant, setVariant] = useState(variants[0] || {})
+
+  const checkoutUrl = useCheckoutUrl()
 
   const addToCart = async () => {
     setLoading(true)
     try {
       await addItem(variant.id, 1)
-      // openCart()
+      window.open(checkoutUrl, '_blank')
       setLoading(false)
     } catch (err) {
       setLoading(false)
     }
   }
 
+  console.log({ width, peakingImageIndex })
+
   return (
-    <React.Fragment>
+    <div {...handlers} >
       {renderSeo && (
         <NextSeo
           title={title}
@@ -245,84 +236,55 @@ const ProductBox: React.FC<Props> = ({
             {peakingImageIndex !== 0 && (
               <PreviousButton
                 overlayColor={peakingImage?.overlayColor}
-                onClick={() => {
-                  const newPeakingImageIndex =
-                    peakingImageIndex === 0
-                      ? images.length - 1
-                      : peakingImageIndex - 1
-                  setPeakingImage(images[newPeakingImageIndex])
-                }}
+                onClick={handlePrevious}
               />
             )}
             {peakingImageIndex !== images.length - 1 && (
               <NextButton
                 overlayColor={peakingImage?.overlayColor}
-                onClick={() => {
-                  setPeakingImage(images[peakingImageIndex + 1])
-                }}
+                onClick={handleNext}
               />
             )}
           </div>
         </div>
-        {peakingImage.image && width > 768 && (
+        {peakingImage.image && (
           <div
             sx={{
-              border: '1px solid gray',
-              padding: 2,
+              padding: 0,
               marginBottom: 2,
               position: 'absolute',
-              zIndex: '0',
-              width: '100%',
-              height: '100%',
-              ' .slide-enter': {
-                opacity: 0,
-              },
-              '  .slide-enter-active': {
-                opacity: 1,
-                transition: 'all 0.3s',
-              },
-              ' .slide-exit': {
-                opacity: 1,
-              },
-              ' .slide-exit-active': {
-                opacity: 0,
-                transition: 'all 0.3s',
-              },
+              zIndex: '1',
+              width: width,
+              height: height,
+              overflow: 'hidden',
             }}
           >
-            <Image
-              src={peakingImage.image}
-              layout="fill"
-              objectFit="cover"
-              objectPosition="center"
-              alt={title}
-              priority
-              quality={100}
-              className="object-center object-cover pointer-events-none"
-            />
+            <div
+              className="inline-flex"
+              style={{
+                marginLeft: `-${width * peakingImageIndex}px`,
+                transition: '0.8s all',
+              }}
+            >
+              {images.map((image, idx) => (
+                <div
+                  style={{ width: width, height: height, position: 'relative' }}
+                >
+                  <Image
+                    src={image.image}
+                    layout="fill"
+                    objectFit="cover"
+                    objectPosition="center"
+                    alt={title}
+                    priority
+                    quality={100}
+                    className="object-center object-cover pointer-events-none"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         )}
-        <div className="flex w-full overflow-hidden">
-          <div></div>
-          {peakingImage.image &&
-            width <= 768 &&
-            images?.map((image, idx) => (
-              <div width={width} height={height}>
-                <Image
-                  src={image.image}
-                  layout="responsive"
-                 width={width}
-                  height={height}
-                  objectPosition="center"
-                  alt={image.alt}
-                  priority
-                  quality={100}
-                  className="object-center object-cover pointer-events-none"
-                  style={{ marginLeft: `${idx * 100}%` }}
-                />
-              </div>
-            ))}
-        </div>
       </div>
       <Sidebar
         open={displayProductDetails}
@@ -353,6 +315,7 @@ const ProductBox: React.FC<Props> = ({
         </div>
 
         <Button
+          displayAs='link'
           style={{ width: '100%' }}
           sx={{
             background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
@@ -368,6 +331,7 @@ const ProductBox: React.FC<Props> = ({
           name="add-to-cart"
           disabled={loading}
           onClick={addToCart}
+
         >
           <span className="flex flex-row justify-between mr-2">
             <span>Bag {loading && <LoadingDots />}</span>
@@ -381,7 +345,7 @@ const ProductBox: React.FC<Props> = ({
           {edition}
         </p>
       </div>
-    </React.Fragment>
+    </div>
   )
 }
 

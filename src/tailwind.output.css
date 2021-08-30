@@ -2300,8 +2300,8 @@ html {
   outline-offset: 2px;
 }
 
-.overflow-hidden{
-  overflow: hidden;
+.p-0{
+  padding: 0;
 }
 
 .p-4{

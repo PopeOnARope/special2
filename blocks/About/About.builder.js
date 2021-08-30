@@ -18,7 +18,7 @@ Builder.registerComponent(LazyText, {
         },
         {
           name: 'content',
-          type: 'longText'
+          type: 'richText'
         }
       ]
     },
