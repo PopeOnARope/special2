@@ -131,7 +131,7 @@ const ProductBox: React.FC<Props> = ({
     setLoading(true)
     try {
       await addItem(variant.id, 1)
-      window.open(checkoutUrl, '_blank')
+      window.location.href = checkoutUrl;
       setLoading(false)
     } catch (err) {
       setLoading(false)

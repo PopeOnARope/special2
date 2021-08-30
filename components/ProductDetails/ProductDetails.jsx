@@ -76,12 +76,12 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
         }}
       >
         {item?.title}
-        <SwitchTransition mode="out-in">
-          <CSSTransition
-            title={shownDetails == item?.title}
-            classNames="icon"
-            timeout={300}
-          >
+        {/*<SwitchTransition mode="out-in">*/}
+        {/*  <CSSTransition*/}
+        {/*    title={shownDetails == item?.title}*/}
+        {/*    classNames="icon"*/}
+        {/*    timeout={300}*/}
+        {/*  >*/}
             {shownDetails === item.title ? (
               <Minus height="25" width="25" />
             ) : (
@@ -91,8 +91,8 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
                 style={{ transform: 'rotate(45deg)' }}
               />
             )}
-          </CSSTransition>
-        </SwitchTransition>
+        {/*  </CSSTransition>*/}
+        {/*</SwitchTransition>*/}
       </Button>
       <Collapse isOpened={shownDetails === item.title}>
         <p
