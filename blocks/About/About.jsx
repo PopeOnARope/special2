@@ -31,7 +31,7 @@ const Wrapper = styled.div`
     transition: opacity 0.3s;
   }
   @media (max-width: 768px) {
-    padding: 5rem 1.5rem;
+    padding: 2rem 1.5rem;
   }
 `
 

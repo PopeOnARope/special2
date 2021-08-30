@@ -2300,6 +2300,10 @@ html {
   outline-offset: 2px;
 }
 
+.overflow-hidden{
+  overflow: hidden;
+}
+
 .p-4{
   padding: 1rem;
 }

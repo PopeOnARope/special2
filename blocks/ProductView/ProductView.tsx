@@ -74,21 +74,11 @@ const ProductBox: React.FC<Props> = ({
   console.log({ description, details, images, overlayColor })
   const [loading, setLoading] = useState(false)
   const addItem = useAddItemToCart()
-  // const colors: string[] | undefined = product?.options
-  //   ?.find((option) => option?.name?.toLowerCase() === 'color')
-  //   ?.values?.map((op) => op.value as string)
-  //
-  // const sizes: string[] | undefined = product?.options
-  //   ?.find((option) => option?.name?.toLowerCase() === 'size')
-  //   ?.values?.map((op) => op.value as string)
-  //
+
   const variants = useMemo(
     () => prepareVariantsWithOptions(product?.variants),
     [product?.variants]
   )
-  // const images = useMemo(() => prepareVariantsImages(variants, 'color'), [
-  //   variants,
-  // ])
 
   const {
     openCart,
@@ -103,11 +93,16 @@ const ProductBox: React.FC<Props> = ({
   })
 
   const [height, setHeight] = React.useState(780)
+  const [width, setWidth] = React.useState(780)
 
   React.useEffect(() => {
     setHeight(window.innerHeight)
   }, [])
 
+  React.useEffect(() => {
+    setWidth(window.innerWidth)
+  }, [])
+  console.log({ width })
   useEffect(() => {
     images && setPeakingImage(images[0])
   }, [])
@@ -242,7 +237,11 @@ const ProductBox: React.FC<Props> = ({
             },
           }}
         >
-          <div className={`flex flex-row ${peakingImageIndex !== 0 ? 'justify-between' : 'justify-end'}  items-start`}>
+          <div
+            className={`flex flex-row ${
+              peakingImageIndex !== 0 ? 'justify-between' : 'justify-end'
+            }  items-start`}
+          >
             {peakingImageIndex !== 0 && (
               <PreviousButton
                 overlayColor={peakingImage?.overlayColor}
@@ -265,52 +264,64 @@ const ProductBox: React.FC<Props> = ({
             )}
           </div>
         </div>
-        <div
-          sx={{
-            border: '1px solid gray',
-            padding: 2,
-            marginBottom: 2,
-            position: 'absolute',
-            zIndex: '0',
-            width: '100%',
-            height: '100%',
-            ' .slide-enter': {
-              opacity: 0,
-            },
-            '  .slide-enter-active': {
-              opacity: 1,
-              transition: 'all 0.3s',
-            },
-            ' .slide-exit': {
-              opacity: 1,
-            },
-            ' .slide-exit-active': {
-              opacity: 0,
-              transition: 'all 0.3s',
-            },
-          }}
-        >
-          {peakingImage.image && (
-            <SwitchTransition mode="out-in">
-              <CSSTransition
-                key={peakingImage.image}
-                classNames="slide"
-                timeout={300}
-                mode="in-out"
-              >
+        {peakingImage.image && width > 768 && (
+          <div
+            sx={{
+              border: '1px solid gray',
+              padding: 2,
+              marginBottom: 2,
+              position: 'absolute',
+              zIndex: '0',
+              width: '100%',
+              height: '100%',
+              ' .slide-enter': {
+                opacity: 0,
+              },
+              '  .slide-enter-active': {
+                opacity: 1,
+                transition: 'all 0.3s',
+              },
+              ' .slide-exit': {
+                opacity: 1,
+              },
+              ' .slide-exit-active': {
+                opacity: 0,
+                transition: 'all 0.3s',
+              },
+            }}
+          >
+            <Image
+              src={peakingImage.image}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center"
+              alt={title}
+              priority
+              quality={100}
+              className="object-center object-cover pointer-events-none"
+            />
+          </div>
+        )}
+        <div className="flex w-full overflow-hidden">
+          <div></div>
+          {peakingImage.image &&
+            width <= 768 &&
+            images?.map((image, idx) => (
+              <div width={width} height={height}>
                 <Image
-                  src={peakingImage.image}
-                  layout="fill"
-                  objectFit="cover"
+                  src={image.image}
+                  layout="responsive"
+                 width={width}
+                  height={height}
                   objectPosition="center"
-                  alt={title}
+                  alt={image.alt}
                   priority
                   quality={100}
                   className="object-center object-cover pointer-events-none"
+                  style={{ marginLeft: `${idx * 100}%` }}
                 />
-              </CSSTransition>
-            </SwitchTransition>
-          )}
+              </div>
+            ))}
         </div>
       </div>
       <Sidebar
