@@ -95,7 +95,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
         {/*</SwitchTransition>*/}
       </Button>
       <Collapse isOpened={shownDetails === item.title}>
-        <p
+        <div
           sx={{
             fontSize: '1.25rem',
             fontFamily: 'Value Sans Pro',
@@ -105,9 +105,10 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             // marginLeft: '1.25rem',
 
           }}
-          dangerouslySetInnerHTML={item.value}
+          dangerouslySetInnerHTML={{ __html: item.value}}
         >
-        </p>
+
+        </div>
       </Collapse>
     </div>
   )
@@ -144,7 +145,7 @@ const ProductDetails = ({ details, productDescription }) => {
 
   return (
     <Wrapper>
-      <p className="type-wrapper font-bold max-w-64">{productDescription}</p>
+      <p className="type-wrapper font-bold max-w-64" dangerouslySetInnerHTML={{__html: productDescription}></p>
       <DetailsToggle onClick={toggleProductDetails} />
       <Themed.div
         sx={{

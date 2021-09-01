@@ -35,7 +35,6 @@ const Wrapper = styled.div`
   }
 `
 
-
 const Detail = ({ shownDetails, item, setShownDetails }) => {
   return (
     <div className="w-full pb-4">
@@ -73,10 +72,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
           },
           ' @media (max-width: 768px)': {
             fontSize: '2.5rem',
-            color: 'black',
-            ' svg': {
-              color: 'black'
-            }
+            ' svg': {},
           },
         }}
       >
@@ -109,11 +105,9 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             fontWeight: 400,
             lineHeight: '2rem',
             // marginLeft: '1.25rem',
-
           }}
-        >
-          {item.content}
-        </p>
+          dangerouslySetInnerHTML={{ __html: item.content }}
+        ></p>
       </Collapse>
     </div>
   )
@@ -133,8 +127,7 @@ const DetailsToggle = ({ onClick }) => (
         marginLeft: '0rem',
       },
     }}
-  >
-  </Themed.div>
+  ></Themed.div>
 )
 
 const About = ({ sections }) => {
@@ -150,7 +143,7 @@ const About = ({ sections }) => {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          marginTop: '2rem'
+          marginTop: '2rem',
         }}
       >
         <div className="flex flex-col">
@@ -163,9 +156,7 @@ const About = ({ sections }) => {
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
-                    isShownDetails={
-                      shownDetails === item?.title
-                    }
+                    isShownDetails={shownDetails === item?.title}
                   />
                 )
               }

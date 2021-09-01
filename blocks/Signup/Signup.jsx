@@ -107,7 +107,7 @@ const Signup = ({ content }) => {
             }}
           />
           <Checkbox
-            label="I agree to Spec__ial's terms and conditions"
+            label="I agree to Spec_ial's terms and conditions"
             onChange={(e) => {
               setAgree(e.target.checked)
             }}

@@ -24,7 +24,7 @@ restrictedRegister(
       {
         name: 'details',
         type: 'list',
-        defaultValue: [{ title: 'Title', url: '#' }],
+        defaultValue: [{ title: 'Title' }],
         subFields: [
           {
             name: 'title',
@@ -32,7 +32,7 @@ restrictedRegister(
           },
           {
             name: 'value',
-            type: 'string',
+            type: 'richText',
           },
         ],
       },
@@ -40,6 +40,7 @@ restrictedRegister(
       {
         name: 'images',
         type: 'list',
+        defaultValue:[{image: '', overlayColor: 'rgba(255,255,255,1)'}],
         subFields: [
           {
             name: 'image',
