@@ -16,8 +16,6 @@ const collectionBoxSchema: Input[] = [
         imgPriority: true,
         imgLayout: 'responsive',
         imgLoading: 'eager',
-        imgWidth: 540,
-        imgHeight: 540,
         layout: 'fixed',
       },
     },

@@ -8,7 +8,10 @@ import Button from '../Button/Button'
 import { ArrowLeft, ChevronUp, Plus } from '../../components/icons'
 import { NextSeo } from 'next-seo'
 import { useUI } from '@components/ui/context'
-import { useAddItemToCart, useCheckoutUrl } from '@lib/shopify/storefront-data-hooks'
+import {
+  useAddItemToCart,
+  useCheckoutUrl,
+} from '@lib/shopify/storefront-data-hooks'
 import {
   prepareVariantsWithOptions,
   getPrice,
@@ -65,7 +68,6 @@ const ProductBox: React.FC<Props> = ({
   edition,
   collection,
 }) => {
-  console.log({ description, details, images, overlayColor })
   const [loading, setLoading] = useState(false)
   const addItem = useAddItemToCart()
 
@@ -88,6 +90,7 @@ const ProductBox: React.FC<Props> = ({
 
   const [height, setHeight] = React.useState(780)
   const [width, setWidth] = React.useState(780)
+  const [margin, setMargin] = React.useState(0)
 
   React.useEffect(() => {
     setHeight(window.innerHeight)
@@ -96,7 +99,6 @@ const ProductBox: React.FC<Props> = ({
   React.useEffect(() => {
     setWidth(window.innerWidth)
   }, [])
-  console.log({ width })
   useEffect(() => {
     images && setPeakingImage(images[0])
   }, [])
@@ -104,24 +106,23 @@ const ProductBox: React.FC<Props> = ({
   const peakingImageIndex = images
     ?.map((_image) => _image.image === peakingImage.image)
     .indexOf(true)
-  console.log({ peakingImageIndex })
 
   function handlePrevious() {
-    const newPeakingImageIndex =
-      peakingImageIndex === 0 ? images.length - 1 : peakingImageIndex - 1
-    setPeakingImage(images[newPeakingImageIndex])
+
+      peakingImageIndex > 0 && setPeakingImage(images[peakingImageIndex-1])
   }
 
   function handleNext() {
-    setPeakingImage(images[peakingImageIndex + 1])
+    peakingImageIndex < images.length-1 &&
+      setPeakingImage(images[peakingImageIndex + 1])
   }
 
   const handlers = useSwipeable({
     onSwipedLeft: handleNext,
     onSwipedRight: handlePrevious,
     preventDefaultTouchmoveEvent: false,
-    trackMouse: true
-  });
+    trackMouse: true,
+  })
 
   const [variant, setVariant] = useState(variants[0] || {})
 
@@ -131,17 +132,41 @@ const ProductBox: React.FC<Props> = ({
     setLoading(true)
     try {
       await addItem(variant.id, 1)
-      window.location.href = checkoutUrl;
+      window.location.href = checkoutUrl
       setLoading(false)
     } catch (err) {
       setLoading(false)
     }
   }
 
-  console.log({ width, peakingImageIndex })
+
+  React.useEffect(() => {
+    //ON first render, give a 'content tease' to indicate user should swipe
+    if (width < 781) {
+      setTimeout(() => {
+        setMargin(50)
+      }, 500)
+      setTimeout(() => {
+        setMargin(0)
+      }, 1200)
+    }
+
+    // var ls = localStorage.getItem('namespace.visited');
+    // if (ls == null) {
+    //   alert("Your first visit");
+    //   localStorage.setItem('namespace.visited', 1)
+    // }
+  }, [])
+
+  React.useEffect(() => {
+    window.addEventListener('resize', () => {
+      setHeight(window.innerHeight - 42)
+      setWidth(window.innerWidth)
+    })
+  })
 
   return (
-    <div {...handlers} >
+    <div {...handlers}>
       {renderSeo && (
         <NextSeo
           title={title}
@@ -262,7 +287,7 @@ const ProductBox: React.FC<Props> = ({
             <div
               className="inline-flex"
               style={{
-                marginLeft: `-${width * peakingImageIndex}px`,
+                marginLeft: `-${margin || width * peakingImageIndex}px`,
                 transition: '0.8s all',
               }}
             >
@@ -315,7 +340,7 @@ const ProductBox: React.FC<Props> = ({
         </div>
 
         <Button
-          displayAs='link'
+          displayAs="link"
           style={{ width: '100%' }}
           sx={{
             background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
@@ -331,7 +356,6 @@ const ProductBox: React.FC<Props> = ({
           name="add-to-cart"
           disabled={loading}
           onClick={addToCart}
-
         >
           <span className="flex flex-row justify-between mr-2">
             <span>Bag {loading && <LoadingDots />}</span>

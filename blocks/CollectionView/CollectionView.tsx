@@ -63,9 +63,7 @@ const CollectionPreview: FC<Props> = ({
         />
       )}
 
-      <Themed.div sx={{ p: 5 }}>
         <ProductGrid {...productGridOptions} products={products} />
-      </Themed.div>
     </Themed.div>
   )
 }

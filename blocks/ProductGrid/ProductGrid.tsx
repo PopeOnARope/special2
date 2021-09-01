@@ -78,7 +78,7 @@ export const ProductGrid: FC<ProductGridProps> = ({
 
   return (
     <div className='flex flex-col items-center'>
-      <div className="flex flex-col w-763">
+      <div className="flex flex-col w-full md:w-2/3 lg:w-1/2">
         {products.slice(offset, limit).map((product, i) => (
           <ProductComponent
             key={String(product.id) + i}
@@ -88,17 +88,5 @@ export const ProductGrid: FC<ProductGridProps> = ({
         ))}
       </div>
     </div>
-  )
-
-  return (
-    <Grid gap={2} width={['100%', '40%', '24%']}>
-      {products.slice(offset, limit).map((product, i) => (
-        <ProductComponent
-          key={String(product.id) + i}
-          {...(highlightCard?.index === i ? highlightCard : cardProps)}
-          product={product}
-        />
-      ))}
-    </Grid>
   )
 }

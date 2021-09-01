@@ -30,7 +30,7 @@ const Navbar: FC = () => {
     displayCart,
   } = useUI()
   const cart = useCart()
-  const isScrollingInPage = !isWindowTop && !displayCart && !displaySideNav
+  const isScrollingInPage = false
 
   useEffect(() => {
     async function fetchContent() {
@@ -58,7 +58,7 @@ const Navbar: FC = () => {
   const navItemStyles = {
     background: 'none',
     border: navPrimaryColor,
-    color: isScrollingInPage ? 'black' : navPrimaryColor,
+    color: navPrimaryColor,
     transition: 'all 0.25s',
     ' svg': {
       transition: 'all 0.25s',
@@ -92,7 +92,7 @@ const Navbar: FC = () => {
           margin: `0`,
           // maxWidth: 1920,
           padding: '0rem 1.25rem',
-          background: isScrollingInPage ? 'rgba(255,255,255,0.5)' : 'none',
+          background: 'none',
           transition: 'background 0.3s',
           display: 'flex',
           justifyContent: 'space-between',
