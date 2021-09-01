@@ -145,7 +145,7 @@ const ProductDetails = ({ details, productDescription }) => {
 
   return (
     <Wrapper>
-      <p className="type-wrapper font-bold max-w-64" dangerouslySetInnerHTML={{__html: productDescription}></p>
+      <p className="type-wrapper font-bold max-w-64" dangerouslySetInnerHTML={{__html: productDescription}}></p>
       <DetailsToggle onClick={toggleProductDetails} />
       <Themed.div
         sx={{
