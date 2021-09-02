@@ -57,8 +57,6 @@
   position: absolute;
   display: flex;
   flex-direction: row;
-
-
 }
 
 .model-toggle .toggle-switch {
@@ -89,4 +87,13 @@
   align-self: flex-end;
   margin-bottom: 2.25rem;
   margin-right: 2rem;
+}
+
+@media (max-width: 768px) {
+  .model-toggle {
+    margin-bottom: 20rem;
+  }
+}
+
+.model-toggle {
 }

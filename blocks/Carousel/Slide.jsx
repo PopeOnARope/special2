@@ -135,7 +135,7 @@ const Slide = ({ slide, height, width }) => {
 const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
 
   console.log({ slide })
-  const fittedVideos = slide.videos
+  const fittedVideos = width < 768 && slide.mobileVideos ? slide.mobileVideos : slide.videos
   return (
     <Wrapper height={height}>
       <div className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3" style={{height: `${height}px`}}>
