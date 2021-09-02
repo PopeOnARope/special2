@@ -9,10 +9,14 @@ import Footer from '../../blocks/Footer/Footer'
 
 const SideNav = () => {
   const { navigationLinks, footerSections, bottomLinks, toggleSideNav } = useUI()
+  const [height, setheight] = React.useState(780)
+  React.useEffect(()=>{
+    setheight(window.innerHeight)
+  })
   return (
     <Themed.div
       sx={{
-        height: '100%',
+        height: height,
         background: '#FFC391',
         display: 'flex',
         flexDirection: 'column',
