@@ -2,8 +2,6 @@
 
 @import './Carousel.css';
 
-@import './NavBar.css';
-
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -2095,6 +2093,14 @@ video {
 
 .prose-2xl > :last-child{
   margin-bottom: 0;
+}
+
+button:active{
+  outline: none;
+}
+
+a:active{
+  outline: none;
 }
 
 html {

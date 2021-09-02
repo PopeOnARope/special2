@@ -49,11 +49,11 @@
   }
 }
 
-button:active{
+button:focus{
   outline: none;
 }
 
-a:active{
+a:focus{
   outline: none;
 }
 

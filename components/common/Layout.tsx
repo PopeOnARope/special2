@@ -43,13 +43,15 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
           const siteSeoInfo = data?.siteInformation
           return (
             <ManagedUIContext key={data?.id} siteSettings={siteSettings}>
-              <Head seoInfo={siteSeoInfo || seoConfig} />
-              <InnerLayout
-                themeName={data?.theme || 'base'}
-                colorOverrides={colorOverrides}
-              >
-                {children}
-              </InnerLayout>
+              <div className="type-wrapper">
+                <Head seoInfo={siteSeoInfo || seoConfig} />
+                <InnerLayout
+                  themeName={data?.theme || 'base'}
+                  colorOverrides={colorOverrides}
+                >
+                  {children}
+                </InnerLayout>
+              </div>
             </ManagedUIContext>
           )
         }}
@@ -104,13 +106,18 @@ const InnerLayout: React.FC<{
       >
         <CartSidebarView />
       </Sidebar>
-      <Sidebar open={displaySideNav} onClose={closeSideNav} from="left" zIndex={1000}>
+      <Sidebar
+        open={displaySideNav}
+        onClose={closeSideNav}
+        from="left"
+        zIndex={1000}
+      >
         <SideNav />
       </Sidebar>
 
       <NoSSR>
         <FeatureBar
-          title="This site uses cookies to improve your experience. By clicking, you agree to our Privacy Policy."
+          title="We use cookies to ensure that we give you the best experience."
           hide={Builder.isEditing ? true : acceptedCookies}
           action={
             <Button onClick={() => onAcceptCookies()}>Accept cookies</Button>
