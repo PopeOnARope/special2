@@ -9,12 +9,9 @@ const Wrapper = styled.div`
   }
   font-family: Value Sans Pro;
   font-size: 14px;
-  width: 100%;
-  min-width: 15ch;
-  max-width: 30ch;
+
   border-radius: 0;
-  padding: 0.25em 0.5em;
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   cursor: pointer;
   line-height: 1.1;
   background-color: #fff;

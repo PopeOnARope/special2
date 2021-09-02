@@ -124,8 +124,8 @@ const DetailsToggle = ({ onClick }) => (
       zIndex: 6,
       position: 'absolute',
       ' @media (max-width: 768px)': {
-        bottom: '14rem',
-        marginLeft: '0rem',
+        bottom: '20rem',
+        marginLeft: '-1rem',
       },
     }}
   >

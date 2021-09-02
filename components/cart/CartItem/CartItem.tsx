@@ -37,7 +37,9 @@ const CartItem = ({
   const [details, setDetails] = useState(false)
   const [removing, setRemoving] = useState(false)
   const updateQuantity = async (quantity: number) => {
-    await updateItem(item.variant.id, quantity)
+    console.log({quantity})
+    const q = typeof(quantity) === 'number' ? quantity : parseFloat(quantity)
+    await updateItem(item.variant.id, q)
   }
   const handleQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     const val = Number(e.target.value)
@@ -82,18 +84,8 @@ const CartItem = ({
   }, [item.quantity])
 
   return (
-    <Themed.div
-      sx={{
-        width: '50rem',
-        display: 'inline-flex',
-        fontFamily: 'Value Sans Pro',
-      }}
-    >
-      <Themed.div
-        sx={{
-          width: '17.875rem',
-        }}
-      >
+    <div className="flex flex-row p-2 w-full">
+      <div className="w-2/5">
         <Image
           height={123}
           width={286}
@@ -101,8 +93,8 @@ const CartItem = ({
           alt={item.variant.image.altText}
           src={item.variant.image.src}
         />
-      </Themed.div>
-      <Themed.div sx={{ height: '100%', width: '12rem', marginLeft: '2rem' }}>
+      </div>
+      <div className='px-2'>
         <Themed.div
           as={Link}
           href={`/product/${item.variant.product.handle}/`}
@@ -111,35 +103,26 @@ const CartItem = ({
           <h1
             sx={{
               fontWeight: 700,
-              fontSize: '1rem',
+              fontSize: '1.2rem',
               fontFamily: 'Value Sans Pro',
             }}
           >
             {item.title}
           </h1>
         </Themed.div>
-        <Themed.ul sx={{ fontSize: '0.7rem', color: '#888' }}>
+        <Themed.ul sx={{ fontSize: '0.7rem', color: '#222' }}>
           <li>100% Carbon Offset</li>
           <li>Shipped in Recycled Packaging</li>
           <li>Free Shipping in 2 - 4 Business Days</li>
         </Themed.ul>
-      </Themed.div>
-      <Themed.div
-        sx={{
-          height: '100%',
-          marginLeft: '2rem',
-          fontFamily: 'Value Sans Pro',
-          fontWeight: 'Bold',
-        }}
-      >
+      </div>
+      <div className='font-bold'>
         {getPrice(
           item.variant.priceV2.amount,
           item.variant.priceV2.currencyCode || 'USD'
         )}
-      </Themed.div>
-      <Themed.div
-        sx={{ display: 'flex', justifyItems: 'center', marginLeft: '4rem' }}
-      >
+      </div>
+      <div className="p-1 m-1 pt-0">
         <label>
           <Select
             options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
@@ -147,13 +130,11 @@ const CartItem = ({
               label: num,
             }))}
             value={quantity}
-            onChange={handleQuantity}
-
+            onChange={(e)=>{updateQuantity(e.target.value)}}
           />
-
         </label>
-      </Themed.div>
-    </Themed.div>
+      </div>
+    </div>
   )
 
   return (

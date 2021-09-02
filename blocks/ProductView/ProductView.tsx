@@ -132,7 +132,7 @@ const ProductBox: React.FC<Props> = ({
     setLoading(true)
     try {
       await addItem(variant.id, 1)
-      window.location.href = checkoutUrl
+      openCart();
       setLoading(false)
     } catch (err) {
       setLoading(false)
@@ -340,7 +340,6 @@ const ProductBox: React.FC<Props> = ({
         </div>
 
         <Button
-          displayAs="link"
           style={{ width: '100%' }}
           sx={{
             background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
