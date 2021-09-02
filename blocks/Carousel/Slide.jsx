@@ -104,7 +104,7 @@ const ChevronDown = styled.div`
 
 
 
-const Slide = ({ slide, height }) => {
+const Slide = ({ slide, height, width }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
@@ -131,10 +131,11 @@ const Slide = ({ slide, height }) => {
   }
 }
 
+
 const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
 
   console.log({ slide })
-  // return <div></div>
+  const fittedVideos = slide.videos
   return (
     <Wrapper height={height}>
       <div className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3" style={{height: `${height}px`}}>
@@ -171,21 +172,21 @@ const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
         </div>
       </div>
       {slide.videos &&
-        Object.keys(slide.videos).map((video) => (
+        Object.keys(fittedVideos).map((video) => (
           <Video
             height={height}
-            src={slide.videos[video]}
+            src={fittedVideos[video]}
             autoPlay
             poster={slide.image}
             muted
             loop
             playsInline
-            show={currentSlideVideos === slide.videos[video]}
+            show={currentSlideVideos === fittedVideos[video]}
           >
-            <source src={slide.videos[video]} type='video/mp4'/>
+            <source src={fittedVideos[video]} type='video/mp4'/>
           </Video>
         ))}
-      {!slide.videos && slide.image && (
+      {!fittedVideos && slide.image && (
         <Image src={slide.image} height={height} />
       )}
 
@@ -206,7 +207,7 @@ const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
             setCurrentModel('model1')
           }}
         >
-          {slide.videos?.model1Name}
+          {fittedVideos?.model1Name}
         </button>
         <div className="toggle-switch">
           <div className="toggle-button" style={{marginLeft: toggleModelMarginLeft}}></div>
@@ -217,7 +218,7 @@ const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
             setCurrentModel('model2')
           }}
         >
-          {slide.videos?.model2Name}
+          {fittedVideos?.model2Name}
         </button>
       </div>
     </Wrapper>

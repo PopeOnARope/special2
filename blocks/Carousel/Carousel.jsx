@@ -34,12 +34,11 @@ const Wrapper = styled.div`
   }
 `
 
-
-
 const Carousel = (props) => {
   const { slides } = props
 
   const [height, setHeight] = React.useState(780)
+  const [width, setWidth] = React.useState(780)
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
@@ -48,13 +47,16 @@ const Carousel = (props) => {
   const [playing, toggle] = useAudio(props.sound)
 
   React.useEffect(() => {
-    window.addEventListener('resize', () => setHeight(window.innerHeight - 42))
+    window.addEventListener('resize', () => {
+      setWidth(window.innerWidth)
+      setHeight(window.innerHeight - 42)
+    })
   })
 
   React.useEffect(() => {
     setHeight(window.innerHeight - 42)
+    setWidth(window.innerWidth)
   }, [])
-
 
   if (!slides) {
     return (
@@ -83,7 +85,7 @@ const Carousel = (props) => {
     : ''
   return (
     <Wrapper height={height}>
-      <div className='sound-control' onClick={toggle} height={height}>
+      <div className="sound-control" onClick={toggle} height={height}>
         Sound Is {playing ? 'on' : 'off'}
       </div>
       <SwitchTransition mode="out-in">
@@ -91,6 +93,7 @@ const Carousel = (props) => {
           <Slide
             sound={props.sound}
             height={height}
+            width={width}
             slide={slides[currentSlide]}
           />
         </CSSTransition>
