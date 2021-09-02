@@ -102,45 +102,61 @@ const ChevronDown = styled.div`
   transform: rotate(180deg);
 `
 
-
-
 const Slide = ({ slide, height, width }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
 
-  const { image, titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
+  const {
+    image,
+    titleLine1,
+    titleLine2,
+    buttonLabel,
+    buttonUrl,
+    videos,
+    mobileVideos,
+  } = slide
   const collectionAvailable = true
 
-  const currentSlideVideos = slide.videos
-    ? slide.videos[`${currentModel}${timeOfDay}`]
-    : ''
-
- function toggleSwitchMarginTop(){
-  if (timeOfDay === 'Night') {
-    return '0rem'
-  }
-  if (timeOfDay === 'Dusk') {
-    return '1.8rem'
-  }
-  if (timeOfDay === 'Day') {
-    return '3.5rem'
-  }
-  if (timeOfDay === 'Dawn') {
-    return '5.5rem'
-  }
-}
 
 
-const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
+  function toggleSwitchMarginTop() {
+    if (timeOfDay === 'Night') {
+      return '0rem'
+    }
+    if (timeOfDay === 'Dusk') {
+      return '1.8rem'
+    }
+    if (timeOfDay === 'Day') {
+      return '3.5rem'
+    }
+    if (timeOfDay === 'Dawn') {
+      return '5.5rem'
+    }
+  }
+
+  const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
 
   console.log({ slide })
-  const fittedVideos = width < 768 && slide.mobileVideos ? slide.mobileVideos : slide.videos
+  console.log({width})
+  const fittedVideos =
+    width < 768 && slide.mobileVideos ? slide.mobileVideos : slide.videos
+
+  const currentSlideVideos = fittedVideos
+    ? fittedVideos[`${currentModel}${timeOfDay}`]
+    : ''
+  console.log({mv: slide.mobileVideos, v: slide.videos})
   return (
     <Wrapper height={height}>
-      <div className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3" style={{height: `${height}px`}}>
-        <div className='time-toggle' >
-          <div className="toggle-switch" style={{marginTop: toggleSwitchMarginTop()}}></div>
+      <div
+        className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3"
+        style={{ height: `${height}px` }}
+      >
+        <div className="time-toggle">
+          <div
+            className="toggle-switch"
+            style={{ marginTop: toggleSwitchMarginTop() }}
+          ></div>
           <button
             onClick={() => {
               setTimeOfDay('Night')
@@ -183,7 +199,7 @@ const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
             playsInline
             show={currentSlideVideos === fittedVideos[video]}
           >
-            <source src={fittedVideos[video]} type='video/mp4'/>
+            <source src={fittedVideos[video]} type="video/mp4" />
           </Video>
         ))}
       {!fittedVideos && slide.image && (
@@ -201,16 +217,19 @@ const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
           </Button>
         )}
       </div>
-      <div className='model-toggle'>
+      <div className="model-toggle">
         <button
           onClick={() => {
             setCurrentModel('model1')
           }}
         >
-          {fittedVideos?.model1Name}
+          {slide?.model1Name}
         </button>
         <div className="toggle-switch">
-          <div className="toggle-button" style={{marginLeft: toggleModelMarginLeft}}></div>
+          <div
+            className="toggle-button"
+            style={{ marginLeft: toggleModelMarginLeft }}
+          ></div>
         </div>
 
         <button
@@ -218,7 +237,7 @@ const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
             setCurrentModel('model2')
           }}
         >
-          {fittedVideos?.model2Name}
+          {slide?.model2Name}
         </button>
       </div>
     </Wrapper>

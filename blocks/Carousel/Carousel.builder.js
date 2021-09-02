@@ -11,7 +11,7 @@ Builder.registerComponent(LazyText, {
     {
       name: 'sound',
       type: 'file',
-      allowedFileTypes: ['mp3', 'mpeg']
+      allowedFileTypes: ['mp3', 'mpeg'],
     },
     {
       name: 'slides',
@@ -39,17 +39,16 @@ Builder.registerComponent(LazyText, {
           allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg'],
         },
         {
-          name:'useBackgroundVideo',
-          type:'boolean',
-          defaultValue: true
+          name: 'useBackgroundVideo',
+          type: 'boolean',
+          defaultValue: true,
         },
+        { name: 'model1Name', type: 'string', defaultValue: 'model1Name' },
+        { name: 'model2Name', type: 'string', defaultValue: 'model2Name' },
         {
           name: 'videos',
           type: 'object',
           subFields: [
-            { name: 'model1Name', type: 'string', defaultValue: 'model1Name' },
-            { name: 'model2Name', type: 'string', defaultValue: 'model2Name' },
-
             {
               name: 'model1Night',
               type: 'file',
@@ -96,9 +95,6 @@ Builder.registerComponent(LazyText, {
           name: 'mobileVideos',
           type: 'object',
           subFields: [
-            { name: 'model1Name', type: 'string', defaultValue: 'model1Name' },
-            { name: 'model2Name', type: 'string', defaultValue: 'model2Name' },
-
             {
               name: 'model1Night',
               type: 'file',
