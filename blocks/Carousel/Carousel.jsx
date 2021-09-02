@@ -34,24 +34,7 @@ const Wrapper = styled.div`
   }
 `
 
-const SoundControl = styled.button`
-  color: white;
-  z-index: 3;
-  position: absolute;
-  align-self: center;
-  transform: rotate(-90deg);
-  width: 5rem;
-  float: right;
-  font-size: 0.8rem;
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    border-bottom: 2px solid white;
-  }
-  transition: 0.3s ease-in-out;
-  cursor: pointer;
-`
+
 
 const Carousel = (props) => {
   const { slides } = props
@@ -71,33 +54,6 @@ const Carousel = (props) => {
   React.useEffect(() => {
     setHeight(window.innerHeight - 42)
   }, [])
-
-  React.useEffect(() => {
-    const useHandleScroll = (event) => {
-      const isScrollingDown =
-        event.deltaY > 1 && currentSlide < slides.length + 1
-      const isScrollingUp =
-        event.deltaY < 1 && currentSlide > 0 && !window.scrollY
-      const isTop = !window.scrollY
-
-      console.log({ isScrollingUp, isScrollingDown, currentSlide, isTop, event })
-
-      if (isScrollingUp && currentSlide !== 0 && isTop) {
-        event.stopPropagation()
-        setCurrentSlide(currentSlide - 1)
-      }
-      if (isScrollingDown && currentSlide < slides.length -1 && isTop) {
-        event.stopPropagation()
-        setCurrentSlide(currentSlide + 1)
-      }
-
-      // setCurrentSlide(currentSlide + 1 < slides.length ? currentSlide + 1 : 0)
-    }
-    window.addEventListener('wheel', useHandleScroll, { passive: false })
-    return function cleanup() {
-      window.removeEventListener('wheel', useHandleScroll)
-    }
-  })
 
 
   if (!slides) {
@@ -127,9 +83,9 @@ const Carousel = (props) => {
     : ''
   return (
     <Wrapper height={height}>
-      <SoundControl onClick={toggle} height={height}>
+      <div className='sound-control' onClick={toggle} height={height}>
         Sound Is {playing ? 'on' : 'off'}
-      </SoundControl>
+      </div>
       <SwitchTransition mode="out-in">
         <CSSTransition key={currentSlide} classNames="slide" timeout={300}>
           <Slide

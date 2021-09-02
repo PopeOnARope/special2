@@ -1,0 +1,19 @@
+.sound-control {
+  color: white;
+  z-index: 3;
+  position: absolute;
+  align-self: center;
+  transform: rotate(-90deg);
+  width: 5rem;
+  float: right;
+  font-size: 0.8rem;
+  transition: 0.3s ease-in-out;
+  cursor: pointer;
+}
+.sound-control:focus {
+  outline: none;
+}
+.sound-control:hover {
+  border-bottom: 2px solid white;
+}
+
