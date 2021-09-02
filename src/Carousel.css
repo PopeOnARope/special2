@@ -17,3 +17,76 @@
   border-bottom: 2px solid white;
 }
 
+.time-toggle {
+  margin-top: 11rem;
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  z-index: 3;
+  border-right: 1px solid white;
+}
+.time-toggle button {
+  color: white;
+  padding: 0.25rem 1.25rem;
+  font-size: 0.75rem;
+}
+.time-toggle :focus {
+  outline: none;
+}
+.time-toggle :first-of-type {
+  padding-top: 0px;
+}
+.time-toggle :last-of-type {
+  padding-bottom: 0px;
+}
+.time-toggle .toggle-switch {
+  background: white;
+  height: 0.6rem;
+  width: 1.2rem;
+  align-self: flex-end;
+  position: absolute;
+  transition: 0.3s ease-in-out;
+  margin-right: -0.7rem;
+  margin-left: 0.7rem;
+  display: inline-block;
+}
+.model-toggle {
+  z-index: 3;
+  align-items: center;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+
+
+}
+
+.model-toggle .toggle-switch {
+  border: 1px solid white;
+  width: 2rem;
+  height: 0px;
+  display: flex;
+  align-items: center;
+}
+.model-toggle .toggle-switch .toggle-button {
+  position: absolute;
+  background: white;
+  height: 1.2rem;
+  width: 0.75rem;
+  transition: 0.3s ease-in-out;
+}
+
+.model-toggle button {
+  color: white;
+  padding: 15px;
+  font-size: 0.75rem;
+}
+.model-toggle button:focus {
+  outline: none;
+}
+
+.model-toggle {
+  align-self: flex-end;
+  margin-bottom: 2.25rem;
+  margin-right: 2rem;
+}

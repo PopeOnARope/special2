@@ -68,11 +68,7 @@ const ModelToggle = styled.div`
     align-items: center;
     .toggle-button {
       position: absolute;
-      margin-left: ${({ currentModel }) => {
-        if (currentModel === 'model2') {
-          return '1.2rem;'
-        }
-      }};
+
       background: white;
       height: 1.2rem;
       width: 0.75rem;
@@ -106,58 +102,7 @@ const ChevronDown = styled.div`
   transform: rotate(180deg);
 `
 
-const TimeToggle = styled.div`
-  margin-top: 11rem;
-  display: flex;
-  flex-direction: column;
-  //margin-bottom: ${({ height }) => 0.5 * height + 'px'};
-  //margin-top: auto;
-  position: absolute;
-  //align-self: center;
-  z-index: 3;
-  border-right: 1px solid white;
-  button {
-    color: white;
-    padding: 0.25rem 1.25rem;
-    font-size: 0.75rem;
-    &:focus {
-      outline: none;
-    }
-    &:first-of-type {
-      padding-top: 0px;
-    }
-    &:last-of-type {
-      padding-bottom: 0px;
-    }
-  }
 
-  .toggle-switch {
-    background: white;
-    height: 0.6rem;
-    width: 1.2rem;
-    align-self: flex-end;
-    position: absolute;
-    transition: 0.3s ease-in-out;
-    margin-right: -0.7rem;
-    // hack for mobile, why do we need this?
-    margin-left: 0.7rem;
-    display: inline-block;
-    margin-top: ${({ timeOfDay }) => {
-      if (timeOfDay === 'Night') {
-        return '0rem;'
-      }
-      if (timeOfDay === 'Dusk') {
-        return '1.8rem;'
-      }
-      if (timeOfDay === 'Day') {
-        return '3.5rem;'
-      }
-      if (timeOfDay === 'Dawn') {
-        return '5.5rem;'
-      }
-    }};
-  }
-`
 
 const Slide = ({ slide, height }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
@@ -171,13 +116,30 @@ const Slide = ({ slide, height }) => {
     ? slide.videos[`${currentModel}${timeOfDay}`]
     : ''
 
+ function toggleSwitchMarginTop(){
+  if (timeOfDay === 'Night') {
+    return '0rem'
+  }
+  if (timeOfDay === 'Dusk') {
+    return '1.8rem'
+  }
+  if (timeOfDay === 'Day') {
+    return '3.5rem'
+  }
+  if (timeOfDay === 'Dawn') {
+    return '5.5rem'
+  }
+}
+
+const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
+
   console.log({ slide })
   // return <div></div>
   return (
     <Wrapper height={height}>
       <div className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3" style={{height: `${height}px`}}>
-        <TimeToggle timeOfDay={timeOfDay}>
-          <div className="toggle-switch"></div>
+        <div className='time-toggle' >
+          <div className="toggle-switch" style={{marginTop: toggleSwitchMarginTop()}}></div>
           <button
             onClick={() => {
               setTimeOfDay('Night')
@@ -206,7 +168,7 @@ const Slide = ({ slide, height }) => {
           >
             Dawn
           </button>
-        </TimeToggle>
+        </div>
       </div>
       {slide.videos &&
         Object.keys(slide.videos).map((video) => (
@@ -238,7 +200,7 @@ const Slide = ({ slide, height }) => {
           </Button>
         )}
       </div>
-      <ModelToggle currentModel={currentModel} height={height}>
+      <div className='model-toggle'>
         <button
           onClick={() => {
             setCurrentModel('model1')
@@ -247,7 +209,7 @@ const Slide = ({ slide, height }) => {
           {slide.videos?.model1Name}
         </button>
         <div className="toggle-switch">
-          <div className="toggle-button"></div>
+          <div className="toggle-button" style={{marginLeft: toggleModelMarginLeft}}></div>
         </div>
 
         <button
@@ -257,7 +219,7 @@ const Slide = ({ slide, height }) => {
         >
           {slide.videos?.model2Name}
         </button>
-      </ModelToggle>
+      </div>
     </Wrapper>
   )
 }
