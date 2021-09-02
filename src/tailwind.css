@@ -49,6 +49,14 @@
   }
 }
 
+button:active{
+  outline: none;
+}
+
+a:active{
+  outline: none;
+}
+
 html {
   font-size: 12px;
 }
