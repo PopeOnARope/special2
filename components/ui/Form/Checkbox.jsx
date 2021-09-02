@@ -51,7 +51,7 @@ const Wrapper = styled.div`
     margin-top: 0;
   }
 `
-const Checkbox = ({ label, name, onChange }) => (
+const Checkbox = ({ label, name, onChange, checked }) => (
   <Wrapper>
     <input
       id="checkbox-2"
@@ -59,9 +59,9 @@ const Checkbox = ({ label, name, onChange }) => (
       name="checkbox-2"
       type="checkbox"
       onChange={(e)=>{onChange(e)}}
+      checked={checked}
     />
-    <label htmlFor="checkbox-2" className="checkbox-custom-label">
-      {label}
+    <label htmlFor="checkbox-2" className="checkbox-custom-label" dangerouslySetInnerHTML={{__html: label}}>
     </label>
   </Wrapper>
 )

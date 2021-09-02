@@ -8,7 +8,7 @@ const Signup = ({ content }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phone, setPhone] = React.useState('')
-  const [agree, setAgree] = React.useState(false)
+  const [agree, setAgree] = React.useState(true)
   const [error, setError] = React.useState('')
   const [formStatus, setFormStatus] = React.useState('initial')
 
@@ -107,10 +107,11 @@ const Signup = ({ content }) => {
             }}
           />
           <Checkbox
-            label="I agree to Spec_ial's terms and conditions"
+            label="I agree to Spec_ial's <a style=text-decoration: 'revert' href='/terms-and-condition'>terms and conditions</a>"
             onChange={(e) => {
               setAgree(e.target.checked)
             }}
+            checked={agree}
           />
           <Button
             onClick={handleSubmit}
