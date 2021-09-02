@@ -1,0 +1,39 @@
+.navbar button:focus {
+  outline: none;
+}
+
+.nav-black {
+  color: black;
+  transition: 0.3s all;
+}
+
+.nav-black svg {
+  fill: black !important;
+  transition: 0.3s all;
+}
+
+.nav-black button {
+  color: black;
+  transition: 0.3s all;
+}
+
+.nav-white {
+  color: white;
+  transition: 0.3s all;
+}
+
+.nav-white svg {
+  fill: white !important;
+  transition: 0.3s all;
+}
+.nav-white button {
+  color: white;
+  transition: 0.3s all;
+}
+
+.hover-orange svg:hover,
+.hover-orange button:hover {
+  color: #ffc391;
+  fill: #ffc391 !important;
+  stroke: #ffc391;
+}

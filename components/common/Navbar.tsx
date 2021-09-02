@@ -1,167 +1,79 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React, { FC, useState, useEffect } from 'react'
-import Link from 'next/link'
-import { UserNav } from '@components/common'
-import env from '@config/env'
-import { BuilderComponent, builder } from '@builder.io/react'
 import { useCart } from '@lib/shopify/storefront-data-hooks'
 import { jsx, Themed, useThemeUI, Button } from 'theme-ui'
 import { useUI } from '@components/ui/context'
-import Image from 'next/image'
-import Searchbar from './Searchbar'
 import { Cross, Hamburger, SpecialLogo } from '@components/icons'
-import {
-  CSSTransition,
-  SwitchTransition,
-  Transition,
-} from 'react-transition-group'
+
 
 const Navbar: FC = () => {
   const [announcement, setAnnouncement] = useState()
   const [isWindowTop, setIsWindowTop] = useState(true)
+  const [navClassNames, setNavClassNames] = useState('white')
   const { theme } = useThemeUI()
-  const {
-    logo,
-    toggleSideNav,
-    navPrimaryColor,
-    navSecondaryColor,
-    displaySideNav,
-    displayCart,
-  } = useUI()
+  const { toggleSideNav, toggleCart, displaySideNav, displayCart } = useUI()
   const cart = useCart()
+
+  const totalItems = cart?.lineItems
+    ?.map((item) => item.quantity)
+    .reduce((num, tot) => num + tot, 0)
   const isScrollingInPage = false
 
-  useEffect(() => {
-    async function fetchContent() {
-      const items = cart?.lineItems || []
-      const anouncementContent = await builder
-        .get('announcement-bar', {
-          cachebust: env.isDev,
-          userAttributes: {
-            itemInCart: items.map((item: any) => item.variant.product.handle),
-          } as any,
-        })
-        .toPromise()
-      setAnnouncement(anouncementContent)
+  function getNavClassNames() {
+    let classNames = ''
+    if (
+      window.location.href.includes('collection/seven') ||
+      window.location.href.includes('product') ||
+      displaySideNav ||
+      displayCart
+    ) {
+      classNames += ' nav-black'
+    } else {
+      classNames += ' nav-white'
     }
-    fetchContent()
-  }, [cart?.lineItems])
+    if (
+      !displaySideNav &&
+      !window.location.href.includes('product') &&
+      !window.location.href.includes('about')
 
-  const [bg, setBg] = React.useState('none')
-  // React.useEffect(()=>{
-  //   window.addEventListener('scroll', ()=>{
-  //     if(!window.scrollY)
-  //   })
-  // })
-
-  const navItemStyles = {
-    background: 'none',
-    border: navPrimaryColor,
-    color: navPrimaryColor,
-    transition: 'all 0.25s',
-    ' svg': {
-      transition: 'all 0.25s',
-      fill: isScrollingInPage ? 'black' : navPrimaryColor,
-      stroke: isScrollingInPage ? 'black' : navPrimaryColor,
-    },
+    ) {
+      classNames += ' hover-orange'
+    }
+    console.log({ classNames })
+    return classNames;
   }
 
-  React.useEffect(() => {
-    function updateScrollTop() {
-      const _isWindowTop = !window.scrollY
-      const { scrollY } = window
-      if (_isWindowTop !== isWindowTop) {
-        console.log(isWindowTop)
-        setIsWindowTop(_isWindowTop)
-      }
-    }
-    window.addEventListener('scroll', updateScrollTop, { passive: false })
-    return function cleanup() {
-      window.removeEventListener('scroll', updateScrollTop)
-    }
+  useEffect(() => {
+    setNavClassNames(getNavClassNames())
   })
 
-  // @ts-ignore
-  // @ts-ignore
   return (
-    <React.Fragment>
-      <Themed.div
-        as="header"
-        sx={{
-          margin: `0`,
-          // maxWidth: 1920,
-          padding: '0rem 1.25rem',
-          background: 'none',
-          transition: 'background 0.3s',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          height: '5rem',
-          position: 'fixed',
-          zIndex: '2000',
-          ' a': {
-            ...navItemStyles,
-          },
-        }}
-      >
-        <Themed.div
-          sx={{
-            // display: ['none', 'none', 'flex'],
-            flexBasis: 0,
-            minWidth: 240,
-            justifyContent: 'space-evenly',
-          }}
-        >
-          <Button
-            sx={{
-              ...navItemStyles,
-              padding: '0',
-              height: '100%',
-              '&:focus': { outline: 0 },
-            }}
-            onClick={toggleSideNav}
-          >
-            {!displaySideNav ? (
-              <Hamburger height="25px" />
-            ) : (
-              <Cross height="25px" />
-            )}
-          </Button>
-        </Themed.div>
-        <Themed.div
-          sx={{
-            transform: 'translateX(-50%)',
-            left: '50%',
-            position: 'absolute',
-          }}
-        >
-          <Themed.a
-            as={Link}
-            href="/"
-            sx={{
-              letterSpacing: -1,
-              textDecoration: `none`,
-              paddingLeft: '5px',
-            }}
-          >
-            <SpecialLogo fill={isScrollingInPage ? 'black' : navPrimaryColor} />
-          </Themed.a>
-        </Themed.div>
-        <Themed.div
-          sx={{
-            display: 'flex',
-            minWidth: 140,
-            width: '100%',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <UserNav isScrollingInPage={isScrollingInPage} />
-        </Themed.div>
-      </Themed.div>
-    </React.Fragment>
+    <nav
+      className={`navbar flex flex-row justify-between py-4  w-full fixed ${navClassNames}`}
+      style={{ zIndex: 5000 }}
+    >
+      <div className="px-4 justify-center flex flex-col">
+        <button onClick={toggleSideNav} style={{ mixBlendMode: 'difference' }}>
+          {!displaySideNav ? (
+            <Hamburger height="25px" />
+          ) : (
+            <Cross height="25px" />
+          )}
+        </button>
+      </div>
+      <div className="px-4 justify-center flex flex-col">
+        <a href="/" style={{ mixBlendMode: 'difference' }}>
+          {' '}
+          <SpecialLogo />
+        </a>
+      </div>
+      <div className="px-4 justify-center flex flex-col">
+        <button onClick={toggleCart}>{totalItems}</button>
+      </div>
+    </nav>
   )
+
 }
 
 export default Navbar
