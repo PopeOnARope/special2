@@ -2095,11 +2095,11 @@ video {
   margin-bottom: 0;
 }
 
-button:active{
+button:focus{
   outline: none;
 }
 
-a:active{
+a:focus{
   outline: none;
 }
 

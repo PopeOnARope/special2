@@ -5,6 +5,7 @@ import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
 import { H1, SecondaryH1 } from '../../components/Typography'
 import { CSSTransition } from 'react-transition-group'
+import { LoadingDots } from '../../components/ui'
 
 const Wrapper = styled.div`
   height: ${({ height }) => height}px;
@@ -32,6 +33,18 @@ const Wrapper = styled.div`
       margin: 3rem;
     }
   }
+`
+const Loading = styled.div`
+  position: absolute;
+  //background: black;
+  height: 100%;
+  width: 100%;
+  z-index: 10000;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 const Video = styled.video`
@@ -106,6 +119,7 @@ const Slide = ({ slide, height, width }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
+  const [loading, setLoading] = React.useState(true)
 
   const {
     image,
@@ -117,8 +131,6 @@ const Slide = ({ slide, height, width }) => {
     mobileVideos,
   } = slide
   const collectionAvailable = true
-
-
 
   function toggleSwitchMarginTop() {
     if (timeOfDay === 'Night') {
@@ -138,16 +150,18 @@ const Slide = ({ slide, height, width }) => {
   const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
 
   console.log({ slide })
-  console.log({width})
+  console.log({ width })
   const fittedVideos =
     width < 768 && slide.mobileVideos ? slide.mobileVideos : slide.videos
 
   const currentSlideVideos = fittedVideos
     ? fittedVideos[`${currentModel}${timeOfDay}`]
     : ''
-  console.log({mv: slide.mobileVideos, v: slide.videos})
+  console.log({ mv: slide.mobileVideos, v: slide.videos })
+
   return (
     <Wrapper height={height}>
+      {loading && <Loading>loading<LoadingDots/></Loading>}
       <div
         className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3"
         style={{ height: `${height}px` }}
@@ -198,7 +212,9 @@ const Slide = ({ slide, height, width }) => {
             loop
             playsInline
             show={currentSlideVideos === fittedVideos[video]}
+            onLoadedData={() => {currentSlideVideos === fittedVideos[video] && setLoading(false)}}
           >
+            >
             <source src={fittedVideos[video]} type="video/mp4" />
           </Video>
         ))}

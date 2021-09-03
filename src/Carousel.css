@@ -7,7 +7,7 @@
   width: 5rem;
   float: right;
   font-size: 0.8rem;
-  transition: 0.3s ease-in-out;
+  transition: border-bottom 0.3s ease-in-out;
   cursor: pointer;
 }
 .sound-control:focus {
@@ -35,10 +35,10 @@
   outline: none;
 }
 .time-toggle :first-of-type {
-  padding-top: 0px;
+  padding-top: 0;
 }
 .time-toggle :last-of-type {
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 .time-toggle .toggle-switch {
   background: white;
@@ -62,7 +62,7 @@
 .model-toggle .toggle-switch {
   border: 1px solid white;
   width: 2rem;
-  height: 0px;
+  height: 0;
   display: flex;
   align-items: center;
 }
