@@ -214,7 +214,7 @@ const Slide = ({ slide, height, width }) => {
             show={currentSlideVideos === fittedVideos[video]}
             onLoadedData={() => {currentSlideVideos === fittedVideos[video] && setLoading(false)}}
           >
-            >
+
             <source src={fittedVideos[video]} type="video/mp4" />
           </Video>
         ))}
