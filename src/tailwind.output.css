@@ -5118,6 +5118,10 @@ html {
     margin-bottom: 0;
   }
 
+  .md\:block{
+    display: block;
+  }
+
   .md\:inline-flex{
     display: inline-flex;
   }

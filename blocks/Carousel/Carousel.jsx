@@ -85,7 +85,7 @@ const Carousel = (props) => {
     : ''
   return (
     <Wrapper height={height}>
-      <div className="sound-control" onClick={toggle} height={height}>
+      <div className="sound-control hidden md:block" onClick={toggle} height={height}>
         Sound Is {playing ? 'on' : 'off'}
       </div>
       <SwitchTransition mode="out-in">

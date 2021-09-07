@@ -91,6 +91,6 @@
 
 @media (max-width: 768px) {
   .model-toggle {
-    margin-bottom: 20rem;
+    bottom: 12rem;
   }
 }
