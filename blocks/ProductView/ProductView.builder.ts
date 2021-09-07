@@ -54,6 +54,17 @@ restrictedRegister(
             type: 'color',
             defaultValue: 'rgba(255,255,255,1)'
           },
+          {
+            name: 'backgroundColor',
+            type: 'color',
+            defaultValue: 'rgba(255,255,255,1)'
+          },
+          {
+            name: 'display',
+            type: 'string',
+            enum: ['cover', 'contain'],
+            defaultValue: 'cover'
+          },
         ],
       },
       {
@@ -73,6 +84,17 @@ restrictedRegister(
             name: 'overlayColor',
             type: 'color',
             defaultValue: 'rgba(255,255,255,1)'
+          },
+          {
+            name: 'backgroundColor',
+            type: 'color',
+            defaultValue: 'rgba(255,255,255,1)'
+          },
+          {
+            name: 'display',
+            type: 'string',
+            enum: ['cover', 'contain'],
+            defaultValue: 'cover'
           },
         ],
       },

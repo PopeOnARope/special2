@@ -62,7 +62,6 @@ const ProductBox: React.FC<Props> = ({
   details,
   images: _images,
   mobileImages,
-  overlayColor,
   renderSeo = true,
   seoDescription = product.description,
   title,
@@ -205,7 +204,8 @@ const ProductBox: React.FC<Props> = ({
           position: 'relative',
           height: height,
           width: '100vw',
-          backgroundColor: 'black',
+          backgroundColor: peakingImage.backgroundColor || 'black',
+          transition: '0.3S background'
         }}
         className="type-wrapper"
       >
@@ -312,7 +312,7 @@ const ProductBox: React.FC<Props> = ({
                   <Image
                     src={image.image}
                     layout="fill"
-                    objectFit="cover"
+                    objectFit={image.display || 'cover'}
                     objectPosition="center"
                     alt={title}
                     priority
