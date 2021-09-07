@@ -84,12 +84,12 @@ const CartItem = ({
   }, [item.quantity])
 
   return (
-    <div className="flex flex-row p-2 w-full">
-      <div className="w-2/5">
+    <div className="flex flex-row justify-between p-2 w-full min-h-8 md:p-4 lg:justify-around lg:justify max-w-4xl">
+      <div className="w-1/3 md:w-1/4 relative">
         <Image
-          height={123}
-          width={286}
-          unoptimized
+          layout="fill"
+          objectFit='cover'
+          objectPosition="top"
           alt={item.variant.image.altText}
           src={item.variant.image.src}
         />
@@ -112,8 +112,8 @@ const CartItem = ({
         </Themed.div>
         <Themed.ul sx={{ fontSize: '0.7rem', color: '#222' }}>
           <li>100% Carbon Offset</li>
-          <li>Shipped in Recycled Packaging</li>
-          <li>Free Shipping in 2 - 4 Business Days</li>
+          <li>Limited Edition of 200</li>
+          <li>Free 2-day Shipping within The United States</li>
         </Themed.ul>
       </div>
       <div className='font-bold'>
@@ -125,7 +125,7 @@ const CartItem = ({
       <div className="p-1 m-1 pt-0">
         <label>
           <Select
-            options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
+            options={[0, 1, 2, 3, 4].map((num) => ({
               value: num,
               label: num,
             }))}

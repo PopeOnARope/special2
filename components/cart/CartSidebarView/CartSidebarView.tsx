@@ -80,8 +80,8 @@ const CartSidebarView: FC = () => {
       ) : (
         <div className='type-wrapper'>
           <div className="w-full"><button onClick={toggleCart} className='flex flex-row items-center'><ArrowLeft orientation='left'/> Keep Shopping</button></div>
-          <div className="flex flex-col justify-center lg:flex-row">
-            <div>
+          <div className="flex flex-col justify-center lg:flex-row lg:justify-end w-full">
+            <div className='flex-grow max-w-4xl'>
               {items.map((item: any) => (
                 <CartItem
                   key={item.id}
