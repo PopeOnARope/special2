@@ -60,7 +60,8 @@ const ProductBox: React.FC<Props> = ({
   product,
   description,
   details,
-  images,
+  images: _images,
+  mobileImages,
   overlayColor,
   renderSeo = true,
   seoDescription = product.description,
@@ -69,6 +70,13 @@ const ProductBox: React.FC<Props> = ({
   collection,
 }) => {
   const [loading, setLoading] = useState(false)
+  const [height, setHeight] = useState(640)
+  const [width, setWidth] = useState(640)
+  const [margin, setMargin] = useState(0)
+  const [images, setImages] = useState([])
+
+  console.log({ height, width, images })
+
   const addItem = useAddItemToCart()
 
   const variants = useMemo(
@@ -88,19 +96,13 @@ const ProductBox: React.FC<Props> = ({
     overlayColor: 'white',
   })
 
-  const [height, setHeight] = React.useState(780)
-  const [width, setWidth] = React.useState(780)
-  const [margin, setMargin] = React.useState(0)
-
-  React.useEffect(() => {
-    setHeight(window.innerHeight)
-  }, [])
-
-  React.useEffect(() => {
-    setWidth(window.innerWidth)
-  }, [])
   useEffect(() => {
-    images && setPeakingImage(images[0])
+    const w = window.innerWidth
+    const i = w < 640 ? mobileImages || _images : _images
+    setWidth(w)
+    setHeight(window.innerHeight)
+    setImages(i)
+    setPeakingImage(i[0])
   }, [])
 
   const peakingImageIndex = images
@@ -108,12 +110,11 @@ const ProductBox: React.FC<Props> = ({
     .indexOf(true)
 
   function handlePrevious() {
-
-      peakingImageIndex > 0 && setPeakingImage(images[peakingImageIndex-1])
+    peakingImageIndex > 0 && setPeakingImage(images[peakingImageIndex - 1])
   }
 
   function handleNext() {
-    peakingImageIndex < images.length-1 &&
+    peakingImageIndex < images.length - 1 &&
       setPeakingImage(images[peakingImageIndex + 1])
   }
 
@@ -132,38 +133,49 @@ const ProductBox: React.FC<Props> = ({
     setLoading(true)
     try {
       await addItem(variant.id, 1)
-      openCart();
+      openCart()
       setLoading(false)
     } catch (err) {
       setLoading(false)
     }
   }
 
-
   React.useEffect(() => {
-    //ON first render, give a 'content tease' to indicate user should swipe
-    if (width < 781) {
+    var ls = localStorage.getItem('namespace.visited')
+    if (ls == null) {
+      //ON first render, give a 'content tease' to indicate user should swipe
       setTimeout(() => {
         setMargin(50)
       }, 500)
       setTimeout(() => {
         setMargin(0)
       }, 1200)
+      localStorage.setItem('namespace.visited', 1)
     }
-
-    // var ls = localStorage.getItem('namespace.visited');
-    // if (ls == null) {
-    //   alert("Your first visit");
-    //   localStorage.setItem('namespace.visited', 1)
-    // }
   }, [])
 
   React.useEffect(() => {
     window.addEventListener('resize', () => {
+      const w = window.innerWidth
+      const i = w < 640 ? mobileImages || images : _images
       setHeight(window.innerHeight - 42)
-      setWidth(window.innerWidth)
+      setWidth(w)
+      if(i !== images) {
+        setImages(i)
+        setPeakingImage(i[0])
+      }
     })
   })
+
+  if (!images) {
+    return (
+      <div style={{ height: height + 'px', width: width + 'px' }}>
+        <span>
+          loading <LoadingDots />
+        </span>
+      </div>
+    )
+  }
 
   return (
     <div {...handlers}>
@@ -201,7 +213,9 @@ const ProductBox: React.FC<Props> = ({
           <div
             style={{
               background: '#ffc391',
-              width: `${(peakingImageIndex + 1) * (100 / images.length)}%`,
+              width: `${
+                (peakingImageIndex + 1) * (100 / (images?.length || 1))
+              }%`,
               height: '100%',
               transition: 'all 0.5s cubic-bezier( 0.4, 0.02, 0.53, 1 )',
             }}
@@ -264,7 +278,7 @@ const ProductBox: React.FC<Props> = ({
                 onClick={handlePrevious}
               />
             )}
-            {peakingImageIndex !== images.length - 1 && (
+            {peakingImageIndex !== (images?.length - 1 || 0) && (
               <NextButton
                 overlayColor={peakingImage?.overlayColor}
                 onClick={handleNext}

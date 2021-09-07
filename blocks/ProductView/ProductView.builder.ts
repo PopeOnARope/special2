@@ -36,9 +36,28 @@ restrictedRegister(
           },
         ],
       },
-
       {
         name: 'images',
+        type: 'list',
+        defaultValue:[{image: '', overlayColor: 'rgba(255,255,255,1)'}],
+        subFields: [
+          {
+            name: 'image',
+            type: 'file',
+          },
+          {
+            name: 'altText',
+            type: 'text',
+          },
+          {
+            name: 'overlayColor',
+            type: 'color',
+            defaultValue: 'rgba(255,255,255,1)'
+          },
+        ],
+      },
+      {
+        name: 'mobileImages',
         type: 'list',
         defaultValue:[{image: '', overlayColor: 'rgba(255,255,255,1)'}],
         subFields: [
