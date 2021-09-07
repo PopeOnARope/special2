@@ -89,7 +89,7 @@ const CartItem = ({
         <Image
           layout="fill"
           objectFit='cover'
-          objectPosition="top"
+          objectPosition="center"
           alt={item.variant.image.altText}
           src={item.variant.image.src}
         />
