@@ -175,7 +175,7 @@ const ProductBox: React.FC<Props> = ({
   }
 
   return (
-    <div {...handlers} className={`${displayProductDetails ? 'relative' : 'absolute'}`}>
+    <div {...handlers} className={displayProductDetails ? 'relative' : 'fixed'}>
       {renderSeo && (
         <NextSeo
           title={title}
