@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   margin: 32px;
+  display: inline-flex;
   font-family: Value Sans Pro;
   label {
     font-size: 1.2rem !important;
@@ -63,7 +64,7 @@ const Checkbox = ({ label, name, onChange, checked }) => (
     />
     <label htmlFor="checkbox-2" className="checkbox-custom-label">
     </label>
-    <p className='checkbox-custom-label' dangerouslySetInnerHTML={{__html: label}}></p>
+    <span className='checkbox-custom-label' dangerouslySetInnerHTML={{__html: label}}></span>
   </Wrapper>
 )
 export default Checkbox
