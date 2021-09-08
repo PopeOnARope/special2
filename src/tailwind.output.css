@@ -2257,6 +2257,10 @@ html {
   margin-bottom: 0;
 }
 
+.mt-2{
+  margin-top: 0.5rem;
+}
+
 .mr-2{
   margin-right: 0.5rem;
 }

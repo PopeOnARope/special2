@@ -7,18 +7,20 @@ import { LoadingDots } from '../../components/ui'
 const Signup = ({ content }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
-  const [phone, setPhone] = React.useState('')
+  const [phoneNumber, setPhone] = React.useState('')
   const [agree, setAgree] = React.useState(true)
   const [error, setError] = React.useState('')
   const [formStatus, setFormStatus] = React.useState('initial')
 
+
+
   async function postData() {
-    const data = `g='XKvFZS'&email=${email}&name=${name}&phone=${phone}`
+    const data = `g='XKvFZS'&email=${email}&name=${name}&phoneNumber=${phoneNumber}`
 
     var urlencoded = new URLSearchParams()
     urlencoded.append('g', 'XKvFZS')
     urlencoded.append('email', email)
-    urlencoded.append('phone', phone)
+    urlencoded.append('phone_number', phoneNumber)
     urlencoded.append('name', name)
     console.log({ data, urlencoded })
 
@@ -60,7 +62,7 @@ const Signup = ({ content }) => {
     //if success set submitState to success
   }
 
-  console.log({ agree, name, phone, email })
+  console.log({ agree, name, phoneNumber, email })
   return (
     <div className="px-10 mx-auto md:my-20 mb-20">
       <div className="flex flex-col md:flex-row justify-items-start md:justify-center">
@@ -96,7 +98,7 @@ const Signup = ({ content }) => {
             }}
           />
           <TextInput
-            name="phone"
+            name="phoneNumber"
             label="Phone SMS ( 01-02 texts every 03 months )"
             onChange={(e) => {
               if (error) {

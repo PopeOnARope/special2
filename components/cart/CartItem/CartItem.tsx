@@ -122,8 +122,7 @@ const CartItem = ({
           item.variant.priceV2.currencyCode || 'USD'
         )}
       </div>
-      <div className="p-1 m-1 pt-0">
-        <label>
+      <div className="p-1 m-1 pt-0 flex flex-col items-center">
           <Select
             options={[0, 1, 2, 3, 4].map((num) => ({
               value: num,
@@ -132,7 +131,7 @@ const CartItem = ({
             value={quantity}
             onChange={(e)=>{updateQuantity(e.target.value)}}
           />
-        </label>
+          <button className='mt-2 text-gray-500' onClick={()=>{updateQuantity(0)}}>remove</button>
       </div>
     </div>
   )

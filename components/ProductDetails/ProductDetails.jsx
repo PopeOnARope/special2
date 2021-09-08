@@ -11,7 +11,7 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  height: 100%;
+  min-height: 100%;
   background: #ffc391;
   padding: 5rem 46px;
   display: inherit;
@@ -32,6 +32,9 @@ const Wrapper = styled.div`
   }
   @media (max-width: 768px) {
     padding: 5rem 1.5rem;
+  }
+  @media (max-width: 640px) {
+    padding: 5rem 2.5rem;
   }
 `
 
@@ -71,7 +74,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             opacity: 1,
           },
           ' @media (max-width: 768px)': {
-            fontSize: '2.5rem',
+            fontSize: '2rem',
           },
         }}
       >
@@ -111,16 +114,20 @@ const DetailsToggle = ({ onClick }) => (
       marginLeft: '-1rem',
       bottom: '10rem',
       alignSelf: 'flex-end',
-      zIndex: 6,
+      zIndex: '10000',
       position: 'absolute',
       ' @media (max-width: 768px)': {
         bottom: '20rem',
         marginLeft: '-1rem',
       },
+      ' @media (max-width: 640px)': {
+        bottom: '30rem',
+        marginLeft: '-3.25rem',
+      },
     }}
   >
     <button
-      className="active:outline-none focus:outline-none flex flex-row"
+      className="active:outline-none focus:outline-none flex flex-row justify-center items-center"
       onClick={onClick}
       style={{transform: 'rotate(90deg)'}}
     >
