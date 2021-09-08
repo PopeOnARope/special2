@@ -58,6 +58,22 @@ const Carousel = (props) => {
     setWidth(window.innerWidth)
   }, [])
 
+  React.useEffect(() => {
+    const d = new Date();
+    const h = d.getHours()
+    if(h<6 || h>9) {
+      setTimeOfDay('night')
+    }
+    if(h>=6 && h<9) {
+      setTimeOfDay('dawn')
+    }
+    if(h>=9 && h<17) {
+      setTimeOfDay('day')
+    }
+    if(h>=17 && h<19)
+    setTimeOfDay('dusk')
+  }, [])
+
   if (!slides) {
     return (
       <Wrapper>
