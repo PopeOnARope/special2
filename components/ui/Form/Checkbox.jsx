@@ -61,8 +61,9 @@ const Checkbox = ({ label, name, onChange, checked }) => (
       onChange={(e)=>{onChange(e)}}
       checked={checked}
     />
-    <label htmlFor="checkbox-2" className="checkbox-custom-label" dangerouslySetInnerHTML={{__html: label}}>
+    <label htmlFor="checkbox-2" className="checkbox-custom-label">
     </label>
+    <p className='checkbox-custom-label' dangerouslySetInnerHTML={{__html: label}}></p>
   </Wrapper>
 )
 export default Checkbox

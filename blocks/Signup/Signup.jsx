@@ -101,7 +101,7 @@ const Signup = ({ content }) => {
             }}
           />
           <Checkbox
-            label="I agree to Spec_ial's <a style=text-decoration: 'revert' href='/terms-and-conditions'>terms and conditions</a>"
+            label="I agree to Spec_ial's <a className='text-underline' href='/terms-and-conditions'>terms and conditions</a>"
             onChange={(e) => {
               setAgree(e.target.checked)
             }}
