@@ -111,14 +111,13 @@ const DetailsToggle = ({ onClick }) => (
   <Themed.div
     className="text-white hover:cursor-pointer"
     sx={{
-      marginLeft: '-1rem',
+      marginLeft: '-3rem',
       bottom: '10rem',
       alignSelf: 'flex-end',
       zIndex: '10000',
       position: 'absolute',
       ' @media (max-width: 768px)': {
         bottom: '20rem',
-        marginLeft: '-1rem',
       },
       ' @media (max-width: 640px)': {
         bottom: '30rem',

@@ -177,7 +177,7 @@ const ProductBox: React.FC<Props> = ({
   }
 
   return (
-    <div {...handlers}>
+    <div {...handlers} className={`${displayProductDetails ? 'relative' : 'absolute'}`}>
       {renderSeo && (
         <NextSeo
           title={title}
@@ -231,6 +231,7 @@ const ProductBox: React.FC<Props> = ({
             zIndex: 6,
             ' @media (max-width: 768px)': {
               bottom: '18rem',
+              marginLeft: '-3rem'
             },
           }}
         >
