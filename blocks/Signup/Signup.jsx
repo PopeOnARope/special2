@@ -22,7 +22,6 @@ const Signup = ({ content }) => {
     urlencoded.append('email', email)
     urlencoded.append('phone_number', phoneNumber)
     urlencoded.append('name', name)
-    console.log({ data, urlencoded })
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {
@@ -40,7 +39,6 @@ const Signup = ({ content }) => {
     setFormStatus('loading')
     postData()
       .then((r) => {
-        console.log({ r })
         if (r.errors.length) {
           setFormStatus('error')
           setError(r.errors[0])
@@ -49,7 +47,6 @@ const Signup = ({ content }) => {
       })
       .catch((r) => {
         setFormStatus('error')
-        console.log({ r })
         if (r?.errors?.length) {
           setError(r?.errors[0])
         } else {
@@ -62,7 +59,6 @@ const Signup = ({ content }) => {
     //if success set submitState to success
   }
 
-  console.log({ agree, name, phoneNumber, email })
   return (
     <div className="px-10 mx-auto md:my-20 mb-20">
       <div className="flex flex-col md:flex-row justify-items-start md:justify-center">

@@ -19,7 +19,6 @@ import Select from '@components/ui/Form/Select'
 
 function getDetails(config: BuillderConfig, id: string) {
   return getProduct(config, { id }).then((r) => {
-    console.log({ r })
     return r.description
   })
 }
@@ -37,7 +36,6 @@ const CartItem = ({
   const [details, setDetails] = useState(false)
   const [removing, setRemoving] = useState(false)
   const updateQuantity = async (quantity: number) => {
-    console.log({quantity})
     const q = typeof(quantity) === 'number' ? quantity : parseFloat(quantity)
     await updateItem(item.variant.id, q)
   }

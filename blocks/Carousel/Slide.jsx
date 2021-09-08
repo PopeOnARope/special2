@@ -149,15 +149,13 @@ const Slide = ({ slide, height, width }) => {
 
   const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
 
-  console.log({ slide })
-  console.log({ width })
+
   const fittedVideos =
     width < 768 && slide.mobileVideos ? slide.mobileVideos : slide.videos
 
   const currentSlideVideos = fittedVideos
     ? fittedVideos[`${currentModel}${timeOfDay}`]
     : ''
-  console.log({ mv: slide.mobileVideos, v: slide.videos })
 
   return (
     <Wrapper height={height}>

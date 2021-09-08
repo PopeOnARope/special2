@@ -45,7 +45,7 @@ export async function getStaticProps({
 
 export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   const paths = await getAllCollectionPaths(builderConfig)
-  console.log({paths})
+
   return {
     paths: paths.map((path) => `/collection/${path}`),
     //hard coding this for now because wtf, why does it keep trying to load old collections?

@@ -138,7 +138,6 @@ const DetailsToggle = ({ onClick }) => (
 
 const ProductDetails = ({ details, productDescription }) => {
   const { toggleProductDetails } = useUI()
-  console.log({ details })
   const [shownDetails, setShownDetails] = React.useState('')
 
   return (
@@ -160,7 +159,6 @@ const ProductDetails = ({ details, productDescription }) => {
           <div className="flex flex-col w-full lg:w-1/2">
             {details?.map((item, idx) => {
               if (idx < 6) {
-                console.log({ item })
                 return (
                   <Detail
                     item={item}

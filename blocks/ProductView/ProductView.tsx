@@ -74,8 +74,6 @@ const ProductBox: React.FC<Props> = ({
   const [margin, setMargin] = useState(0)
   const [images, setImages] = useState([])
 
-  console.log({ height, width, images })
-
   const addItem = useAddItemToCart()
 
   const variants = useMemo(

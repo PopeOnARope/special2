@@ -160,8 +160,7 @@ export async function searchCollections(
     },
     { allowDots: true }
   )
-  console.log('**************')
-  console.log({config})
+
   const collectionsContent = (
 
     await fetch(
@@ -185,8 +184,6 @@ export async function getAllCollectionPaths(
   limit?: number
 ): Promise<string[]> {
   const collections: any[] = await getAllCollections(config, limit)
-  console.log('****************')
-  console.log({ collections })
   return collections?.map((entry) => entry.handle) || []
 }
 

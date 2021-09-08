@@ -49,7 +49,6 @@ const CartSidebarView: FC = () => {
   const subTotal = cart?.subtotalPrice
   const tax = cart?.totalTax
   const total = cart?.totalPrice
-  console.log({ cart })
 
   const items = cart?.lineItems ?? []
   const isEmpty = items.length === 0

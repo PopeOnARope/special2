@@ -43,7 +43,6 @@ export const UIProvider: FC<{ siteSettings: Partial<State> }> = ({
   children,
 }) => {
   const { asPath } = useRouter()
-  console.log({ siteSettings })
 
   const [state, setState] = React.useState({
     ...initialState,

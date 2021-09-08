@@ -40,7 +40,6 @@ const Navbar: FC = () => {
     ) {
       classNames += ' hover-orange'
     }
-    console.log({ classNames })
     return classNames;
   }
 
