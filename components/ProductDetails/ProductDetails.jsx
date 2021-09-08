@@ -76,23 +76,16 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
         }}
       >
         {item?.title}
-        {/*<SwitchTransition mode="out-in">*/}
-        {/*  <CSSTransition*/}
-        {/*    title={shownDetails == item?.title}*/}
-        {/*    classNames="icon"*/}
-        {/*    timeout={300}*/}
-        {/*  >*/}
-            {shownDetails === item.title ? (
-              <Minus height="25" width="25" />
-            ) : (
-              <Cross
-                height="25"
-                width="25"
-                style={{ transform: 'rotate(45deg)' }}
-              />
-            )}
-        {/*  </CSSTransition>*/}
-        {/*</SwitchTransition>*/}
+
+        {shownDetails === item.title ? (
+          <Minus height="25" width="25" />
+        ) : (
+          <Cross
+            height="25"
+            width="25"
+            style={{ transform: 'rotate(45deg)' }}
+          />
+        )}
       </Button>
       <Collapse isOpened={shownDetails === item.title}>
         <div
@@ -103,12 +96,9 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             fontWeight: 400,
             lineHeight: '2rem',
             // marginLeft: '1.25rem',
-
           }}
-          dangerouslySetInnerHTML={{ __html: item.value}}
-        >
-
-        </div>
+          dangerouslySetInnerHTML={{ __html: item.value }}
+        ></div>
       </Collapse>
     </div>
   )
@@ -119,7 +109,7 @@ const DetailsToggle = ({ onClick }) => (
     className="text-white hover:cursor-pointer"
     sx={{
       marginLeft: '-1rem',
-      bottom: '6rem',
+      bottom: '10rem',
       alignSelf: 'flex-end',
       zIndex: 6,
       position: 'absolute',
@@ -130,10 +120,12 @@ const DetailsToggle = ({ onClick }) => (
     }}
   >
     <button
-      className="active:outline-none focus:outline-none"
+      className="active:outline-none focus:outline-none flex flex-row"
       onClick={onClick}
+      style={{transform: 'rotate(90deg)'}}
     >
-      <ArrowLeft orientation="right" />
+      close
+      <ArrowLeft orientation='down' />
     </button>
   </Themed.div>
 )
@@ -145,14 +137,17 @@ const ProductDetails = ({ details, productDescription }) => {
 
   return (
     <Wrapper>
-      <p className="type-wrapper font-bold max-w-64" dangerouslySetInnerHTML={{__html: productDescription}}></p>
+      <p
+        className="type-wrapper font-bold max-w-64"
+        dangerouslySetInnerHTML={{ __html: productDescription }}
+      ></p>
       <DetailsToggle onClick={toggleProductDetails} />
       <Themed.div
         sx={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          marginTop: '2rem'
+          marginTop: '2rem',
         }}
       >
         <div className="flex flex-col lg:flex-row">
@@ -165,9 +160,7 @@ const ProductDetails = ({ details, productDescription }) => {
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
-                    isShownDetails={
-                      shownDetails === item?.title
-                    }
+                    isShownDetails={shownDetails === item?.title}
                   />
                 )
               }
