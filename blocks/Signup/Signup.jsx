@@ -53,10 +53,6 @@ const Signup = ({ content }) => {
           setError('Something went wrong. Please try again later.')
         }
       })
-
-    //try posting
-    //if error, set submitState
-    //if success set submitState to success
   }
 
   return (
@@ -84,7 +80,7 @@ const Signup = ({ content }) => {
           />
           <TextInput
             name="email"
-            label="Email ( 01-02 emails every month )"
+            label="Email"
             onChange={(e) => {
               if (error) {
                 setError(false)
@@ -95,7 +91,7 @@ const Signup = ({ content }) => {
           />
           <TextInput
             name="phoneNumber"
-            label="Phone SMS ( 01-02 texts every 03 months )"
+            label="Phone SMS"
             onChange={(e) => {
               if (error) {
                 setError(false)
@@ -105,7 +101,7 @@ const Signup = ({ content }) => {
             }}
           />
           <Checkbox
-            label="I agree to Spec_ial's <a style=text-decoration: 'revert' href='/terms-and-condition'>terms and conditions</a>"
+            label="I agree to Spec_ial's <a style=text-decoration: 'revert' href='/terms-and-conditions'>terms and conditions</a>"
             onChange={(e) => {
               setAgree(e.target.checked)
             }}
