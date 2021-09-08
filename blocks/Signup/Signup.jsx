@@ -61,10 +61,10 @@ const Signup = ({ content }) => {
         <div className="md:max-w-lg md:mr-12 md:w-763">
           <h1 className="primary-h1 hidden md:inline-flex"> Spec_ial</h1>
           <h1 className="secondary-h1 hidden md:inline-flex"> Club</h1>
-          <h1 className="heading text-5xl py-8-24 md:hidden text-center">
+          <h1 className="heading text-4xl py-8-24 md:hidden text-center">
             Spec_ial Club
           </h1>
-          <p style={{ fontSize: '1.25rem', padding: '1.25rem 0' }}>{content}</p>
+          <p style={{ fontSize: '1rem', padding: '1.25rem 0' }}>{content}</p>
         </div>
         <div className="md:max-w-3xl">
           <TextInput

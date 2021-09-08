@@ -48,7 +48,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
             : setShownDetails(item.title)
         }}
         sx={{
-          fontSize: '2.75rem',
+          fontSize: '2.25rem',
           fontFamily: 'Value Sans Pro',
           color: '#fff',
           textAlign: 'left',
@@ -126,11 +126,11 @@ const DetailsToggle = ({ onClick }) => (
     }}
   >
     <button
-      className="active:outline-none focus:outline-none flex flex-row justify-center items-center"
+      className="active:outline-none focus:outline-none flex flex-row justify-center items-center type-wrapper"
       onClick={onClick}
       style={{transform: 'rotate(90deg)'}}
     >
-      close
+      Close
       <ArrowLeft orientation='down' />
     </button>
   </Themed.div>

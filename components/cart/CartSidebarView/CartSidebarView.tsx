@@ -26,7 +26,7 @@ const Totals = ({ total, subTotal, tax }) => (
         </tr>
         <tr>
           <td>Taxes:</td>
-          <td className="text-right md:text-left">${tax}</td>
+          <td className="text-right md:text-left">Calculated at checkout</td>
         </tr>
 
         <tr>
@@ -34,7 +34,7 @@ const Totals = ({ total, subTotal, tax }) => (
             <strong className="text-right">Total:</strong>
           </td>
           <td>
-            <strong className="text-right md:text-left">${total}</strong>
+            <strong className="text-right md:text-left" style={{width: '75rem'}}>{getPrice(subTotal, 'USD')}</strong>
           </td>
         </tr>
       </tbody>
