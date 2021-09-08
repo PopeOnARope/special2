@@ -11,11 +11,11 @@ const Wrapper = styled.div`
     position: absolute;
     background-color: transparent;
     border-bottom: 2px solid black;
+    border-radius: 0;
     width: 100%;
     ${(props) => {
       if (props.value?.length) {
         return `& + .label-text {
-      font-size: 20px;
         font-size: 1.25rem;
         margin-top: 2.8rem;
         color: #333;
