@@ -9,6 +9,7 @@ import { ArrowLeft, Cross, Minus } from '@components/icons'
 import Collapse from 'react-collapse'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import styled from 'styled-components'
+import { isMobile } from '@lib/isMobile'
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -114,7 +115,7 @@ const DetailsToggle = ({ onClick }) => (
       marginLeft: '-3rem',
       bottom: '10rem',
       alignSelf: 'flex-end',
-      zIndex: '10000',
+      zIndex: '1000',
       position: 'absolute',
       ' @media (max-width: 768px)': {
         bottom: '20rem',
@@ -128,17 +129,22 @@ const DetailsToggle = ({ onClick }) => (
     <button
       className="active:outline-none focus:outline-none flex flex-row justify-center items-center type-wrapper"
       onClick={onClick}
-      style={{transform: 'rotate(90deg)'}}
+      style={{ transform: 'rotate(90deg)' }}
     >
       Close
-      <ArrowLeft orientation='down' />
+      <ArrowLeft orientation="down" />
     </button>
   </Themed.div>
 )
 
-const ProductDetails = ({ details, productDescription }) => {
+const ProductDetails = ({ details, productDescription, setShowBuyButton }) => {
   const { toggleProductDetails } = useUI()
   const [shownDetails, setShownDetails] = React.useState('')
+  React.useEffect(() => {
+    if (isMobile()) {
+      setShowBuyButton(!shownDetails.length)
+    }
+  })
 
   return (
     <Wrapper>
@@ -146,7 +152,12 @@ const ProductDetails = ({ details, productDescription }) => {
         className="type-wrapper font-bold max-w-64"
         dangerouslySetInnerHTML={{ __html: productDescription }}
       ></p>
-      <DetailsToggle onClick={toggleProductDetails} />
+      <DetailsToggle
+        onClick={() => {
+          toggleProductDetails()
+          setShowBuyButton(true)
+        }}
+      />
       <Themed.div
         sx={{
           display: 'flex',
