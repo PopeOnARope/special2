@@ -15,6 +15,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      transitionProperty:{
+        'opacity': 'opacity'
+      },
       maxWidth: {
         '8xl': '1920px',
       },

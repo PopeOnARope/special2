@@ -6,8 +6,8 @@ import dynamic from 'next/dynamic'
 import { ManagedUIContext, useUI } from '@components/ui/context'
 import { Head, Navbar } from '@components/common'
 import { useAcceptCookies } from '@lib/hooks/useAcceptCookies'
-import { Button } from 'theme-ui'
-import { Sidebar } from '@components/ui'
+import Button from '../../blocks/Button/Button'
+import { LoadingDots, Sidebar } from '@components/ui'
 import { CartSidebarView } from '@components/cart'
 import { SideNav } from '@components/common'
 import ProductDetails from '../ProductDetails/ProductDetails'
@@ -19,10 +19,12 @@ import '@builder.io/widgets'
 import 'react-spring-modal/styles.css'
 import seoConfig from '@config/seo.json'
 import NoSSR from './NoSSR'
+import styled from 'styled-components'
 
 const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
   ssr: false,
 })
+
 
 const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme
@@ -36,7 +38,7 @@ const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
       >
         {(data, loading) => {
           if (loading && !builderTheme) {
-            return 'loading ...'
+            return 'loading...'
           }
           const siteSettings = data?.siteSettings
           const colorOverrides = data?.colorOverrides
@@ -119,9 +121,7 @@ const InnerLayout: React.FC<{
         <FeatureBar
           title="We use cookies to ensure that we give you the best experience."
           hide={Builder.isEditing ? true : acceptedCookies}
-          action={
-            <Button onClick={() => onAcceptCookies()}>Accept cookies</Button>
-          }
+          action={<Button onClick={() => onAcceptCookies()}>Accept</Button>}
         />
       </NoSSR>
     </ThemeProvider>

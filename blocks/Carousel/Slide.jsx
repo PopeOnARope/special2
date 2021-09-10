@@ -1,11 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
-import useAudio from './useAudio'
-import { ChevronUp } from '../../components/icons'
+import styled, { css } from 'styled-components'
 import Button from '../Button/Button'
 import { H1, SecondaryH1 } from '../../components/Typography'
-import { CSSTransition } from 'react-transition-group'
 import { LoadingDots } from '../../components/ui'
+import { isMobile } from '../../lib/isMobile'
 
 const Wrapper = styled.div`
   height: ${({ height }) => height}px;
@@ -15,6 +13,17 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  video,
+  img {
+    position: absolute;
+    transition: visibility 0s, opacity 0.5s linear;
+    z-index: 0;
+    height: ${(props) => props.height}px;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
   .content {
     display: flex;
     flex-direction: column;
@@ -34,29 +43,17 @@ const Wrapper = styled.div`
     }
   }
 `
+
 const Loading = styled.div`
   position: absolute;
-  //background: black;
   height: 100%;
   width: 100%;
-  z-index: 10000;
+  z-index: 10;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-`
-
-const Video = styled.video`
-  position: absolute;
-  transition: visibility 0s, opacity 0.5s linear;
-  z-index: 0;
-  height: ${(props) => props.height}px;
-  object-fit: cover;
-  top: 0;
-  left: 0;
-  width: 100%;
-  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
 `
 
 const Image = styled.div`
@@ -111,25 +108,21 @@ const ModelToggle = styled.div`
   }
 `
 
-const ChevronDown = styled.div`
-  transform: rotate(180deg);
-`
-
 const Slide = ({ slide, height, width }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(false)
+  const [deviceType, setDeviceType] = React.useState('')
 
-  const {
-    image,
-    titleLine1,
-    titleLine2,
-    buttonLabel,
-    buttonUrl,
-    videos,
-    mobileVideos,
-  } = slide
+  function handleVideoLoaded() {
+    setLoading(false)
+  }
+
+  React.useEffect(() => {
+    setDeviceType(isMobile() ? 'mobile' : 'desktop')
+  })
+  const { titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
   const collectionAvailable = true
 
   function toggleSwitchMarginTop() {
@@ -149,7 +142,6 @@ const Slide = ({ slide, height, width }) => {
 
   const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
 
-
   const fittedVideos =
     width < 768 && slide.mobileVideos ? slide.mobileVideos : slide.videos
 
@@ -159,7 +151,12 @@ const Slide = ({ slide, height, width }) => {
 
   return (
     <Wrapper height={height}>
-      {loading && <Loading>loading<LoadingDots/></Loading>}
+      {loading && (
+        <Loading>
+          loading
+          <LoadingDots />
+        </Loading>
+      )}
       <div
         className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3"
         style={{ height: `${height}px` }}
@@ -200,25 +197,29 @@ const Slide = ({ slide, height, width }) => {
         </div>
       </div>
       {slide.videos &&
-        Object.keys(fittedVideos).map((video) => (
-          <Video
-            height={height}
-            src={fittedVideos[video]}
-            autoPlay
-            poster={slide.image}
-            muted
-            loop
-            playsInline
-            show={currentSlideVideos === fittedVideos[video]}
-            onLoadedData={() => {currentSlideVideos === fittedVideos[video] && setLoading(false)}}
-          >
+        Object.keys(fittedVideos).map((video) => {
+          const attr = {
+            src: `${fittedVideos[video]}.mp4`,
+            autoPlay: true,
+            muted: true,
+            loop: true,
+            playsInline: true,
+            style: {
+              visibility:
+                currentSlideVideos === fittedVideos[video]
+                  ? 'visible'
+                  : 'hidden',
+            },
+            onLoadedData: () => {
+              currentSlideVideos === fittedVideos[video] && handleVideoLoaded()
+            },
+          }
 
-            <source src={fittedVideos[video]} type="video/mp4" />
-          </Video>
-        ))}
-      {!fittedVideos && slide.image && (
-        <Image src={slide.image} height={height} />
-      )}
+          if (deviceType === 'mobile') {
+            return <img {...attr} />
+          }
+          return <video {...attr}></video>
+        })}
 
       <div className="content">
         <H1>{titleLine1}</H1>

@@ -2,7 +2,6 @@
 @import './Carousel.css';
 @import './NavBar.css';
 
-
 @tailwind base;
 @tailwind components;
 @layer utilities {

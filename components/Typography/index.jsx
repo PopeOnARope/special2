@@ -9,6 +9,9 @@ export const H1 = styled.h1`
   @media (max-width: 768px) {
     font-size: 4rem;
   }
+  @media (max-width: 640px) {
+    font-size: 3rem;
+  }
 `
 
 export const SecondaryH1 = styled.h1`
@@ -25,6 +28,10 @@ export const SecondaryH1 = styled.h1`
   @media (max-width: 768px) {
     margin-top: -40px !important;
     font-size: 4rem;
+  }
+  @media (max-width: 640px) {
+    margin-top: -30px !important;
+    font-size: 3rem;
   }
 
 `
