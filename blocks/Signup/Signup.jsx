@@ -53,8 +53,16 @@ const Signup = ({ content }) => {
         }
       })
   }
-  function doSetFormStatus(value) {
+  function doSetEmailStatus(value) {
     if (validateEmail(value) && agree) {
+      setFormStatus('ready')
+    } else {
+      setFormStatus('initial')
+    }
+  }
+
+  function doSetFormStatus() {
+    if (validateEmail(email) && agree) {
       setFormStatus('ready')
     } else {
       setFormStatus('initial')
@@ -92,7 +100,7 @@ const Signup = ({ content }) => {
                 setError(false)
               }
               setEmail(e.target.value)
-              doSetFormStatus(e.target.value)
+              doSetEmailStatus(e.target.value)
             }}
           />
           <TextInput
