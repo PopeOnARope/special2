@@ -10,10 +10,10 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   width: 100%;
+  background: rgb(223,223,223);
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  background: white;
   font-family: 'Value Sans Pro';
   font-size: 0.8rem;
   position: sticky;
