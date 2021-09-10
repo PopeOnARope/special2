@@ -10,20 +10,21 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   width: 100%;
-  display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   background: white;
   font-family: 'Value Sans Pro';
+  font-size: 0.8rem;
   position: sticky;
   bottom: 0;
   minHeight: 8rem;
   transition: 0.3s opacity;
   opacity: ${props=>props.opacity};
+  display: ${props=>props.display};
   visibility: ${props=>props.visibility};
   z-index: 10;
-  padding: 1rem 1rem 2rem;
+  padding: 0.5rem 1rem 0.5rem;
   p {
     padding: 1rem 0rem;
   }
@@ -54,7 +55,8 @@ const FeatureBar: React.FC<FeatureBarProps> = ({
   return (
       <Wrapper
         opacity={!delayPassed || hide ? 0 : 100}
-        visibility={!delayPassed || hide ? 'hidden' : 'visible'}
+        display={hide ? 'none' : 'flex'}
+        visibility={hide ? 'hidden' : 'visible'}
       >
         <p>
           By continuing to browse and pressing <strong>Accept</strong> you agree
@@ -63,15 +65,6 @@ const FeatureBar: React.FC<FeatureBarProps> = ({
         </p>
         {action && action}
       </Wrapper>
-  )
-  return (
-    <BottomModal isOpen={delayPassed && !hide}>
-      <ModalTitle>{title}</ModalTitle>
-      {description}
-      <Themed.div sx={{ display: 'flex', justifyContent: 'center', p: [1, 2] }}>
-        {action && action}
-      </Themed.div>
-    </BottomModal>
   )
 }
 

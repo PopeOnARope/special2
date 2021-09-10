@@ -2125,6 +2125,12 @@ html {
   transition: height 500ms;
 }
 
+.bg-black{
+  --bg-opacity: 1;
+  background-color: #000000;
+  background-color: rgba(0, 0, 0, var(--bg-opacity));
+}
+
 .border-purple-400{
   --border-opacity: 1;
   border-color: #ac94fa;
@@ -2332,6 +2338,11 @@ html {
   padding: 2rem;
 }
 
+.py-2{
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 .px-2{
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -2345,6 +2356,11 @@ html {
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.px-8{
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .px-10{
@@ -2426,6 +2442,10 @@ html {
 
 .w-80{
   width: 20rem;
+}
+
+.w-96{
+  width: 24rem;
 }
 
 .w-1\/2{
@@ -5116,10 +5136,6 @@ html {
 
   .md\:prose-2xl > :last-child{
     margin-bottom: 0;
-  }
-
-  .md\:block{
-    display: block;
   }
 
   .md\:inline-flex{

@@ -20,11 +20,11 @@ import 'react-spring-modal/styles.css'
 import seoConfig from '@config/seo.json'
 import NoSSR from './NoSSR'
 import styled from 'styled-components'
+import { ArrowLeft } from '@components/icons'
 
 const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
   ssr: false,
 })
-
 
 const Layout: React.FC<{ pageProps: any }> = ({ children, pageProps }) => {
   const builderTheme = pageProps.theme
@@ -121,7 +121,14 @@ const InnerLayout: React.FC<{
         <FeatureBar
           title="We use cookies to ensure that we give you the best experience."
           hide={Builder.isEditing ? true : acceptedCookies}
-          action={<Button onClick={() => onAcceptCookies()}>Accept</Button>}
+          action={
+            <button
+              className="bg-black text-white flex flex-row text-lg w-96 justify-between items-center px-8 py-2 type-wrapper "
+              onClick={() => onAcceptCookies()}
+            >
+              Accept <ArrowLeft orientation="right" />
+            </button>
+          }
         />
       </NoSSR>
     </ThemeProvider>
