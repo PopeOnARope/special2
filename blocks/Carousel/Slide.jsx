@@ -112,7 +112,7 @@ const Slide = ({ slide, height, width }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(true)
   const [deviceType, setDeviceType] = React.useState('')
 
   function handleVideoLoaded() {

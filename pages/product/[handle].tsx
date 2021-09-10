@@ -16,6 +16,9 @@ import {
 import DefaultErrorPage from 'next/error'
 import Head from 'next/head'
 import { useThemeUI } from 'theme-ui'
+import styled from 'styled-components'
+import React from 'react'
+import { LoadingDots } from '@components/ui'
 builder.init(builderConfig.apiKey!)
 Builder.isStatic = true
 
@@ -53,6 +56,30 @@ export async function getStaticPaths({ locales }: GetStaticPathsContext) {
   }
 }
 
+
+const LoadingWrapper = styled.div`
+  position: absolute;
+  background: black;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+const Loading = () => {
+  const [width, setWidth] = React.useState('100vh')
+  const [height, setHeight] = React.useState('100vw')
+  React.useEffect(() => {
+    setWidth(`${window.innerWidth}px`)
+    setHeight(`${window.innerHeight}px`)
+  })
+
+  return <LoadingWrapper>Loading <LoadingDots/></LoadingWrapper>
+}
+
 export default function Handle({
   product,
   page,
@@ -75,7 +102,7 @@ export default function Handle({
   }
 
   return router.isFallback && isLive ? (
-    <h1>Loading...</h1> // TODO (BC) Add Skeleton Views
+    <Loading/> // TODO (BC) Add Skeleton Views
   ) : (
     <BuilderComponent
       isStatic
