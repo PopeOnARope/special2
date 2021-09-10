@@ -101,9 +101,9 @@ const Carousel = (props) => {
     : ''
   return (
     <Wrapper height={height}>
-      <div className="sound-control hidden md:block" onClick={toggle} height={height}>
+      <button className="sound-control" onClickCapture={toggle} height={height}>
         Sound Is {playing ? 'on' : 'off'}
-      </div>
+      </button>
       <SwitchTransition mode="out-in">
         <CSSTransition key={currentSlide} classNames="slide" timeout={300}>
           <Slide

@@ -3,6 +3,7 @@ import TextInput from '../../components/ui/Form/TextInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
 import Button from '../Button/Button'
 import { LoadingDots } from '../../components/ui'
+import { validateEmail } from '../../lib/validateEmail'
 
 const Signup = ({ content }) => {
   const [name, setName] = React.useState('')
@@ -11,8 +12,6 @@ const Signup = ({ content }) => {
   const [agree, setAgree] = React.useState(true)
   const [error, setError] = React.useState('')
   const [formStatus, setFormStatus] = React.useState('initial')
-
-
 
   async function postData() {
     const data = `g='XKvFZS'&email=${email}&name=${name}&phoneNumber=${phoneNumber}`
@@ -54,6 +53,13 @@ const Signup = ({ content }) => {
         }
       })
   }
+  function doSetFormStatus(value) {
+    if (validateEmail(value) && agree) {
+      setFormStatus('ready')
+    } else {
+      setFormStatus('initial')
+    }
+  }
 
   return (
     <div className="px-10 mx-auto md:my-20 mb-20">
@@ -74,8 +80,8 @@ const Signup = ({ content }) => {
               if (error) {
                 setError(false)
               }
-              setFormStatus('initial')
               setName(e.target.value)
+              doSetFormStatus()
             }}
           />
           <TextInput
@@ -85,8 +91,8 @@ const Signup = ({ content }) => {
               if (error) {
                 setError(false)
               }
-              setFormStatus('initial')
               setEmail(e.target.value)
+              doSetFormStatus(e.target.value)
             }}
           />
           <TextInput
@@ -96,8 +102,8 @@ const Signup = ({ content }) => {
               if (error) {
                 setError(false)
               }
-              setFormStatus('initial')
               setPhone(e.target.value)
+              doSetFormStatus()
             }}
           />
           <Checkbox
@@ -109,11 +115,15 @@ const Signup = ({ content }) => {
           />
           <Button
             onClick={handleSubmit}
-            disabled={!agree || formStatus === 'success'}
+            disabled={
+              !agree || formStatus === 'success' || formStatus === 'initial'
+            }
           >
             {' '}
             <span> {formStatus === 'loading' && <LoadingDots />}</span>
-            <span>{formStatus === 'initial' && 'Join'}</span>
+            <span>
+              {(formStatus === 'initial' || formStatus === 'ready') && 'Join'}
+            </span>
             <span>
               {formStatus === 'success' &&
                 'Thank you for joining! We will be in touch'}
