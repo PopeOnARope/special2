@@ -1,7 +1,7 @@
 @import './transitions.css';
 @import './Carousel.css';
 @import './NavBar.css';
-
+@import 'typography.css';
 @tailwind base;
 @tailwind components;
 @layer utilities {

@@ -148,10 +148,10 @@ const ProductDetails = ({ details, productDescription, setShowBuyButton }) => {
 
   return (
     <Wrapper>
-      <p
+      <div
         className="type-wrapper font-bold max-w-64"
         dangerouslySetInnerHTML={{ __html: productDescription }}
-      ></p>
+      ></div>
       <DetailsToggle
         onClick={() => {
           toggleProductDetails()
