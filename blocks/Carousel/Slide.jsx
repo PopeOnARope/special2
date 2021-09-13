@@ -226,10 +226,10 @@ const Slide = ({ slide, height, width }) => {
       {deviceType === 'mobile' && (
         <img
           src={`${fittedVideos.day}.mp4`}
-          autoPlay="true"
-          muted="true"
-          loop="true"
-          playsInline="true"
+          autoPlay
+          muted
+          loop
+          playsInline
         />
       )}
 
