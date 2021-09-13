@@ -143,7 +143,9 @@ const Slide = ({ slide, height, width }) => {
   const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
 
   const fittedVideos =
-    width < 768 && slide.mobileVideos ? slide.mobileVideos : slide.videos
+    deviceType === 'mobile' && slide.mobileVideos
+      ? slide.mobileVideos
+      : slide.videos
 
   const currentSlideVideos = fittedVideos
     ? fittedVideos[`${currentModel}${timeOfDay}`]
@@ -196,7 +198,7 @@ const Slide = ({ slide, height, width }) => {
           </button>
         </div>
       </div>
-      {slide.videos &&
+      {deviceType==='desktop' && slide.videos &&
         Object.keys(fittedVideos).map((video) => {
           const attr = {
             src: `${fittedVideos[video]}.mp4`,
@@ -215,11 +217,21 @@ const Slide = ({ slide, height, width }) => {
             },
           }
 
-          if (deviceType === 'mobile') {
-            return <img {...attr} />
-          }
+          // if (deviceType === 'mobile') {
+          //   return <img {...attr} />
+          // }
           return <video {...attr}></video>
         })}
+
+      {deviceType === 'mobile' && (
+        <img
+          src={`${fittedVideos.day}.mp4`}
+          autoPlay="true"
+          muted="true"
+          loop="true"
+          playsInline="true"
+        />
+      )}
 
       <div className="content">
         <H1>{titleLine1}</H1>
