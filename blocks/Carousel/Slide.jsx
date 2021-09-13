@@ -112,7 +112,7 @@ const Slide = ({ slide, height, width }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
-  const [loading, setLoading] = React.useState(true)
+  const [loading, setLoading] = React.useState(false)
   const [deviceType, setDeviceType] = React.useState('')
 
   function handleVideoLoaded() {
@@ -151,6 +151,7 @@ const Slide = ({ slide, height, width }) => {
     ? fittedVideos[`${currentModel}${timeOfDay}`]
     : ''
 
+  console.log(slide.mobileVideos)
   return (
     <Wrapper height={height}>
       {loading && (
@@ -198,7 +199,8 @@ const Slide = ({ slide, height, width }) => {
           </button>
         </div>
       </div>
-      {deviceType==='desktop' && slide.videos &&
+      {deviceType === 'desktop' &&
+        slide.videos &&
         Object.keys(fittedVideos).map((video) => {
           const attr = {
             src: `${fittedVideos[video]}.mp4`,
@@ -224,13 +226,24 @@ const Slide = ({ slide, height, width }) => {
         })}
 
       {deviceType === 'mobile' && (
-        <img
-          src={`${fittedVideos.day}.mp4`}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
+        <>
+          <img
+            src={`${fittedVideos.model1Day}.mp4`}
+            autoPlay
+            muted
+            loop
+            playsInline
+
+          />
+          <img
+            src={`${fittedVideos.model2Day}.mp4`}
+            autoPlay
+            muted
+            loop
+            playsInline
+
+          />
+        </>
       )}
 
       <div className="content">
