@@ -10,7 +10,7 @@ Builder.registerComponent(LazyText, {
   inputs: [
     {
       name: 'darkMode',
-      type: 'boolean'
+      type: 'boolean',
     },
     {
       name: 'sections',
@@ -36,6 +36,11 @@ Builder.registerComponent(LazyText, {
               type: 'string',
               defaultValue: '#',
             },
+            {
+              name: 'openInNewTab',
+              defaultValue: false,
+              type: 'boolean',
+            },
           ],
         },
       ],
@@ -54,6 +59,11 @@ Builder.registerComponent(LazyText, {
           name: 'url',
           type: 'string',
           defaultValue: '#',
+        },
+        {
+          name: 'openInNewTab',
+          defaultValue: false,
+          type: 'boolean',
         },
       ],
     },

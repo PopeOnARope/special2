@@ -33,6 +33,7 @@ const SideNav = () => {
             >
               <Themed.a
                 href={link.link}
+                target={link.openInNewTab ? '_blank' : '_self'}
                 sx={{
                   fontSize: '4rem',
                   fontFamily: 'Value Sans Pro',

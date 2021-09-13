@@ -7,8 +7,6 @@ import { H1, SecondaryH1 } from '../../components/Typography'
 import TextInput from '../../components/ui/Form/TextInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
 
-
-
 const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
   const bgClass = darkMode ? 'dark-mode-wrapper' : 'light-mode-wrapper'
   return (
@@ -16,15 +14,26 @@ const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
       className={`mx-auto ${bgClass} w-max-content type-wrapper dark:bg-gray-800`}
       style={{ width: '100%' }}
     >
-      <div className="max-h-52 md:max-h-64 ml-10 flex flex-col flex-wrap md:flex-row md:flex-nowrap" style={{maxWidth: '64rem'}}>
+      <div
+        className="max-h-52 md:max-h-64 ml-10 flex flex-col flex-wrap md:flex-row md:flex-nowrap"
+        style={{ maxWidth: '64rem' }}
+      >
         {sections?.map((section) => (
           <div className="md:w-1/3 flex flex-col justify-items-start mb-4">
-            <h5 className={`uppercase font-bold mb-3  ${headerColor==='white' ? 'text-white' : 'text-gray-500'}`} >
+            <h5
+              className={`uppercase font-bold mb-3  ${
+                headerColor === 'white' ? 'text-white' : 'text-gray-500'
+              }`}
+            >
               {section.title}
             </h5>
 
             {section?.links?.map((link) => (
-              <a href={link.url} className="text-extrabold">
+              <a
+                href={link.url}
+                className="text-extrabold"
+                target={link.openInNewTab ? '_blank' : '_self'}
+              >
                 {link.title}
               </a>
             ))}
@@ -34,7 +43,13 @@ const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
       <div className="float-right flex flex-row mb-4">
         {bottomLinks?.map((link) => (
           <div className="mx-5">
-            <a className={` ${headerColor==='white' ? 'text-white' : 'text-gray-500'}`} href={link.url} >
+            <a
+              className={` ${
+                headerColor === 'white' ? 'text-white' : 'text-gray-500'
+              }`}
+              href={link.url}
+              target={link.openInNewTab ? '_blank' : '_self'}
+            >
               {link.title}
             </a>
           </div>
