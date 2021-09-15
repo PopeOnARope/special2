@@ -19,12 +19,12 @@
 
 .time-toggle {
   margin-top: 11rem;
+  margin-left: 0.5rem;
   display: flex;
   flex-direction: column;
 
   position: absolute;
   z-index: 3;
-  border-right: 1px solid white;
 }
 .time-toggle button {
   color: white;
@@ -41,8 +41,8 @@
   padding-bottom: 0;
 }
 .time-toggle .toggle-switch {
-  background: white;
-  height: 0.6rem;
+  /*background: white;*/
+  /*height: 0.6rem;*/
   width: 1.2rem;
   align-self: flex-end;
   position: absolute;

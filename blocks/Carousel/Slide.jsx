@@ -4,6 +4,7 @@ import Button from '../Button/Button'
 import { H1, SecondaryH1 } from '../../components/Typography'
 import { LoadingDots } from '../../components/ui'
 import { isMobile } from '../../lib/isMobile'
+import Cloud from '../../components/icons/Cloud'
 
 const Wrapper = styled.div`
   height: ${({ height }) => height}px;
@@ -71,7 +72,6 @@ const ModelToggle = styled.div`
   display: flex;
   flex-direction: row;
   .toggle-switch {
-    border: 1px solid white;
     width: 2rem;
     height: 0px;
     display: flex;
@@ -125,19 +125,40 @@ const Slide = ({ slide, height, width }) => {
   const { titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
   const collectionAvailable = true
 
-  function toggleSwitchMarginTop() {
-    if (timeOfDay === 'Night') {
-      return '0rem'
-    }
-    if (timeOfDay === 'Dusk') {
-      return '1.8rem'
-    }
-    if (timeOfDay === 'Day') {
-      return '3.5rem'
-    }
-    if (timeOfDay === 'Dawn') {
-      return '5.5rem'
-    }
+  // function toggleSwitchMarginTop() {
+  //   if (timeOfDay === 'Night') {
+  //     return '0rem'
+  //   }
+  //   if (timeOfDay === 'Dusk') {
+  //     return '1.8rem'
+  //   }
+  //   if (timeOfDay === 'Day') {
+  //     return '3.5rem'
+  //   }
+  //   if (timeOfDay === 'Dawn') {
+  //     return '5.5rem'
+  //   }
+  // }
+
+  const TimeToggle = ({ timeOfDay }) => {
+    return ['Night', 'Dusk', 'Day', 'Dawn'].map((time) => (
+      <button
+        onClick={() => {
+          setTimeOfDay(time)
+        }}
+        className="flex justify-center items-center"
+        style={{ width: '3rem' }}
+      >
+        {timeOfDay === time && (
+          <Cloud
+            fill="white"
+            stroke="white"
+            style={{ position: 'absolute', width: '3rem' }}
+          />
+        )}
+        {time}
+      </button>
+    ))
   }
 
   const toggleModelMarginLeft = currentModel === 'model2' ? '1.2rem' : '0rem'
@@ -161,43 +182,10 @@ const Slide = ({ slide, height, width }) => {
         </Loading>
       )}
       <div
-        className="position-absolute border-1 border-purple-400 flex flex-col justify-center z-3"
+        className="position-absolute flex flex-col justify-center z-3 time-toggle"
         style={{ height: `${height}px` }}
       >
-        <div className="time-toggle">
-          <div
-            className="toggle-switch"
-            style={{ marginTop: toggleSwitchMarginTop() }}
-          ></div>
-          <button
-            onClick={() => {
-              setTimeOfDay('Night')
-            }}
-          >
-            Night
-          </button>
-          <button
-            onClick={() => {
-              setTimeOfDay('Dusk')
-            }}
-          >
-            Dusk
-          </button>
-          <button
-            onClick={() => {
-              setTimeOfDay('Day')
-            }}
-          >
-            Day
-          </button>{' '}
-          <button
-            onClick={() => {
-              setTimeOfDay('Dawn')
-            }}
-          >
-            Dawn
-          </button>
-        </div>
+        {deviceType === 'desktop' && <TimeToggle timeOfDay={timeOfDay} />}
       </div>
       {deviceType === 'desktop' &&
         slide.videos &&
@@ -219,9 +207,6 @@ const Slide = ({ slide, height, width }) => {
             },
           }
 
-          // if (deviceType === 'mobile') {
-          //   return <img {...attr} />
-          // }
           return <video {...attr}></video>
         })}
 
@@ -233,7 +218,9 @@ const Slide = ({ slide, height, width }) => {
             muted
             loop
             playsInline
-
+            style={{
+              visibility: currentModel === model1Day ? 'visibile' : 'hidden',
+            }}
           />
           <img
             src={`${fittedVideos.model2Day}.mp4`}
@@ -241,7 +228,9 @@ const Slide = ({ slide, height, width }) => {
             muted
             loop
             playsInline
-
+            style={{
+              visibility: currentModel === model2Day ? 'visibile' : 'hidden',
+            }}
           />
         </>
       )}
