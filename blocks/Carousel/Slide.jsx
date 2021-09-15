@@ -220,7 +220,7 @@ const Slide = ({ slide, height, width }) => {
             loop
             playsInline
             style={{
-              visibility: currentModel === 'model1' ? 'visibile' : 'hidden',
+              visibility: currentModel === 'model1' ? 'visible' : 'hidden',
             }}
           />
           <img
@@ -230,7 +230,7 @@ const Slide = ({ slide, height, width }) => {
             loop
             playsInline
             style={{
-              visibility: currentModel === 'model2' ? 'visibile' : 'hidden',
+              visibility: currentModel === 'model2' ? 'visible' : 'hidden',
             }}
           />
         </>
