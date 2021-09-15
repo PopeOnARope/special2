@@ -173,6 +173,7 @@ const Slide = ({ slide, height, width }) => {
     : ''
 
   console.log(slide.mobileVideos)
+  console.log({currentModel})
   return (
     <Wrapper height={height}>
       {loading && (
@@ -219,7 +220,7 @@ const Slide = ({ slide, height, width }) => {
             loop
             playsInline
             style={{
-              visibility: currentModel === 'model1Day' ? 'visibile' : 'hidden',
+              visibility: currentModel === 'model1' ? 'visibile' : 'hidden',
             }}
           />
           <img
@@ -229,7 +230,7 @@ const Slide = ({ slide, height, width }) => {
             loop
             playsInline
             style={{
-              visibility: currentModel === 'model2Day' ? 'visibile' : 'hidden',
+              visibility: currentModel === 'model2' ? 'visibile' : 'hidden',
             }}
           />
         </>
