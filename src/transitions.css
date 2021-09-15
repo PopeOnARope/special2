@@ -13,3 +13,20 @@
   transition: all 0.3s;
 }
 
+.hover-right {
+  transition: 0.7s all;
+}
+
+.hover-right:hover  {
+  margin-right: -0.5rem;
+  margin-left: 0.5rem;
+}
+
+.hover-left {
+  transition: 0.7s all;
+}
+
+.hover-left:hover  {
+  margin-left: -0.5rem;
+  margin-right: 0.5rem;
+}

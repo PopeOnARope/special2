@@ -39,17 +39,17 @@ interface ButtonProps {
 const NextButton: React.FC<ButtonProps> = ({ onClick, overlayColor }) => (
   <button onClick={onClick} className="focus:outline-none">
     <div
-      sx={{
+      style={{
         transform: 'rotate(90deg)',
       }}
-      className="hover:pr-20"
+      className='hover-right'
     >
       <ChevronUp width="40" height="40" stroke={overlayColor || 'white'} />
     </div>
   </button>
 )
 const PreviousButton: React.FC<ButtonProps> = ({ onClick, overlayColor }) => (
-  <button onClick={onClick} className="focus:outline-none">
+  <button onClick={onClick} className="focus:outline-none hover-left">
     <div sx={{ transform: 'rotate(270deg)' }}>
       <ChevronUp width="40" height="40" stroke={overlayColor || 'white'} />
     </div>
@@ -223,7 +223,7 @@ const ProductBox: React.FC<Props> = ({
         <Themed.div
           className="text-white absolute z-50 hover:cursor-pointer"
           sx={{
-            marginLeft: '-2rem',
+            marginLeft: '-3.5rem',
             position: 'absolute',
             bottom: '10rem',
             alignSelf: 'flex-end',
@@ -241,7 +241,7 @@ const ProductBox: React.FC<Props> = ({
               flexDirection: 'inherit',
               color: peakingImage?.overlayColor || 'white',
             }}
-            className="active:outline-none focus:outline-none"
+            className="active:outline-none focus:outline-none hover-right"
             onClick={toggleProductDetails}
           >
             Details and Specs
