@@ -219,7 +219,7 @@ const Slide = ({ slide, height, width }) => {
             loop
             playsInline
             style={{
-              visibility: currentModel === model1Day ? 'visibile' : 'hidden',
+              visibility: currentModel === 'model1Day' ? 'visibile' : 'hidden',
             }}
           />
           <img
@@ -229,7 +229,7 @@ const Slide = ({ slide, height, width }) => {
             loop
             playsInline
             style={{
-              visibility: currentModel === model2Day ? 'visibile' : 'hidden',
+              visibility: currentModel === 'model2Day' ? 'visibile' : 'hidden',
             }}
           />
         </>
