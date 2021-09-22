@@ -57,56 +57,7 @@ const Loading = styled.div`
   align-items: center;
 `
 
-const Image = styled.div`
-  background-image: ${({ src }) => `url(${src})`};
-  width: 100%;
-  height: ${(props) => props.height}px;
-  position: absolute;
-  background-position: center;
-`
 
-const ModelToggle = styled.div`
-  z-index: 3;
-  align-items: center;
-  position: absolute;
-  display: flex;
-  flex-direction: row;
-  .toggle-switch {
-    width: 2rem;
-    height: 0px;
-    display: flex;
-    align-items: center;
-    .toggle-button {
-      position: absolute;
-
-      background: white;
-      height: 1.2rem;
-      width: 0.75rem;
-      transition: 0.3s ease-in-out;
-    }
-  }
-  button {
-    color: white;
-    padding: 15px;
-    font-size: 0.75rem;
-    &:focus {
-      outline: none;
-    }
-  }
-  align-self: flex-end;
-  margin-bottom: 2.25rem;
-  margin-right: 2rem;
-  @media (max-width: 768px) {
-    margin-right: 3rem;
-    margin-bottom: 8rem;
-  }
-
-  @media (max-width: 640px) {
-    margin-right: 3rem;
-    margin-top: -14rem;
-    margin-bottom: 14rem;
-  }
-`
 
 const Slide = ({ slide, height, width }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
@@ -248,25 +199,38 @@ const Slide = ({ slide, height, width }) => {
         )}
       </div>
       <div className="model-toggle">
+
         <button
           onClick={() => {
             setCurrentModel('model1')
           }}
+          className="flex justify-center items-center"
+          style={{ width: '3rem' }}
         >
+          {currentModel === 'model1' && (
+            <Cloud
+              fill="white"
+              stroke="white"
+              style={{ position: 'absolute', width: '3rem' }}
+            />
+          )}
           {slide?.model1Name}
         </button>
-        <div className="toggle-switch">
-          <div
-            className="toggle-button"
-            style={{ marginLeft: toggleModelMarginLeft }}
-          ></div>
-        </div>
 
         <button
           onClick={() => {
             setCurrentModel('model2')
           }}
+          className="flex justify-center items-center"
+          style={{ width: '3rem' }}
         >
+          {currentModel === 'model2' && (
+            <Cloud
+              fill="white"
+              stroke="white"
+              style={{ position: 'absolute', width: '3rem' }}
+            />
+          )}
           {slide?.model2Name}
         </button>
       </div>
