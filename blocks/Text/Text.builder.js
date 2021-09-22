@@ -8,13 +8,10 @@ Builder.registerComponent(LazyText, {
   name: 'Text Element',
   inputs: [
     {
-      name: 'headline',
-      type: 'string',
-      defaultValue: 'This is a text element'
+      name: 'content',
+      type: 'richText',
+      defaultValue: 'Edit your text here...'
     },
-    {
-      name: 'description',
-      type: 'string',
-    }
+
   ]
 })

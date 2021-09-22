@@ -19,6 +19,8 @@ import '../blocks/Footer/Footer.builder'
 import '../blocks/Marquee/Marquee.builder'
 import '../blocks/Signup/Signup.builder'
 import '../blocks/About/About.builder'
+import '../blocks/Text/Text.builder'
+
 
 
 
