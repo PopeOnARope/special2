@@ -19,6 +19,12 @@ Builder.registerComponent(LazyText, {
       defaultValue: [{ title: 'Collection', buttonLabel: 'View Collection' }],
       subFields: [
         {
+          name: 'type',
+          type: 'string',
+          defaultValue: 'modelSelector',
+          enum: ['modelSelector', 'basicVideo']
+        },
+        {
           name: 'titleLine1',
           type: 'string',
           defaultValue: 'Collection Name',

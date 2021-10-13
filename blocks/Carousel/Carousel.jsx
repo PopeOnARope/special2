@@ -4,7 +4,7 @@ import useAudio from './useAudio'
 import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import Slide from './Slide'
+import ModelSelectorSlide from './ModelSelectorSlide'
 
 const Wrapper = styled.div`
   height: ${({ height }) => height}px;
@@ -34,6 +34,11 @@ const Wrapper = styled.div`
   }
 `
 
+const SlideWrapper = styled.div`
+  display: block;
+  width: inherit;
+`
+
 const Carousel = (props) => {
   const { slides } = props
 
@@ -42,7 +47,7 @@ const Carousel = (props) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
-  const [scrollValue, setScrollValue] = React.useState(0)
+  const [isTransitioning, setIsTransitioning] = React.useState(false)
 
   const [playing, toggle] = useAudio(props.sound)
 
@@ -58,20 +63,99 @@ const Carousel = (props) => {
     setWidth(window.innerWidth)
   }, [])
 
+
+
   React.useEffect(() => {
-    const d = new Date();
+    function handleScroll(e) {
+      //check if this is the last slide
+      const isLastSlide = slides.length - 1 === currentSlide
+      const isFirstSlide = currentSlide === 0
+      //check if we are at the top of the document
+      const isTopOfPage = !window.scrollY
+      //check if the user scrolled up or down
+      const scrollDirection = e.deltaY > 0 ? 'down' : 'up'
+      //if we are at the top of the page and the user is scrolling up, go to the previous slide.
+      function nextSlide() {
+        setCurrentSlide(currentSlide + 1)
+      }
+      function previousSlide() {
+        setCurrentSlide(currentSlide - 1)
+      }
+      //if last slide, don't add it back and return.
+      if (isTransitioning) {
+        e.preventDefault()
+      } else {
+        // e.preventDefault()
+        // console.log({ scrollDirection, isFirstSlide, currentSlide })
+        // console.log(e)
+        if (!isLastSlide && scrollDirection === 'down') {
+          console.log(scrollDirection)
+          e.preventDefault()
+          setIsTransitioning(true)
+          nextSlide()
+          setTimeout(() => {
+            setIsTransitioning(false)
+          }, 1200)
+        }
+
+        if (!isFirstSlide && scrollDirection === 'up' && isTopOfPage) {
+          console.log(scrollDirection)
+          e.preventDefault()
+          setIsTransitioning(true)
+          previousSlide()
+          setTimeout(() => {
+            setIsTransitioning(false)
+          }, 1200)
+        }
+
+        // if (!isLastSlide && scrollDirection === 'down') {
+        //   window.removeEventListener('wheel', handleScroll)
+        //   window.addEventListener('wheel', ignoreScroll, { passive: false })
+        //   console.log('next slide')
+        //   console.log({ isLastSlide })
+        //   nextSlide()
+        //   setTimeout(() => {
+        //     window.removeEventListener('wheel', ignoreScroll)
+        //     window.addEventListener('wheel', handleScroll, { passive: false })
+        //   }, 1000)
+        // }
+        // if (!isFirstSlide && scrollDirection === 'up' && isTopOfPage) {
+        //   // e.preventDefault()
+        //   window.removeEventListener('wheel', handleScroll)
+        //   window.addEventListener('wheel', ignoreScroll, { passive: false })
+        //   console.log('previous slide')
+        //   console.log({ isFirstSlide })
+        //   previousSlide()
+        //   setTimeout(() => {
+        //     window.removeEventListener('wheel', ignoreScroll)
+        //     window.addEventListener('wheel', handleScroll)
+        //   }, 1000)
+        // }
+      }
+
+      // window.addEventListener('wheel', handleScroll)
+    }
+
+
+    window.addEventListener('wheel', handleScroll, { passive: false })
+    // return function cleanup() {
+    //   window.removeEventListener('wheel', handleScroll)
+    // };
+  }, )
+
+  React.useEffect(() => {
+    const d = new Date()
     const h = d.getHours()
-    if(h<6 || h>9) {
+    if (h < 6 || h > 9) {
       setTimeOfDay('night')
     }
-    if(h>=6 && h<9) {
+    if (h >= 6 && h < 9) {
       setTimeOfDay('dawn')
     }
-    if(h>=9 && h<17) {
+    if (h >= 9 && h < 17) {
       setTimeOfDay('day')
     }
-    if(h>=17 && h<19)
-    setTimeOfDay('dusk')
+    if (h >= 17 && h < 19) setTimeOfDay('dusk')
   }, [])
 
   if (!slides) {
@@ -106,12 +190,23 @@ const Carousel = (props) => {
       </button>
       <SwitchTransition mode="out-in">
         <CSSTransition key={currentSlide} classNames="slide" timeout={300}>
-          <Slide
-            sound={props.sound}
-            height={height}
-            width={width}
-            slide={slides[currentSlide]}
-          />
+          <SlideWrapper>
+            {slides[currentSlide].type === 'modelSelector' ? (
+              <ModelSelectorSlide
+                sound={props.sound}
+                height={height}
+                width={width}
+                slide={slides[currentSlide]}
+              />
+            ) : (
+              <ModelSelectorSlide
+                sound={props.sound}
+                height={height}
+                width={width}
+                slide={slides[currentSlide]}
+              />
+            )}
+          </SlideWrapper>
         </CSSTransition>
       </SwitchTransition>
     </Wrapper>
