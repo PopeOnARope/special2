@@ -45,9 +45,19 @@ Builder.registerComponent(LazyText, {
           allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg'],
         },
         {
-          name: 'useBackgroundVideo',
-          type: 'boolean',
-          defaultValue: true,
+          name: 'video',
+          type: 'file',
+          allowedFileTypes: ['mp4', 'mov'],
+        },
+        {
+          name: 'mobileImage',
+          type: 'file',
+          allowedFileTypes: ['jpeg', 'jpg', 'png', 'svg'],
+        },
+        {
+          name: 'mobileVideo',
+          type: 'file',
+          allowedFileTypes: ['mp4', 'mov'],
         },
         { name: 'model1Name', type: 'string', defaultValue: 'model1Name' },
         { name: 'model2Name', type: 'string', defaultValue: 'model2Name' },

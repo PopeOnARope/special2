@@ -5,6 +5,7 @@ import { ChevronUp } from '../../components/icons'
 import Button from '../Button/Button'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import ModelSelectorSlide from './ModelSelectorSlide'
+import BasicVideoSlide from './BasicVideoSlide'
 
 const Wrapper = styled.div`
   height: ${({ height }) => height}px;
@@ -65,8 +66,7 @@ const Carousel = (props) => {
 
 
 
-  React.useEffect(() => {
-    function handleScroll(e) {
+    const handleScroll = React.useCallback(e =>{
       //check if this is the last slide
       const isLastSlide = slides.length - 1 === currentSlide
       const isFirstSlide = currentSlide === 0
@@ -86,62 +86,32 @@ const Carousel = (props) => {
         e.preventDefault()
       } else {
         // e.preventDefault()
-        // console.log({ scrollDirection, isFirstSlide, currentSlide })
-        // console.log(e)
         if (!isLastSlide && scrollDirection === 'down') {
-          console.log(scrollDirection)
           e.preventDefault()
-          setIsTransitioning(true)
-          nextSlide()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 1200)
+          }, 1000)
+          setIsTransitioning(true)
+          nextSlide()
         }
 
         if (!isFirstSlide && scrollDirection === 'up' && isTopOfPage) {
-          console.log(scrollDirection)
           e.preventDefault()
-          setIsTransitioning(true)
-          previousSlide()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 1200)
+          }, 1000)
+          setIsTransitioning(true)
+          previousSlide()
         }
-
-        // if (!isLastSlide && scrollDirection === 'down') {
-        //   window.removeEventListener('wheel', handleScroll)
-        //   window.addEventListener('wheel', ignoreScroll, { passive: false })
-        //   console.log('next slide')
-        //   console.log({ isLastSlide })
-        //   nextSlide()
-        //   setTimeout(() => {
-        //     window.removeEventListener('wheel', ignoreScroll)
-        //     window.addEventListener('wheel', handleScroll, { passive: false })
-        //   }, 1000)
-        // }
-        // if (!isFirstSlide && scrollDirection === 'up' && isTopOfPage) {
-        //   // e.preventDefault()
-        //   window.removeEventListener('wheel', handleScroll)
-        //   window.addEventListener('wheel', ignoreScroll, { passive: false })
-        //   console.log('previous slide')
-        //   console.log({ isFirstSlide })
-        //   previousSlide()
-        //   setTimeout(() => {
-        //     window.removeEventListener('wheel', ignoreScroll)
-        //     window.addEventListener('wheel', handleScroll)
-        //   }, 1000)
-        // }
       }
 
-      // window.addEventListener('wheel', handleScroll)
-    }
-
-
+    }, [currentSlide, isTransitioning])
+  React.useEffect(() => {
     window.addEventListener('wheel', handleScroll, { passive: false })
-    // return function cleanup() {
-    //   window.removeEventListener('wheel', handleScroll)
-    // };
-  }, )
+    return function cleanup() {
+      window.removeEventListener('wheel', handleScroll)
+    };
+  }, [handleScroll])
 
   React.useEffect(() => {
     const d = new Date()
@@ -165,24 +135,7 @@ const Carousel = (props) => {
       </Wrapper>
     )
   }
-  const {
-    image,
-    titleLine1,
-    titleLine2,
-    buttonLabel,
-    buttonUrl,
-  } = props.slides[currentSlide]
-  const collectionAvailable = true
 
-  function updateSlide() {
-    const slide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1
-    // alert(currentSlide + '' +  slide)
-    setCurrentSlide(slide)
-  }
-
-  const currentSlideVideos = slides[currentSlide].videos
-    ? slides[currentSlide].videos[`${currentModel}${timeOfDay}`]
-    : ''
   return (
     <Wrapper height={height}>
       <button className="sound-control" onClickCapture={toggle} height={height}>
@@ -199,7 +152,7 @@ const Carousel = (props) => {
                 slide={slides[currentSlide]}
               />
             ) : (
-              <ModelSelectorSlide
+              <BasicVideoSlide
                 sound={props.sound}
                 height={height}
                 width={width}
