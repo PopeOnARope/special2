@@ -27,7 +27,7 @@ Builder.registerComponent(LazyText, {
       subFields: [
         {
           name: 'title',
-          type: 'richText',
+          type: 'string',
         },
         {
           name: 'url',
