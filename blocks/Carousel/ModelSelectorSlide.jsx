@@ -5,58 +5,8 @@ import { H1, SecondaryH1 } from '../../components/Typography'
 import { LoadingDots } from '../../components/ui'
 import { isMobile } from '../../lib/isMobile'
 import Cloud from '../../components/icons/Cloud'
-
-const Wrapper = styled.div`
-  height: ${({ height }) => height}px;
-  width: 100%;
-  background: none;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  video,
-  img {
-    position: absolute;
-    transition: visibility 0s, opacity 0.5s linear;
-    z-index: 0;
-    height: ${(props) => props.height}px;
-    object-fit: cover;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-  .content {
-    display: flex;
-    flex-direction: column;
-    margin-left: 50px;
-    margin-bottom: 33px;
-    z-index: 1;
-    h1 {
-      color: #ffffff;
-    }
-    .title2 {
-      margin-top: -70px;
-      margin-left: 25px;
-      padding: 0px;
-    }
-    @media (max-width: 768px) {
-      margin: 3rem;
-    }
-  }
-`
-
-const Loading = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 10;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
+import { useSwipeable } from 'react-swipeable'
+import {Wrapper, Loading} from './Common'
 
 
 const ModelSelectorSlide = ({ slide, height, width }) => {
@@ -123,8 +73,6 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
     ? fittedVideos[`${currentModel}${timeOfDay}`]
     : ''
 
-  console.log(slide.mobileVideos)
-  console.log({currentModel})
   return (
     <Wrapper height={height}>
       {loading && (
@@ -163,7 +111,7 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
         })}
 
       {deviceType === 'mobile' && (
-        <>
+        <div>
           <img
             src={`${fittedVideos.model1Day}.mp4`}
             autoPlay
@@ -184,13 +132,13 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
               visibility: currentModel === 'model2' ? 'visible' : 'hidden',
             }}
           />
-        </>
+        </div>
       )}
 
       <div className="content">
-        <H1>{titleLine1}</H1>
+        <h1>{titleLine1}</h1>
         {titleLine2 && (
-          <SecondaryH1 className="title2">{titleLine2}</SecondaryH1>
+          <h1 className="title2">{titleLine2}</h1>
         )}
         {collectionAvailable && (
           <Button displayAs="link" href={buttonUrl}>
@@ -199,7 +147,6 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
         )}
       </div>
       <div className="model-toggle">
-
         <button
           onClick={() => {
             setCurrentModel('model1')

@@ -2,6 +2,8 @@
   color: white;
   z-index: 3;
   position: absolute;
+  right: 0;
+  top: 50%;
   align-self: center;
   transform: rotate(-90deg);
   width: 5rem;
