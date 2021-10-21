@@ -30,3 +30,23 @@
   margin-left: -0.5rem;
   margin-right: 0.5rem;
 }
+
+
+.floating {
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  margin-left: 30px;
+  margin-top: 5px;
+}
+
+@keyframes floating {
+  0% { transform: translate(0,  0px); }
+  12.5% { transform: translate(3,  2px); }
+  25% { transform: translate(5px,  3px); }
+  37.5% { transform: translate(4,  3px); }
+  50%  { transform: translate(0, 10px); }
+  75% { transform: translate(-3px,  3px); }
+  100%   { transform: translate(0, -0px); }
+}

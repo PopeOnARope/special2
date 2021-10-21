@@ -5,8 +5,12 @@ import Button from '../Button/Button'
 import { LoadingDots } from '../../components/ui'
 import { validateEmail } from '../../lib/validateEmail'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
+import { Cross } from '../../components/icons'
+import {grained} from '../../lib/grain'
+import Cookie from 'js-cookie'
 
-const Signup = ({ content }) => {
+
+const Signup = ({ content, finePrint, title }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
@@ -17,6 +21,21 @@ const Signup = ({ content }) => {
   const [firstPartSubmitted, setFirstPartSubmitted] = React.useState(false)
 
   const [formStatus, setFormStatus] = React.useState('initial')
+  const [height, setHeight] = React.useState(768)
+
+  React.useEffect(()=>{
+    setHeight(window.innerHeight)
+    grained('accountCreate', {
+      "animate": true,
+      "patternWidth": 100,
+      "patternHeight": 100,
+      "grainOpacity": 0.04,
+      "grainDensity": 1.79,
+      "grainWidth": 4.27,
+      "grainHeight": 1
+    })
+
+  }, [])
 
   async function postData() {
     const data = `g='XKvFZS'&email=${email}&name=${name}&phoneNumber=${phoneNumber}&birthday=${birthday}&shareSomething=${shareSomething}`
@@ -81,9 +100,13 @@ const Signup = ({ content }) => {
 
   const form1 = (
     <div
-      className="flex flex-col px-8"
+      className="flex flex-col px-8 floating"
       style={{ minWidth: '16rem', maxWidth: '48rem' }}
     >
+      <button className='absolute' style={{right: '1rem', top: '-1rem'}} onClick={()=>{
+        Cookie.set('account', 'declined', {expires: 7})
+        window.location.href = '/redirect'
+      }}><Cross/></button>
       <h4
         className="text-xl text-bold "
         style={{
@@ -91,15 +114,10 @@ const Signup = ({ content }) => {
           textDecorationColor: '#ffc391',
         }}
       >
-        Become one of the first 5,000 friends to become a member and you'll
-        receive $95 credit.
+        {title}
       </h4>
-      <p className="text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. A accusamus at
-        commodi delectus ea enim error ex inventore minima natus nemo, odio
-        perferendis praesentium quaerat ratione rem, repudiandae soluta,
-        voluptates.
-      </p>
+      <p className="text-sm" dangerouslySetInnerHTML={{__html: content}}>
+       </p>
       <div className="input-container w-full px-16 py-8 ">
         <TextInput
           name="name"
@@ -132,7 +150,10 @@ const Signup = ({ content }) => {
         />
         <div className="flex flex-col  items-center">
           <Button
-            onClick={() => setFirstPartSubmitted(true)}
+            onClick={() => {
+              Cookie.set('account', 'active', {expires: 365})
+              setFirstPartSubmitted(true);
+            }}
             disabled={
               !agree || formStatus === 'success' || formStatus === 'initial'
             }
@@ -149,18 +170,15 @@ const Signup = ({ content }) => {
           </Button>
         </div>
       </div>
-      <p className="text-xs mt-20">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores
-        eligendi, esse fuga quasi saepe sit. Aspernatur beatae eos esse, fuga
-        necessitatibus nisi placeat quisquam repellat sed similique sint vitae
-        voluptas!
+      <p className="text-xs mt-20" dangerouslySetInnerHTML={{__html: finePrint}}>
+
       </p>
     </div>
   )
 
   const form2 = (
     <div
-      className="flex flex-col px-8"
+      className="flex flex-col px-8 floating"
       style={{ minWidth: '16rem', maxWidth: '48rem' }}
     >
       <h4
@@ -230,17 +248,14 @@ const Signup = ({ content }) => {
           </Button>
         </div>
       </div>
-      <p className="text-xs mt-20">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores
-        eligendi, esse fuga quasi saepe sit. Aspernatur beatae eos esse, fuga
-        necessitatibus nisi placeat quisquam repellat sed similique sint vitae
-        voluptas!
+      <p className="text-xs mt-20" dangerouslySetInnerHTML={{__html: finePrint}}>
+
       </p>
     </div>
   )
 
   return (
-    <div className="flex flex-col items-center type-wrapper w-full">
+    <div className="flex flex-col items-center type-wrapper w-full h-full pt-8" id="accountCreate">
       <SwitchTransition mode="out-in">
         <CSSTransition
           key={firstPartSubmitted}
@@ -253,84 +268,6 @@ const Signup = ({ content }) => {
     </div>
   )
 
-  return (
-    <div className="px-10 mx-auto md:my-20 mb-20">
-      <div className="flex flex-col md:flex-row justify-items-start md:justify-center">
-        <div className="md:max-w-lg md:mr-12 md:w-763">
-          <h1 className="primary-h1 hidden md:inline-flex"> Spec_ial</h1>
-          <h1 className="secondary-h1 hidden md:inline-flex"> Club</h1>
-          <h1 className="heading text-4xl py-8-24 md:hidden text-center">
-            Spec_ial Club
-          </h1>
-          <p style={{ fontSize: '1rem', padding: '1.25rem 0' }}>{content}</p>
-        </div>
-        <div className="md:max-w-3xl">
-          <TextInput
-            name="name"
-            label="Name"
-            onChange={(e) => {
-              if (error) {
-                setError(false)
-              }
-              setName(e.target.value)
-              doSetFormStatus()
-            }}
-          />
-          <TextInput
-            name="email"
-            label="Email"
-            onChange={(e) => {
-              if (error) {
-                setError(false)
-              }
-              setEmail(e.target.value)
-              doSetEmailStatus(e.target.value)
-            }}
-          />
-          <TextInput
-            name="phoneNumber"
-            label="Phone SMS"
-            onChange={(e) => {
-              if (error) {
-                setError(false)
-              }
-              setPhone(e.target.value)
-              doSetFormStatus()
-            }}
-          />
-          <Checkbox
-            label="I agree to Spec_ial's <a className='text-underline' href='/terms-and-conditions'>terms and conditions</a>"
-            onChange={(e) => {
-              setAgree(e.target.checked)
-            }}
-            checked={agree}
-          />
-          <Button
-            onClick={handleSubmit}
-            disabled={
-              !agree || formStatus === 'success' || formStatus === 'initial'
-            }
-          >
-            {' '}
-            <span> {formStatus === 'loading' && <LoadingDots />}</span>
-            <span>
-              {(formStatus === 'initial' || formStatus === 'ready') && 'Join'}
-            </span>
-            <span>
-              {formStatus === 'success' &&
-                'Thank you for joining! We will be in touch'}
-            </span>
-          </Button>
-
-          {formStatus === 'error' && (
-            <span className="text-lg type-wrapper" style={{ color: 'red' }}>
-              {error}
-            </span>
-          )}
-        </div>
-      </div>
-    </div>
-  )
 }
 
 export default Signup

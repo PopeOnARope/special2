@@ -2229,6 +2229,10 @@ html {
   height: 0.5rem;
 }
 
+.h-full{
+  height: 100%;
+}
+
 .text-xs{
   font-size: 0.75rem;
 }
@@ -2400,6 +2404,10 @@ html {
 
 .pb-4{
   padding-bottom: 1rem;
+}
+
+.pt-8{
+  padding-top: 2rem;
 }
 
 .pointer-events-none{

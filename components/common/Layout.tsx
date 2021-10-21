@@ -79,11 +79,19 @@ const InnerLayout: React.FC<{
       ...colorOverrides,
     },
   }
+
+  const [location, setLocation] = React.useState('')
+
+  React.useEffect(()=>{
+    setLocation(window.location.href)
+  })
   const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
+      {location.length &&
+       location.indexOf('redirect') < 0 &&
+       location.indexOf('signup') < 0 && <Navbar />}
       <div
         sx={{
           margin: `0 auto`,

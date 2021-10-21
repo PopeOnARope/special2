@@ -21,10 +21,8 @@ import '../blocks/Signup/Signup.builder'
 import '../blocks/About/About.builder'
 import '../blocks/Text/Text.builder'
 import '../blocks/AccountCreate/AccountCreate.builder'
-
-
-
-
+import '../blocks/Video/Video.builder'
+import '../blocks/Redirect/Redirect.builder'
 
 
 Builder.register('insertMenu', {

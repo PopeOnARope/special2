@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     ${(props) => {
       if (props.value?.length) {
         return `& + .label-text {
-        font-size: 0.75rem;
+        font-size: 1rem;
         margin-top: 2.8rem;
         color: #333;
         font-weight: 500;

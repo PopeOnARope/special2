@@ -3,9 +3,7 @@
 //@ts-nocheck
 import React, { useEffect, useState } from 'react'
 import { Themed, jsx } from 'theme-ui'
-import { BottomModal, ModalTitle, ModalCloseTarget } from 'react-spring-modal'
-import Button from '../../blocks/Button/Button'
-import { CSSTransition } from 'react-transition-group'
+
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
