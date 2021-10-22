@@ -14,7 +14,6 @@ const Wrapper = styled.div`
   width: 100%;
   background: black;
   overflow: hidden;
-  opacity: ${props=>props.isFadingIn ? 0 : 1};
   transition: opacity 1s;
   }
 `
@@ -23,11 +22,11 @@ const SlidesWrapper = styled.div`
   margin-top: ${(props) => 0 - props.marginTop}px;
   display: flex;
   flex-direction: column;
-  transition: opacity 0.4s, margin-top 2s cubic-bezier(.41,0,.23,1.01);
+  transition: margin-top 2s cubic-bezier(.41,0,.23,1.01);
   margin-left: auto;
   margin-right: auto;
   @media (max-width: 768px) {
-    transition: opacity 0.4s, margin-top 1.5s cubic-bezier(.41,0,.23,1.01);
+    transition: margin-top 1.5s cubic-bezier(.41,0,.23,1.01);
   }
 `
 
@@ -41,7 +40,6 @@ const Carousel = (props) => {
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
   const [isTransitioning, setIsTransitioning] = React.useState(false)
   const [isLastSlide, setIsLastSlide] = React.useState(false)
-  const [isFadingin, setIsFadingIn] = React.useState(true)
 
   const [playing, toggle] = useAudio(props.sound)
 
@@ -56,7 +54,6 @@ const Carousel = (props) => {
     setHeight(window.innerHeight - 42)
     setWidth(window.innerWidth)
     smoothscroll.polyfill()
-    setTimeout(()=>{setIsFadingIn(false)}, 500)
   }, [])
 
   React.useEffect(() => {
@@ -157,7 +154,7 @@ const Carousel = (props) => {
   }
 
   return (
-    <Wrapper height={height} {...handlers} isFadingIn={isFadingin}>
+    <Wrapper height={height} {...handlers}>
       <button className="sound-control" onClickCapture={toggle} height={height}>
         Sound Is {playing ? 'on' : 'off'}
       </button>

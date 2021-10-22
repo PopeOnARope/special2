@@ -6,26 +6,33 @@ import { LoadingDots } from '../../components/ui'
 import { isMobile } from '../../lib/isMobile'
 import Cloud from '../../components/icons/Cloud'
 import { useSwipeable } from 'react-swipeable'
-import {Wrapper, Loading} from './Common'
+import { Wrapper, Loading } from './Common'
 
-
-const ModelSelectorSlide = ({ slide, height, width, display, isCurrentSlide }) => {
+const ModelSelectorSlide = ({
+  slide,
+  height,
+  width,
+  display,
+  isCurrentSlide,
+}) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
   const [loading, setLoading] = React.useState(false)
   const [deviceType, setDeviceType] = React.useState('')
-
+  const [isPreloading, setIsPreloading] = React.useState(true)
   function handleVideoLoaded() {
     setLoading(false)
   }
 
   React.useEffect(() => {
     setDeviceType(isMobile() ? 'mobile' : 'desktop')
-  })
+    setTimeout(() => {
+      setIsPreloading(false)
+    }, 500)
+  }, [])
   const { titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
   const collectionAvailable = true
-
 
   const TimeToggle = ({ timeOfDay }) => {
     return ['Night', 'Dusk', 'Day', 'Dawn'].map((time) => (
@@ -125,11 +132,9 @@ const ModelSelectorSlide = ({ slide, height, width, display, isCurrentSlide }) =
         </div>
       )}
 
-      <div className="content">
+      <div className={`content ${isPreloading && 'preload'}`}>
         <h1>{titleLine1}</h1>
-        {titleLine2 && (
-          <h1 className="title2">{titleLine2}</h1>
-        )}
+        {titleLine2 && <h1 className="title2">{titleLine2}</h1>}
         {collectionAvailable && (
           <Button displayAs="link" href={buttonUrl}>
             {buttonLabel}
@@ -148,7 +153,7 @@ const ModelSelectorSlide = ({ slide, height, width, display, isCurrentSlide }) =
             <Cloud
               fill="white"
               stroke="white"
-              style={{ position: 'absolute'}}
+              style={{ position: 'absolute' }}
             />
           )}
           {slide?.model1Name}
@@ -165,7 +170,7 @@ const ModelSelectorSlide = ({ slide, height, width, display, isCurrentSlide }) =
             <Cloud
               fill="white"
               stroke="white"
-              style={{ position: 'absolute'}}
+              style={{ position: 'absolute' }}
             />
           )}
           {slide?.model2Name}

@@ -22,11 +22,17 @@ export const Wrapper = styled.div`
   .content {
     display: flex;
     opacity: ${props=>props.isCurrentSlide ? 1 : 0};
-    transition: all 1s 1.5s;
+    transition: margin-bottom 1s 1.5s, opacity 1s 1.5s;
     flex-direction: column;
     margin-left: 50px;
     margin-bottom: ${props=>props.isCurrentSlide ? 2 : 4}rem;
     z-index: 1;
+    @media (max-width: 768px) {
+      margin: 3rem;
+      margin-bottom: ${props=>props.isCurrentSlide ? 3 : 5}rem;
+      opacity: ${props=>props.isCurrentSlide ? 1 : 0};
+      transition:margin-bottom 1s 1s, opacity 1s 1s;
+    }
     h1 {
       margin-left: 0;
       font-family: 'Value Sans Pro';
@@ -61,11 +67,7 @@ export const Wrapper = styled.div`
         font-size: 3rem;
       }
     }
-    @media (max-width: 768px) {
-      margin: 3rem;
-      margin-bottom: ${props=>props.isCurrentSlide ? 3 : 5}rem;
-      transition: all 1s 1s;
-    }
+
   }
 `
 
