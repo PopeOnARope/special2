@@ -32,6 +32,8 @@
 }
 
 
+
+@media(min-width: 768px) {
 .floating {
   animation-name: floating;
   animation-duration: 3s;
@@ -39,6 +41,8 @@
   animation-timing-function: linear;
   margin-left: 30px;
   margin-top: 5px;
+}
+
 }
 
 @keyframes floating {

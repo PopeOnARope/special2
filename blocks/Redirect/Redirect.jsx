@@ -9,11 +9,17 @@ const Redirect = ()=>{
 
     const _cookie = document.cookie
     console.log({cookie})
-    if(Cookies.get('account') || Cookies.get('account') === 'declined') {
-      window.location.href = '/release2'
-    } else {
-      window.location.href = '/signup'
+    const handleRedirect = ()=>{
+
+
+      if(Cookies.get('account') || Cookies.get('account') === 'declined') {
+        window.location.href = '/release2'
+      } else {
+        window.location.href = '/signup'
+      }
     }
+
+    setTimeout(handleRedirect, 2000)
 
   })
   //check if user account has been created for this user

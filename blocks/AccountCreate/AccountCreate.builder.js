@@ -17,5 +17,14 @@ Builder.registerComponent(LazyText, {
       name: 'finePrint',
       type: 'richText',
     },
+    {
+      name: 'declineButtonLabel',
+      type: 'string',
+    },
+    {
+      name: 'submitButtonLabel',
+      type: 'string',
+      defaultValue: 'No thanks I am not interested in sweet deals >'
+    },
   ],
 })

@@ -10,7 +10,7 @@ import {grained} from '../../lib/grain'
 import Cookie from 'js-cookie'
 
 
-const Signup = ({ content, finePrint, title }) => {
+const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
@@ -101,12 +101,8 @@ const Signup = ({ content, finePrint, title }) => {
   const form1 = (
     <div
       className="flex flex-col px-8 floating"
-      style={{ minWidth: '16rem', maxWidth: '48rem' }}
+      style={{ minWidth: '4rem', maxWidth: '48rem', width: '100%' }}
     >
-      <button className='absolute' style={{right: '1rem', top: '-1rem'}} onClick={()=>{
-        Cookie.set('account', 'declined', {expires: 7})
-        window.location.href = '/redirect'
-      }}><Cross/></button>
       <h4
         className="text-xl text-bold "
         style={{
@@ -168,9 +164,13 @@ const Signup = ({ content, finePrint, title }) => {
                 'Thank you for joining! We will be in touch'}
             </span>
           </Button>
+          <button style={{right: '1rem', top: '-1rem', color: '#777', padding: '1rem'}} onClick={()=>{
+            Cookie.set('account', 'declined', {expires: 7})
+            window.location.href = '/redirect'
+          }}>{declineButtonLabel}</button>
         </div>
       </div>
-      <p className="text-xs mt-20" dangerouslySetInnerHTML={{__html: finePrint}}>
+      <p className="text-xs md:mt-20" dangerouslySetInnerHTML={{__html: finePrint}}>
 
       </p>
     </div>
