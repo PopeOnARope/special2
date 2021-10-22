@@ -21,9 +21,11 @@ export const Wrapper = styled.div`
   }
   .content {
     display: flex;
+    opacity: ${props=>props.isCurrentSlide ? 1 : 0};
+    transition: all 1s 1.5s;
     flex-direction: column;
     margin-left: 50px;
-    margin-bottom: 33px;
+    margin-bottom: ${props=>props.isCurrentSlide ? 2 : 4}rem;
     z-index: 1;
     h1 {
       margin-left: 0;
@@ -61,6 +63,8 @@ export const Wrapper = styled.div`
     }
     @media (max-width: 768px) {
       margin: 3rem;
+      margin-bottom: ${props=>props.isCurrentSlide ? 3 : 5}rem;
+      transition: all 1s 1s;
     }
   }
 `

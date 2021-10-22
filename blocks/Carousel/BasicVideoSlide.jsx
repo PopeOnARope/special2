@@ -5,13 +5,12 @@ import { H1, SecondaryH1 } from '../../components/Typography'
 import { LoadingDots } from '../../components/ui'
 import { isMobile } from '../../lib/isMobile'
 import Cloud from '../../components/icons/Cloud'
-import {Wrapper, Loading} from './Common'
+import { Wrapper, Loading } from './Common'
 
-
-const BasicVideoSlide = ({ slide, height, width }) => {
+const BasicVideoSlide = ({ slide, height, width, display, isCurrentSlide }) => {
   const [loading, setLoading] = React.useState(false)
   const [deviceType, setDeviceType] = React.useState('')
-  const { titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
+  const { titleLine1, titleLine2, buttonLabel, buttonUrl, image } = slide
   const collectionAvailable = true
 
   function handleVideoLoaded() {
@@ -37,18 +36,23 @@ const BasicVideoSlide = ({ slide, height, width }) => {
     playsInline: true,
   }
 
+  if (!display) {
+    return <Wrapper height={height} />
+  }
+
   return (
-    <Wrapper height={height}>
+    <Wrapper height={height} isCurrentSlide={isCurrentSlide}>
       {loading && (
         <Loading>
           loading
           <LoadingDots />
         </Loading>
       )}
+      {(!fittedVideo || !fittedVideo.length) && image && <img src={image} />}
 
-      {deviceType === 'desktop' && <video {...attr}></video>}
+      {fittedVideo && deviceType === 'desktop' && <video {...attr}></video>}
 
-      {deviceType === 'mobile' && (
+      {fittedVideo && deviceType === 'mobile' && (
         <>
           <img {...attr} />
         </>
@@ -59,7 +63,7 @@ const BasicVideoSlide = ({ slide, height, width }) => {
         {titleLine2 && (
           <SecondaryH1 className="title2">{titleLine2}</SecondaryH1>
         )}
-        {collectionAvailable && (
+        {collectionAvailable && buttonLabel && (
           <Button displayAs="link" href={buttonUrl}>
             {buttonLabel}
           </Button>

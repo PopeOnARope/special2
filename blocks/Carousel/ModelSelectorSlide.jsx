@@ -9,7 +9,7 @@ import { useSwipeable } from 'react-swipeable'
 import {Wrapper, Loading} from './Common'
 
 
-const ModelSelectorSlide = ({ slide, height, width }) => {
+const ModelSelectorSlide = ({ slide, height, width, display, isCurrentSlide }) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
@@ -26,20 +26,6 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
   const { titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
   const collectionAvailable = true
 
-  // function toggleSwitchMarginTop() {
-  //   if (timeOfDay === 'Night') {
-  //     return '0rem'
-  //   }
-  //   if (timeOfDay === 'Dusk') {
-  //     return '1.8rem'
-  //   }
-  //   if (timeOfDay === 'Day') {
-  //     return '3.5rem'
-  //   }
-  //   if (timeOfDay === 'Dawn') {
-  //     return '5.5rem'
-  //   }
-  // }
 
   const TimeToggle = ({ timeOfDay }) => {
     return ['Night', 'Dusk', 'Day', 'Dawn'].map((time) => (
@@ -73,8 +59,12 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
     ? fittedVideos[`${currentModel}${timeOfDay}`]
     : ''
 
+  if (!display) {
+    return <Wrapper height={height} />
+  }
+
   return (
-    <Wrapper height={height}>
+    <Wrapper height={height} isCurrentSlide={isCurrentSlide}>
       {loading && (
         <Loading>
           loading
@@ -158,7 +148,7 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
             <Cloud
               fill="white"
               stroke="white"
-              style={{ position: 'absolute', width: '3rem' }}
+              style={{ position: 'absolute'}}
             />
           )}
           {slide?.model1Name}
@@ -175,7 +165,7 @@ const ModelSelectorSlide = ({ slide, height, width }) => {
             <Cloud
               fill="white"
               stroke="white"
-              style={{ position: 'absolute', width: '3rem' }}
+              style={{ position: 'absolute'}}
             />
           )}
           {slide?.model2Name}

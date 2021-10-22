@@ -13,28 +13,9 @@ const Wrapper = styled.div`
   height: ${({ height }) => height}px;
   width: 100%;
   background: black;
-  //display: flex;
-  //flex-direction: column;
-  //justify-content: flex-end;
   overflow: hidden;
-  .slide-enter {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  .slide-enter-active {
-    opacity: 1;
-    transform: translateY(0px);
-    transition: all 0.3s;
-  }
-  .slide-exit {
-    opacity: 1;
-    transform: translateY(0px);
-  }
-  .slide-exit-active {
-    opacity: 0;
-    transform: translateY(-40px);
-    transition: all 0.3s;
-  }
+  opacity: ${props=>props.isFadingIn ? 0 : 1};
+  transition: opacity 1s;
   }
 `
 
@@ -42,12 +23,12 @@ const SlidesWrapper = styled.div`
   margin-top: ${(props) => 0 - props.marginTop}px;
   display: flex;
   flex-direction: column;
-  //position: relative;
-  transition: opacity 0.4s, margin-top 0.6s ease-out;
-  //opacity: ${(props) => (props.isTransitioning ? 0.5 : 1)};
-
+  transition: opacity 0.4s, margin-top 2s cubic-bezier(.41,0,.23,1.01);
   margin-left: auto;
   margin-right: auto;
+  @media (max-width: 768px) {
+    transition: opacity 0.4s, margin-top 1.5s cubic-bezier(.41,0,.23,1.01);
+  }
 `
 
 const Carousel = (props) => {
@@ -60,6 +41,7 @@ const Carousel = (props) => {
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
   const [isTransitioning, setIsTransitioning] = React.useState(false)
   const [isLastSlide, setIsLastSlide] = React.useState(false)
+  const [isFadingin, setIsFadingIn] = React.useState(true)
 
   const [playing, toggle] = useAudio(props.sound)
 
@@ -74,6 +56,7 @@ const Carousel = (props) => {
     setHeight(window.innerHeight - 42)
     setWidth(window.innerWidth)
     smoothscroll.polyfill()
+    setTimeout(()=>{setIsFadingIn(false)}, 500)
   }, [])
 
   React.useEffect(() => {
@@ -82,6 +65,7 @@ const Carousel = (props) => {
 
   const handleScroll = React.useCallback(
     (e) => {
+      console.log('scrolling')
       //check if this is the last slide
       const _isLastSlide = slides.length - 1 === currentSlide
       const isFirstSlide = currentSlide === 0
@@ -105,7 +89,7 @@ const Carousel = (props) => {
           e.preventDefault()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 400)
+          }, 1200)
           setIsTransitioning(true)
           nextSlide()
         }
@@ -114,7 +98,7 @@ const Carousel = (props) => {
           e.preventDefault()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 400)
+          }, 1200)
           setIsTransitioning(true)
           previousSlide()
         }
@@ -129,60 +113,29 @@ const Carousel = (props) => {
     }
   }, [handleScroll])
 
-  React.useEffect(() => {
-    const d = new Date()
-    const h = d.getHours()
-    if (h < 6 || h > 9) {
-      setTimeOfDay('night')
-    }
-    if (h >= 6 && h < 9) {
-      setTimeOfDay('dawn')
-    }
-    if (h >= 9 && h < 17) {
-      setTimeOfDay('day')
-    }
-    if (h >= 17 && h < 19) setTimeOfDay('dusk')
-  }, [])
-
-  const onSwipedUp = (e) => {
-    console.log({ e })
-    if (!isLastSlide) {
-      setCurrentSlide(currentSlide + 1)
-    }
-  }
-  const onSwipedDown = (e) => {
-    const isTopOfPage = !window.scrollY
-    if (currentSlide !== 0 && isTopOfPage) {
-      setCurrentSlide(currentSlide - 1)
-    } else {
-      e.returnValue = true
-    }
-  }
   const onSwiping = (e) => {
+    console.log('swiping')
     //if last slide and direction is down, scrollTo deltaY
-    console.log(e.dir)
     if (isTransitioning) {
       return
     } else {
       if (isLastSlide && e.dir === 'Up') {
-        console.log('scrolling')
         window.scrollTo({ top: height, behavior: 'smooth' })
       }
       if (window.scrollY !== 0 && e.dir === 'Down') {
-        console.log('scrolling')
         window.scrollTo({ top: 0, behavior: 'smooth' })
       }
       if (!isLastSlide && e.dir === 'Up') {
         setTimeout(() => {
           setIsTransitioning(false)
-        }, 500)
+        }, 1200)
         setIsTransitioning(true)
         setCurrentSlide(currentSlide + 1)
       }
       if (currentSlide !== 0 && e.dir === 'Down' && window.scrollY === 0) {
         setTimeout(() => {
           setIsTransitioning(false)
-        }, 500)
+        }, 1200)
         setIsTransitioning(true)
         setCurrentSlide(currentSlide - 1)
       }
@@ -204,7 +157,7 @@ const Carousel = (props) => {
   }
 
   return (
-    <Wrapper height={height} {...handlers}>
+    <Wrapper height={height} {...handlers} isFadingIn={isFadingin}>
       <button className="sound-control" onClickCapture={toggle} height={height}>
         Sound Is {playing ? 'on' : 'off'}
       </button>
@@ -215,13 +168,28 @@ const Carousel = (props) => {
         isTransitioning={isTransitioning}
         width={width}
       >
-        {slides.map((slide) =>
-          slide.type === 'modelSelector' ? (
-            <ModelSelectorSlide height={height} width={width} slide={slide} />
+        {slides.map((slide, idx) => {
+          console.log({ currentSlide })
+          return slide.type === 'modelSelector' ? (
+            <ModelSelectorSlide
+              height={height}
+              width={width}
+              slide={slide}
+              key={idx.toString()}
+              display={idx >= currentSlide -2 && idx <= currentSlide + 1}
+              isCurrentSlide={idx===currentSlide}
+            />
           ) : (
-            <BasicVideoSlide height={height} width={width} slide={slide} />
+            <BasicVideoSlide
+              height={height}
+              width={width}
+              slide={slide}
+              key={idx.toString()}
+              display={idx > currentSlide -2 && idx < currentSlide + 2}
+              isCurrentSlide={idx===currentSlide}
+            />
           )
-        )}
+        })}
       </SlidesWrapper>
       {/*{slides[currentSlide].type === 'modelSelector' ? (*/}
       {/*  <ModelSelectorSlide*/}
