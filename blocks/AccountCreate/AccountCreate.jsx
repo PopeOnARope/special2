@@ -5,7 +5,7 @@ import Button from '../Button/Button'
 import { LoadingDots } from '../../components/ui'
 import { validateEmail } from '../../lib/validateEmail'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { Cross } from '../../components/icons'
+import { Cross, SpecialLogo } from '../../components/icons'
 import {grained} from '../../lib/grain'
 import Cookie from 'js-cookie'
 import { formatDate } from '../../lib/formatDate'
@@ -101,11 +101,11 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
 
   const form1 = (
     <div
-      className="flex flex-col px-8 floating"
+      className="flex flex-col px-8"
       style={{ minWidth: '4rem', maxWidth: '48rem', width: '100%' }}
     >
       <h4
-        className="text-xl text-bold "
+        className="text-xl text-bold floating "
         style={{
           textDecoration: 'underline',
           textDecorationColor: '#ffc391',
@@ -158,7 +158,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
             {' '}
             <span> {formStatus === 'loading' && <LoadingDots />}</span>
             <span>
-              {(formStatus === 'initial' || formStatus === 'ready') && 'Submit'}
+              {(formStatus === 'initial' || formStatus === 'ready') && 'Continue to Site'}
             </span>
             <span>
               {formStatus === 'success' &&
@@ -179,11 +179,11 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
 
   const form2 = (
     <div
-      className="flex flex-col px-8 floating"
+      className="flex flex-col px-8"
       style={{ minWidth: '16rem', maxWidth: '48rem' }}
     >
       <h4
-        className="text-xl text-bold "
+        className="text-xl text-bold floating"
         style={{
           textDecoration: 'underline',
           textDecorationColor: '#ffc391',
@@ -261,11 +261,12 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
 
   return (
     <div className="flex flex-col items-center type-wrapper w-full h-full pt-8" id="accountCreate">
+      <SpecialLogo/>
       <SwitchTransition mode="out-in">
         <CSSTransition
           key={firstPartSubmitted}
-          classNames="in-out"
-          timeout={300}
+          classNames="fade-down"
+          timeout={1500}
         >
           {firstPartSubmitted ? form2 : form1}
         </CSSTransition>

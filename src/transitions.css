@@ -13,6 +13,27 @@
   transition: all 0.3s;
 }
 
+
+
+.fade-down-enter {
+  opacity: 0;
+  margin-top: -100px;
+}
+.fade-down-enter-active {
+  opacity: 1;
+  margin-top: 0px;
+  transition: all 1.5s;
+}
+.fade-down-exit {
+  opacity: 1;
+}
+.fade-down-exit-active {
+  margin-top: 100px;
+  opacity: 0;
+  transition: all 1.5s;
+
+}
+
 .hover-right {
   transition: 0.7s all;
 }
@@ -33,10 +54,9 @@
 
 .floating {
   animation-name: floating;
-  animation-duration: 3s;
+  animation-duration: 4s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  margin-left: 30px;
   margin-top: 5px;
 }
 
