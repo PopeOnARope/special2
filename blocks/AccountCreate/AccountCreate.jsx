@@ -1,5 +1,5 @@
 import React from 'react'
-import TextInput from '../../components/ui/Form/TextInput'
+import FancyTextInput from '../../components/ui/Form/FancyTextInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
 import Button from '../Button/Button'
 import { LoadingDots } from '../../components/ui'
@@ -20,6 +20,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
   const [birthday, setBirthday] = React.useState('')
   const [shareSomething, setShareSomething] = React.useState('')
   const [firstPartSubmitted, setFirstPartSubmitted] = React.useState(false)
+  // const [personId, ]
 
   const [formStatus, setFormStatus] = React.useState('initial')
   const [height, setHeight] = React.useState(768)
@@ -59,7 +60,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       body: urlencoded,
     })
     setTimeout(()=>{
-      window.location.href = '/release2';
+      // window.location.href = '/release2';
     }, 2000)
     return response.json()
   }
@@ -101,7 +102,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
 
   const form1 = (
     <div
-      className="flex flex-col px-8"
+      className="flex flex-col px-8 mt-20"
       style={{ minWidth: '4rem', maxWidth: '48rem', width: '100%' }}
     >
       <h4
@@ -116,7 +117,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       <p className="text-sm" dangerouslySetInnerHTML={{__html: content}}>
        </p>
       <div className="input-container w-full px-16 py-8 ">
-        <TextInput
+        <FancyTextInput
           name="name"
           label="Name?"
           onChange={(e) => {
@@ -127,7 +128,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
             doSetFormStatus()
           }}
         />
-        <TextInput
+        <FancyTextInput
           name="email"
           label="Email?"
           onChange={(e) => {
@@ -165,7 +166,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
                 'Thank you for joining! We will be in touch'}
             </span>
           </Button>
-          <button style={{right: '1rem', top: '-1rem', color: '#777', padding: '1rem'}} onClick={()=>{
+          <button style={{right: '1rem', top: '-1rem', color: '#777', padding: '1rem', margin: '1rem'}} onClick={()=>{
             Cookie.set('account', 'declined', {expires: 7})
             window.location.href = '/redirect'
           }}>{declineButtonLabel}</button>
@@ -195,8 +196,8 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       <p className="text-sm">
         Answer below to take full advantage of all the perks.
       </p>
-      <div className="input-container w-full px-16 py-8 ">
-        <TextInput
+      <div className="input-container w-full px-16 ">
+        <FancyTextInput
           name="phoneNumber"
           secondaryLabel='* we barely send any texts'
           label="phone #?"
@@ -208,7 +209,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
             doSetFormStatus()
           }}
         />
-        <TextInput
+        <FancyTextInput
           name="birthday"
           label="birthday?"
           secondaryLabel='* we like to send gifts'
@@ -221,7 +222,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
             doSetFormStatus()
           }}
         />
-        <TextInput
+        <FancyTextInput
           name="share"
           label="Share something?"
           secondaryLabel="a thought, link a song, a book we'd like?"
@@ -234,8 +235,9 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
           }}
         />
 
-        <div className="flex flex-col  items-center">
+        <div className="flex flex-col  items-center p-8">
           <Button
+
             onClick={handleSubmit}
             disabled={
               !agree || formStatus === 'success' || formStatus === 'initial'
@@ -253,7 +255,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
           </Button>
         </div>
       </div>
-      <p className="text-xs mt-20" dangerouslySetInnerHTML={{__html: finePrint}}>
+      <p className="text-xs mt-4" dangerouslySetInnerHTML={{__html: finePrint}}>
 
       </p>
     </div>
