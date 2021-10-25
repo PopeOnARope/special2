@@ -28,31 +28,37 @@ const Wrapper = styled.div`
     &:focus {
       outline: none;
 
-      & + .label-text {
+      & + .label-text, & + .secondary-text {
         font-size: 0.75rem;
         margin-top: 2rem;
         color: #333;
       }
     }
   }
-  .label-text {
+  .label-text, .secondary-text {
     z-index: 1;
     position: absolute;
     transition: all 0.3s;
   }
+
+  .secondary-text {
+    display: contents;
+    font-size: 0.8rem;
+  }
 `
-const TextInput = ({ label, name, onChange }) => {
+const TextInput = ({ label, name, onChange, secondaryLabel='', formatter= (v) => v }) => {
   const [value, setValue] = React.useState('')
 
   return (
     <Wrapper value={value}>
       <input
         onChange={(e) => {
-          setValue(e.currentTarget.value)
+          setValue(formatter(e.currentTarget.value))
           onChange(e)
         }}
+        value={value}
       />
-      <label className="label-text">{label}</label>
+      <label className="label-text">{label} <span className='secondary-text'>{secondaryLabel}</span></label>
     </Wrapper>
   )
 }

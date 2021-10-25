@@ -17,7 +17,7 @@
   transition: 0.7s all;
 }
 
-.hover-right:hover  {
+.hover-right:hover {
   margin-right: -0.5rem;
   margin-left: 0.5rem;
 }
@@ -26,14 +26,11 @@
   transition: 0.7s all;
 }
 
-.hover-left:hover  {
+.hover-left:hover {
   margin-left: -0.5rem;
   margin-right: 0.5rem;
 }
 
-
-
-@media(min-width: 768px) {
 .floating {
   animation-name: floating;
   animation-duration: 3s;
@@ -43,18 +40,30 @@
   margin-top: 5px;
 }
 
-}
-
-.preload{
+.preload {
   transition: none !important;
 }
 
 @keyframes floating {
-  0% { transform: translate(0,  0px); }
-  12.5% { transform: translate(3,  2px); }
-  25% { transform: translate(3px,  2px); }
-  37.5% { transform: translate(4,  3px); }
-  50%  { transform: translate(0, 6px); }
-  75% { transform: translate(-3px,  3px); }
-  100%   { transform: translate(0, -0px); }
+  0% {
+    transform: translate(0, 0px);
+  }
+  12.5% {
+    transform: translate(3, 2px);
+  }
+  25% {
+    transform: translate(3px, 2px);
+  }
+  37.5% {
+    transform: translate(4, 3px);
+  }
+  50% {
+    transform: translate(0, 6px);
+  }
+  75% {
+    transform: translate(-3px, 3px);
+  }
+  100% {
+    transform: translate(0, -0px);
+  }
 }

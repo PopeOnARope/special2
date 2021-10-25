@@ -8,6 +8,7 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import { Cross } from '../../components/icons'
 import {grained} from '../../lib/grain'
 import Cookie from 'js-cookie'
+import { formatDate } from '../../lib/formatDate'
 
 
 const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
@@ -197,6 +198,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       <div className="input-container w-full px-16 py-8 ">
         <TextInput
           name="phoneNumber"
+          secondaryLabel='* we barely send any texts'
           label="phone #?"
           onChange={(e) => {
             if (error) {
@@ -209,17 +211,20 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
         <TextInput
           name="birthday"
           label="birthday?"
+          secondaryLabel='* we like to send gifts'
+          formatter={formatDate}
           onChange={(e) => {
             if (error) {
               setError(false)
             }
-            setBirthday(e.target.value)
+            setBirthday(formatDate(e.target.value))
             doSetFormStatus()
           }}
         />
         <TextInput
           name="share"
           label="Share something?"
+          secondaryLabel="a thought, link a song, a book we'd like?"
           onChange={(e) => {
             if (error) {
               setError(false)
