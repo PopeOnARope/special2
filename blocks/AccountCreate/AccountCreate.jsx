@@ -60,7 +60,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       body: urlencoded,
     })
     setTimeout(()=>{
-      // window.location.href = '/release2';
+      window.location.href = '/release2';
     }, 2000)
     return response.json()
   }
