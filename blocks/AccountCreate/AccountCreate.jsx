@@ -57,7 +57,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
     })
     setTimeout(() => {
       window.location.href = '/release2'
-    }, 2000)
+    }, 1000)
     return response.json()
   }
   function handleSubmit() {
