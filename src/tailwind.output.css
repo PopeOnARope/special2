@@ -2233,10 +2233,6 @@ html {
   height: 100%;
 }
 
-.text-xs{
-  font-size: 0.75rem;
-}
-
 .text-sm{
   font-size: 0.875rem;
 }
@@ -2299,12 +2295,12 @@ html {
   margin-top: 1.5rem;
 }
 
-.ml-10{
-  margin-left: 2.5rem;
+.mt-8{
+  margin-top: 2rem;
 }
 
-.mt-20{
-  margin-top: 5rem;
+.ml-10{
+  margin-left: 2.5rem;
 }
 
 .mb-20{
@@ -2372,11 +2368,6 @@ html {
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.py-8{
-  padding-top: 2rem;
-  padding-bottom: 2rem;
 }
 
 .px-8{

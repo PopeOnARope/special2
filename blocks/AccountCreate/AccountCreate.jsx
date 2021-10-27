@@ -5,11 +5,10 @@ import Button from '../Button/Button'
 import { LoadingDots } from '../../components/ui'
 import { validateEmail } from '../../lib/validateEmail'
 import { CSSTransition, SwitchTransition } from 'react-transition-group'
-import { Cross, SpecialLogo } from '../../components/icons'
-import {grained} from '../../lib/grain'
+import { ArrowLeft, Cross, SpecialLogo } from '../../components/icons'
+import { grained } from '../../lib/grain'
 import Cookie from 'js-cookie'
 import { formatDate } from '../../lib/formatDate'
-
 
 const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
   const [name, setName] = React.useState('')
@@ -25,30 +24,27 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
   const [formStatus, setFormStatus] = React.useState('initial')
   const [height, setHeight] = React.useState(768)
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setHeight(window.innerHeight)
     grained('accountCreate', {
-      "animate": true,
-      "patternWidth": 100,
-      "patternHeight": 100,
-      "grainOpacity": 0.04,
-      "grainDensity": 1.79,
-      "grainWidth": 4.27,
-      "grainHeight": 1
+      animate: true,
+      patternWidth: 100,
+      patternHeight: 100,
+      grainOpacity: 0.04,
+      grainDensity: 1.79,
+      grainWidth: 4.27,
+      grainHeight: 1,
     })
-
   }, [])
 
   async function postData() {
-    const data = `g='XKvFZS'&email=${email}&name=${name}&phoneNumber=${phoneNumber}&birthday=${birthday}&shareSomething=${shareSomething}`
+    // const data = `g='XKvFZS'&email=${email}&name=${name}&phoneNumber=${phoneNumber}`
 
     var urlencoded = new URLSearchParams()
     urlencoded.append('g', 'XKvFZS')
     urlencoded.append('email', email)
     urlencoded.append('phone_number', phoneNumber)
     urlencoded.append('name', name)
-    urlencoded.append('birthday', birthday)
-    urlencoded.append('shareSomething', shareSomething)
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {
@@ -59,8 +55,8 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       redirect: 'follow', // manual, *follow, error
       body: urlencoded,
     })
-    setTimeout(()=>{
-      window.location.href = '/release2';
+    setTimeout(() => {
+      window.location.href = '/release2'
     }, 2000)
     return response.json()
   }
@@ -100,13 +96,13 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
     }
   }
 
-  const form1 = (
+  const form = (
     <div
-      className="flex flex-col px-8 mt-20"
-      style={{ minWidth: '4rem', maxWidth: '48rem', width: '100%' }}
+      className="flex flex-col px-8 mt-8"
+      style={{ minWidth: '16rem', maxWidth: '48rem' }}
     >
       <h4
-        className="text-xl text-bold floating "
+        className="text-xl text-bold floating text-center"
         style={{
           textDecoration: 'underline',
           textDecorationColor: '#ffc391',
@@ -114,9 +110,12 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       >
         {title}
       </h4>
-      <p className="text-sm" dangerouslySetInnerHTML={{__html: content}}>
-       </p>
-      <div className="input-container w-full px-16 py-8 ">
+      <p
+        className="text-sm text-center"
+        style={{ fontFamily: 'InputMono' }}
+        dangerouslySetInnerHTML={{ __html: content }}
+      ></p>
+      <div className="input-container w-full px-16 ">
         <FancyTextInput
           name="name"
           label="Name?"
@@ -139,68 +138,10 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
             doSetEmailStatus(e.target.value)
           }}
         />
-        <Checkbox
-          label="I agree to Spec_ial's <a className='text-underline' href='/terms-and-conditions'>terms and conditions</a>"
-          onChange={(e) => {
-            setAgree(e.target.checked)
-          }}
-          checked={agree}
-        />
-        <div className="flex flex-col  items-center">
-          <Button
-            onClick={() => {
-              Cookie.set('account', 'active', {expires: 365})
-              setFirstPartSubmitted(true);
-            }}
-            disabled={
-              !agree || formStatus === 'success' || formStatus === 'initial'
-            }
-          >
-            {' '}
-            <span> {formStatus === 'loading' && <LoadingDots />}</span>
-            <span>
-              {(formStatus === 'initial' || formStatus === 'ready') && 'Continue to Site'}
-            </span>
-            <span>
-              {formStatus === 'success' &&
-                'Thank you for joining! We will be in touch'}
-            </span>
-          </Button>
-          <button style={{right: '1rem', top: '-1rem', color: '#777', padding: '1rem', margin: '1rem'}} onClick={()=>{
-            Cookie.set('account', 'declined', {expires: 7})
-            window.location.href = '/redirect'
-          }}>{declineButtonLabel}</button>
-        </div>
-      </div>
-      <p className="text-xs md:mt-20" dangerouslySetInnerHTML={{__html: finePrint}}>
-
-      </p>
-    </div>
-  )
-
-  const form2 = (
-    <div
-      className="flex flex-col px-8"
-      style={{ minWidth: '16rem', maxWidth: '48rem' }}
-    >
-      <h4
-        className="text-xl text-bold floating"
-        style={{
-          textDecoration: 'underline',
-          textDecorationColor: '#ffc391',
-        }}
-      >
-        Thanks {name}, we're excited to have you. We'll email you at {email}{' '}
-        with your $95 credit.
-      </h4>
-      <p className="text-sm">
-        Answer below to take full advantage of all the perks.
-      </p>
-      <div className="input-container w-full px-16 ">
         <FancyTextInput
           name="phoneNumber"
-          secondaryLabel='* we barely send any texts'
-          label="phone #?"
+          secondaryLabel="* we barely send any texts"
+          label="Phone #?"
           onChange={(e) => {
             if (error) {
               setError(false)
@@ -209,73 +150,65 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
             doSetFormStatus()
           }}
         />
-        <FancyTextInput
-          name="birthday"
-          label="birthday?"
-          secondaryLabel='* we like to send gifts'
-          formatter={formatDate}
-          onChange={(e) => {
-            if (error) {
-              setError(false)
-            }
-            setBirthday(formatDate(e.target.value))
-            doSetFormStatus()
-          }}
-        />
-        <FancyTextInput
-          name="share"
-          label="Share something?"
-          secondaryLabel="a thought, link a song, a book we'd like?"
-          onChange={(e) => {
-            if (error) {
-              setError(false)
-            }
-            setShareSomething(e.target.value)
-            doSetFormStatus()
-          }}
-        />
 
-        <div className="flex flex-col  items-center p-8">
-          <Button
 
-            onClick={handleSubmit}
-            disabled={
-              !agree || formStatus === 'success' || formStatus === 'initial'
-            }
-          >
-            {' '}
-            <span> {formStatus === 'loading' && <LoadingDots />}</span>
-            <span>
-              {(formStatus === 'initial' || formStatus === 'ready') && 'Submit'}
-            </span>
-            <span>
-              {formStatus === 'success' &&
-                'Thank you for joining! We will be in touch'}
-            </span>
-          </Button>
-        </div>
       </div>
-      <p className="text-xs mt-4" dangerouslySetInnerHTML={{__html: finePrint}}>
-
-      </p>
+      <p
+        className="t mt-2 text-center"
+        style={{
+          fontSize: '0.8rem',
+          fontFamily: 'RayJohnson',
+        }}
+      ></p>
+      <p
+        style={{ bottom: 0, position: 'absolute', alignSelf: 'center' }}
+        className="text-center"
+        dangerouslySetInnerHTML={{ __html: finePrint }}
+      ></p>
     </div>
   )
 
   return (
-    <div className="flex flex-col items-center type-wrapper w-full h-full pt-8" id="accountCreate">
-      <SpecialLogo/>
-      <SwitchTransition mode="out-in">
-        <CSSTransition
-          key={firstPartSubmitted}
-          classNames="fade-down"
-          timeout={1500}
+    <div
+      className="flex flex-col items-center type-wrapper w-full h-full pt-8"
+      id="accountCreate"
+    >
+      <SpecialLogo />
+
+          {form}
+      <div className="flex flex-col items-center p-8">
+        <Button
+          onClick={handleSubmit}
+          style={{ fontFamily: 'RayJohnson', fontSize: '1.25re' }}
+          disabled={
+            !agree || formStatus === 'success' || formStatus === 'initial'
+          }
         >
-          {firstPartSubmitted ? form2 : form1}
-        </CSSTransition>
-      </SwitchTransition>
+          {' '}
+          <span> {formStatus === 'loading' && <LoadingDots />}</span>
+          <span>
+              {(formStatus === 'initial' || formStatus === 'ready') &&
+              'BECOME A MEMBER'}
+            </span>
+          <span>
+              {formStatus === 'success' &&
+              'Thank you for joining! We will be in touch'}
+            </span>
+        </Button>
+
+        <a
+          onClick={() => {
+            Cookie.set('account', 'declined', { expires: 7 })
+            window.location.href = '/redirect'
+          }}
+          className="mt-4 text-sm inline-flex items-center"
+          style={{ fontFamily: 'InputMono', position: 'relative', height: '1rem', width: '20rem', cursor: 'pointer' }}
+        >
+          <span>Not right now, continue to shop</span> <ArrowLeft orientation="right" />
+        </a>
+      </div>
     </div>
   )
-
 }
 
 export default Signup
