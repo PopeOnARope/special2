@@ -8,8 +8,22 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import { ArrowLeft, Cross, SpecialLogo } from '../../components/icons'
 import { grained } from '../../lib/grain'
 import Cookie from 'js-cookie'
-import { formatDate } from '../../lib/formatDate'
+import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
+
+const ConfirmButton = styled.button`
+
+  font-family: 'RayJohnson';
+  font-size: 1.75rem;
+  background: black;
+  color: white;
+  padding: 0.25rem;
+  z-index: 100;
+&:disabled {
+  background: #555;
+}
+
+`
 
 const Signup = ({
   content,
@@ -106,9 +120,10 @@ const Signup = ({
 
   return (
     <div
-      className="flex flex-col items-center type-wrapper w-full h-full pt-8"
+      className="flex flex-col items-center type-wrapper w-full h-full pt-8 "
       id="accountCreate"
     >
+
       <button
         className="absolute px-8 text-sm"
         style={{ right: 0, fontFamily: 'InputMono' }}
@@ -180,17 +195,11 @@ const Signup = ({
         </div>
       </div>
       <div className="flex flex-col items-center p-8">
-        <button
+        <ConfirmButton
           onClick={handleSubmit}
-          style={{
-            fontFamily: 'RayJohnson',
-            fontSize: '1.75rem',
-            background: 'black',
-            color: 'white',
-            padding: '0.25rem',
-          }}
+
           disabled={
-            !agree || formStatus === 'success' || formStatus === 'initial'
+            formStatus === 'success' || formStatus === 'initial'
           }
         >
           {' '}
@@ -203,7 +212,7 @@ const Signup = ({
             {formStatus === 'success' &&
               'Thank you for joining! We will be in touch'}
           </span>
-        </button>
+        </ConfirmButton>
 
         <a
           onClick={decline}
