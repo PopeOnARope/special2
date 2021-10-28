@@ -32,5 +32,10 @@ Builder.registerComponent(LazyText, {
       type: 'string',
       defaultValue: 'No thanks I am not interested in sweet deals >'
     },
+    {
+      name: 'sound',
+      type: 'file',
+      allowedFileTypes: ['wav', 'mp3']
+    }
   ],
 })

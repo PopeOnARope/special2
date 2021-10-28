@@ -10,16 +10,17 @@ const OuterWrapper = styled.div`
 
 const Orange = styled.div`
   background: #ffc391;
-  width: ${(props) => props.width * 0.6}rem;
+  width: ${(props) => props.width * 0.7}rem;
   height: 2px;
   position: absolute;
 `
 
 const Wrapper = styled.div`
   font-family: Value Sans Pro;
+  font-weight: bold;
   display: flex;
   align-items: flex-end;
-  font-size: 1rem;
+  font-size: 1.25rem;
   position: relative;
   height: 2.5rem;
   margin-top: 1rem;
@@ -35,7 +36,7 @@ const Wrapper = styled.div`
       if (props.value?.length) {
         return `& + .label-text {
         font-size: 0.8rem;
-        margin-top: 2.8rem;
+        margin-top: 1.4rem;
         margin-bottom: -1.25rem;
 
         color: #333;
@@ -51,9 +52,12 @@ const Wrapper = styled.div`
       & + .label-text,
       & + .secondary-text {
         font-size: 0.8rem;
-        //margin-top: 2rem;
+        font-weight: bold;
+
+        margin-top: 1.4rem;
         margin-bottom: -1.25rem;
         color: #333;
+
       }
     }
   }

@@ -2303,6 +2303,10 @@ html {
   margin-left: 2.5rem;
 }
 
+.mt-20{
+  margin-top: 5rem;
+}
+
 .mb-20{
   margin-bottom: 5rem;
 }
@@ -2421,8 +2425,16 @@ html {
   position: relative;
 }
 
+.right-0{
+  right: 0;
+}
+
 .resize{
   resize: both;
+}
+
+.text-left{
+  text-align: left;
 }
 
 .text-center{
@@ -2513,6 +2525,10 @@ html {
 .hover\:scale-105:hover{
   --transform-scale-x: 1.05;
   --transform-scale-y: 1.05;
+}
+
+.rotate-90{
+  --transform-rotate: 90deg;
 }
 
 .transition{

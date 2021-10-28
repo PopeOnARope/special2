@@ -9,21 +9,29 @@ import { ArrowLeft, Cross, SpecialLogo } from '../../components/icons'
 import { grained } from '../../lib/grain'
 import Cookie from 'js-cookie'
 import { formatDate } from '../../lib/formatDate'
+import useAudio from '../Carousel/useAudio'
 
-const Signup = ({ content, finePrint, title, declineButtonLabel, secondaryContent }) => {
+const Signup = ({
+  content,
+  finePrint,
+  title,
+  declineButtonLabel,
+  secondaryContent,
+  sound,
+}) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
   const [agree, setAgree] = React.useState(true)
   const [error, setError] = React.useState('')
-  const [birthday, setBirthday] = React.useState('')
-  const [shareSomething, setShareSomething] = React.useState('')
-  const [firstPartSubmitted, setFirstPartSubmitted] = React.useState(false)
-  // const [personId, ]
+  const [playing, toggle] = useAudio(sound)
 
   const [formStatus, setFormStatus] = React.useState('initial')
   const [height, setHeight] = React.useState(768)
-
+  function decline() {
+    Cookie.set('account', 'declined', { expires: 7 })
+    window.location.href = '/redirect'
+  }
   React.useEffect(() => {
     setHeight(window.innerHeight)
     grained('accountCreate', {
@@ -96,80 +104,91 @@ const Signup = ({ content, finePrint, title, declineButtonLabel, secondaryConten
     }
   }
 
-  const form = (
-    <div
-      className="flex flex-col px-8 mt-8"
-      style={{ minWidth: '16rem', maxWidth: '48rem' }}
-    >
-      <h3
-        className="text-xl text-bold floating text-center"
-        style={{
-          textDecoration: 'underline',
-          textDecorationColor: '#ffc391',
-          fontSize: '1.5rem'
-        }}
-      >
-        {title}
-      </h3>
-      <p
-        className="text-sm text-center"
-        style={{ fontFamily: 'InputMono' }}
-        dangerouslySetInnerHTML={{ __html: content }}
-      ></p>
-      <div className="input-container w-full px-16 ">
-        <FancyTextInput
-          name="name"
-          label="Name?"
-          onChange={(e) => {
-            if (error) {
-              setError(false)
-            }
-            setName(e.target.value)
-            doSetFormStatus()
-          }}
-        />
-        <FancyTextInput
-          name="email"
-          label="Email?"
-          onChange={(e) => {
-            if (error) {
-              setError(false)
-            }
-            setEmail(e.target.value)
-            doSetEmailStatus(e.target.value)
-          }}
-        />
-        <FancyTextInput
-          name="phoneNumber"
-          secondaryLabel="* we barely send any texts"
-          label="Phone #?"
-          onChange={(e) => {
-            if (error) {
-              setError(false)
-            }
-            setPhone(e.target.value)
-            doSetFormStatus()
-          }}
-        />
-
-
-      </div>
-
-    </div>
-  )
-
   return (
     <div
       className="flex flex-col items-center type-wrapper w-full h-full pt-8"
       id="accountCreate"
     >
+      <button
+        className="absolute px-8 text-sm"
+        style={{ right: 0, fontFamily: 'InputMono' }}
+        onClick={decline}
+      >
+        Close
+      </button>
+      <button
+        className="absolute text-sm right-0"
+        style={{ transform: 'rotate(90deg)', marginTop: '25rem' }}
+        onClickCapture={toggle}
+      >
+        Sound {playing ? 'on' : 'off'}
+      </button>
       <SpecialLogo />
-
-          {form}
+      <div
+        className="flex flex-col px-8 mt-8"
+        style={{ minWidth: '16rem', maxWidth: '48rem' }}
+      >
+        <h3
+          className="text-xl text-bold floating text-center"
+          style={{
+            textDecoration: 'underline',
+            textDecorationColor: '#ffc391',
+            fontSize: '1.5rem',
+          }}
+        >
+          {title}
+        </h3>
+        <p
+          className="text-sm text-center"
+          style={{ fontFamily: 'InputMono' }}
+          dangerouslySetInnerHTML={{ __html: content }}
+        ></p>
+        <div className="input-container w-full px-16 ">
+          <FancyTextInput
+            name="name"
+            label="Name?"
+            onChange={(e) => {
+              if (error) {
+                setError(false)
+              }
+              setName(e.target.value)
+              doSetFormStatus()
+            }}
+          />
+          <FancyTextInput
+            name="email"
+            label="Email?"
+            onChange={(e) => {
+              if (error) {
+                setError(false)
+              }
+              setEmail(e.target.value)
+              doSetEmailStatus(e.target.value)
+            }}
+          />
+          <FancyTextInput
+            name="phoneNumber"
+            label="Phone?"
+            onChange={(e) => {
+              if (error) {
+                setError(false)
+              }
+              setPhone(e.target.value)
+              doSetFormStatus()
+            }}
+          />
+        </div>
+      </div>
       <div className="flex flex-col items-center p-8">
-        <Button
+        <button
           onClick={handleSubmit}
-          style={{ fontFamily: 'RayJohnson', fontSize: '1.25re' }}
+          style={{
+            fontFamily: 'RayJohnson',
+            fontSize: '1.75rem',
+            background: 'black',
+            color: 'white',
+            padding: '0.25rem',
+          }}
           disabled={
             !agree || formStatus === 'success' || formStatus === 'initial'
           }
@@ -177,36 +196,44 @@ const Signup = ({ content, finePrint, title, declineButtonLabel, secondaryConten
           {' '}
           <span> {formStatus === 'loading' && <LoadingDots />}</span>
           <span>
-              {(formStatus === 'initial' || formStatus === 'ready') &&
+            {(formStatus === 'initial' || formStatus === 'ready') &&
               'BECOME A MEMBER'}
-            </span>
+          </span>
           <span>
-              {formStatus === 'success' &&
+            {formStatus === 'success' &&
               'Thank you for joining! We will be in touch'}
-            </span>
-        </Button>
+          </span>
+        </button>
 
         <a
-          onClick={() => {
-            Cookie.set('account', 'declined', { expires: 7 })
-            window.location.href = '/redirect'
-          }}
+          onClick={decline}
           className="mt-4 text-sm inline-flex items-center"
-          style={{ fontFamily: 'InputMono', position: 'relative', height: '1rem', width: '20rem', cursor: 'pointer' }}
+          style={{
+            fontFamily: 'InputMono',
+            position: 'relative',
+            height: '1rem',
+            cursor: 'pointer',
+          }}
         >
-          <span>{declineButtonLabel}</span> <ArrowLeft orientation="right" />
+          <span>{declineButtonLabel}</span> <ArrowLeft height='1rem' orientation="right" />
         </a>
         <p
-          className="t mt-20 uppercase text-left"
+          className="mt-20 uppercase text-left"
           style={{
             fontSize: '0.8rem',
             fontWeight: 'bold',
             fontFamily: 'RayJohnson',
+            maxWidth: '50rem'
           }}
-          dangerouslySetInnerHTML={{__html: secondaryContent}}
+          dangerouslySetInnerHTML={{ __html: secondaryContent }}
         ></p>
         <p
-          style={{ bottom: 0, position: 'absolute', alignSelf: 'center', fontSize: '0.5rem' }}
+          style={{
+            bottom: 0,
+            position: 'absolute',
+            alignSelf: 'center',
+            fontSize: '0.5rem',
+          }}
           className="text-center"
           dangerouslySetInnerHTML={{ __html: finePrint }}
         ></p>
