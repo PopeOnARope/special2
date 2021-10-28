@@ -14,6 +14,12 @@ Builder.registerComponent(LazyText, {
       type: 'richText',
     },
     {
+      name: 'secondaryContent',
+      type: 'richText',
+      defaultValue: 'Spec_ial is special etc...'
+
+    },
+    {
       name: 'finePrint',
       type: 'richText',
     },

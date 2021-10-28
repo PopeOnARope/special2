@@ -10,7 +10,7 @@ import { grained } from '../../lib/grain'
 import Cookie from 'js-cookie'
 import { formatDate } from '../../lib/formatDate'
 
-const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
+const Signup = ({ content, finePrint, title, declineButtonLabel, secondaryContent }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
@@ -101,15 +101,16 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
       className="flex flex-col px-8 mt-8"
       style={{ minWidth: '16rem', maxWidth: '48rem' }}
     >
-      <h4
+      <h3
         className="text-xl text-bold floating text-center"
         style={{
           textDecoration: 'underline',
           textDecorationColor: '#ffc391',
+          fontSize: '1.5rem'
         }}
       >
         {title}
-      </h4>
+      </h3>
       <p
         className="text-sm text-center"
         style={{ fontFamily: 'InputMono' }}
@@ -153,18 +154,7 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
 
 
       </div>
-      <p
-        className="t mt-2 text-center"
-        style={{
-          fontSize: '0.8rem',
-          fontFamily: 'RayJohnson',
-        }}
-      ></p>
-      <p
-        style={{ bottom: 0, position: 'absolute', alignSelf: 'center' }}
-        className="text-center"
-        dangerouslySetInnerHTML={{ __html: finePrint }}
-      ></p>
+
     </div>
   )
 
@@ -204,8 +194,22 @@ const Signup = ({ content, finePrint, title, declineButtonLabel }) => {
           className="mt-4 text-sm inline-flex items-center"
           style={{ fontFamily: 'InputMono', position: 'relative', height: '1rem', width: '20rem', cursor: 'pointer' }}
         >
-          <span>Not right now, continue to shop</span> <ArrowLeft orientation="right" />
+          <span>{declineButtonLabel}</span> <ArrowLeft orientation="right" />
         </a>
+        <p
+          className="t mt-20 uppercase text-left"
+          style={{
+            fontSize: '0.8rem',
+            fontWeight: 'bold',
+            fontFamily: 'RayJohnson',
+          }}
+          dangerouslySetInnerHTML={{__html: secondaryContent}}
+        ></p>
+        <p
+          style={{ bottom: 0, position: 'absolute', alignSelf: 'center', fontSize: '0.5rem' }}
+          className="text-center"
+          dangerouslySetInnerHTML={{ __html: finePrint }}
+        ></p>
       </div>
     </div>
   )
