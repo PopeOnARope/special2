@@ -26,6 +26,11 @@ const BasicVideoSlide = ({ slide, height, width, display, isCurrentSlide }) => {
       ? slide.mobileVideo
       : slide.video
 
+  const fittedImage =
+    deviceType === 'mobile' || width < 768 && slide.mobileImage
+      ? slide.mobileImage
+      : slide.image
+
   const currentSlideVideo = fittedVideo ? fittedVideo : ''
 
   const attr = {
@@ -48,7 +53,7 @@ const BasicVideoSlide = ({ slide, height, width, display, isCurrentSlide }) => {
           <LoadingDots />
         </Loading>
       )}
-      {(!fittedVideo || !fittedVideo.length) && image && <img src={image} />}
+      {(!fittedVideo || !fittedVideo.length) && fittedImage && <img src={fittedImage} />}
 
       {fittedVideo && deviceType === 'desktop' && <video {...attr}></video>}
 
