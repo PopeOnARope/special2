@@ -23,6 +23,7 @@ import '../blocks/Text/Text.builder'
 import '../blocks/AccountCreate/AccountCreate.builder'
 import '../blocks/Video/Video.builder'
 import '../blocks/Redirect/Redirect.builder'
+import '../src/typography.css'
 
 
 Builder.register('insertMenu', {

@@ -24,62 +24,13 @@
   font-weight: bold;
   font-style: italic;
 }
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-Black.woff2") format("woff2");*/
-/*}*/
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-BlackItalic.woff2") format("woff2");*/
-/*  font-weight: bold;*/
-/*  font-style: italic;*/
-/*}*/
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-Bold.woff2") format("woff2");*/
-/*  font-weight: bold;*/
-/*  font-style: normal;*/
 
-/*}*/
-
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-ExtraLight.woff2") format("woff2");*/
-/*  font-weight: 100;*/
-/*  font-style: normal;*/
-/*}*/
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-ExtraLightItalic.woff2") format("woff2");*/
-/*  font-weight: 100;*/
-/*  font-style: italic;*/
-/*}*/
-
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-Light.woff2") format("woff2");*/
-/*}*/
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-LightItalic.woff2") format("woff2");*/
-/*}*/
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-Medium.woff2") format("woff2");*/
-/*}*/
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-MediumItalic.woff2") format("woff2");*/
-/*}*/
-
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-Thin.woff2") format("woff2");*/
-/*}*/
-/*@font-face {*/
-/*  font-family: "InputMono";*/
-/*src: url("../assets/fonts/InputMono-ThinItalic.woff2") format("woff2");*/
-/*}*/
+@font-face {
+  font-family: "Nova Stamp Bold";
+  src: url("../assets/fonts/NOVASTAMP-Bold.woff2") format("woff2");
+  font-weight: bold;
+  font-style: italic;
+}
 
 
 

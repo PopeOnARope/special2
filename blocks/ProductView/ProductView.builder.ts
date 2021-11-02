@@ -1,7 +1,6 @@
 import { Builder, builder } from '@builder.io/react'
 import { restrictedRegister } from 'blocks/utils'
 import dynamic from 'next/dynamic'
-
 const isDemo = Boolean(process.env.IS_DEMO)
 const LazyProductView = dynamic(
   () =>
@@ -17,9 +16,45 @@ restrictedRegister(
     name: 'ProductView',
     inputs: [
       {
+        name: 'nameFont',
+        type: 'string',
+        defaultValue: 'Value Sans Pro',
+        enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+      },
+      {
+        name: 'editionFont',
+        type: 'string',
+        defaultValue: 'Value Sans Pro',
+        enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+      },
+      {
+        name: 'productDescriptionFont',
+        type: 'string',
+        defaultValue: 'Value Sans Pro',
+        enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+      },
+      {
+        name: 'productDescriptionFont',
+        type: 'string',
+        defaultValue: 'Value Sans Pro',
+        enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+      },
+      {
         name: 'description',
         type: 'richText',
         defaultValue: 'enter a long description of this item here!',
+      },
+      {
+        name: 'detailToggleFont',
+        type: 'string',
+        defaultValue: 'Value Sans Pro',
+        enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+      },
+      {
+        name: 'detailFont',
+        type: 'string',
+        defaultValue: 'Value Sans Pro',
+        enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
       },
       {
         name: 'details',

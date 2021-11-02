@@ -13,10 +13,6 @@ const BasicVideoSlide = ({ slide, height, width, display, isCurrentSlide }) => {
   const { titleLine1, titleLine2, buttonLabel, buttonUrl, image } = slide
   const collectionAvailable = true
 
-  function handleVideoLoaded() {
-    setLoading(false)
-  }
-
   React.useEffect(() => {
     setDeviceType(isMobile() ? 'mobile' : 'desktop')
   })

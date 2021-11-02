@@ -1,10 +1,7 @@
 import React from 'react'
 import FancyTextInput from '../../components/ui/Form/FancyTextInput'
-import Checkbox from '../../components/ui/Form/Checkbox'
-import Button from '../Button/Button'
 import { LoadingDots } from '../../components/ui'
 import { validateEmail } from '../../lib/validateEmail'
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import { ArrowLeft, Cross, SpecialLogo } from '../../components/icons'
 import { grained } from '../../lib/grain'
 import Cookie from 'js-cookie'
@@ -12,7 +9,6 @@ import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
 
 const ConfirmButton = styled.button`
-
   font-family: 'RayJohnson';
   font-size: 1.75rem;
   background: black;
@@ -133,7 +129,7 @@ const Signup = ({
       </button>
       <button
         className="absolute text-sm right-0"
-        style={{ transform: 'rotate(90deg)', marginTop: '25rem' }}
+        style={{ transform: 'rotate(90deg)', marginTop: '25rem', fontFamily: 'Nova Stamp Bold' }}
         onClickCapture={toggle}
       >
         Sound {playing ? 'on' : 'off'}
@@ -160,6 +156,7 @@ const Signup = ({
         ></p>
         <div className="input-container w-full px-16 ">
           <FancyTextInput
+            font='Nova Stamp Bold'
             name="name"
             label="Name?"
             onChange={(e) => {
@@ -171,6 +168,7 @@ const Signup = ({
             }}
           />
           <FancyTextInput
+            font='Nova Stamp Bold'
             name="email"
             label="Email?"
             onChange={(e) => {
@@ -182,6 +180,7 @@ const Signup = ({
             }}
           />
           <FancyTextInput
+            font='Nova Stamp Bold'
             name="phoneNumber"
             label="Phone?"
             onChange={(e) => {

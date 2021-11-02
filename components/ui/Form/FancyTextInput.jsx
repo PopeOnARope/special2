@@ -16,7 +16,7 @@ const Orange = styled.div`
 `
 
 const Wrapper = styled.div`
-  font-family: Value Sans Pro;
+  font-family: ${props=>props.font};
   font-weight: bold;
   display: flex;
   align-items: flex-end;
@@ -78,12 +78,13 @@ const TextInput = ({
   name,
   onChange,
   secondaryLabel = '',
+  font = 'Value Sans Pro',
   formatter = (v) => v,
 }) => {
   const [value, setValue] = React.useState('')
 
   return (
-    <Wrapper value={value}>
+    <Wrapper value={value} font={font}>
       <input
         onChange={(e) => {
           setValue(formatter(e.currentTarget.value))
