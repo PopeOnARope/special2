@@ -91,14 +91,12 @@ const InnerLayout: React.FC<{
     <ThemeProvider theme={theme}>
       {location.length &&
        location.indexOf('redirect') < 0 &&
-       location.indexOf('signup') < 0 && <Navbar />}
+        <Navbar />}
       <div
         sx={{
           margin: `0 auto`,
           px: 0,
-          // maxWidth: 1920,
           minWidth: '60vw',
-          // minHeight: 800,
         }}
       >
         <main>{children}</main>

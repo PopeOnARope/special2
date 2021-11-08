@@ -5,11 +5,10 @@ import { useCart } from '@lib/shopify/storefront-data-hooks'
 import { jsx, Themed, useThemeUI, Button } from 'theme-ui'
 import { useUI } from '@components/ui/context'
 import { Cross, Hamburger, SpecialLogo } from '@components/icons'
-
+import Cookie from 'js-cookie'
 
 const Navbar: FC = () => {
-  const [announcement, setAnnouncement] = useState()
-  const [isWindowTop, setIsWindowTop] = useState(true)
+  const [rightContent, setRightContent] = useState(null)
   const [navClassNames, setNavClassNames] = useState('white')
   const { theme } = useThemeUI()
   const { toggleSideNav, toggleCart, displaySideNav, displayCart } = useUI()
@@ -25,6 +24,7 @@ const Navbar: FC = () => {
     if (
       window.location.href.includes('collection/seven') ||
       window.location.href.includes('product') ||
+      window.location.href.includes('signup') ||
       displaySideNav ||
       displayCart
     ) {
@@ -36,16 +36,28 @@ const Navbar: FC = () => {
       !displaySideNav &&
       !window.location.href.includes('product') &&
       !window.location.href.includes('about')
-
     ) {
       classNames += ' hover-orange'
     }
-    return classNames;
+    return classNames
   }
 
   useEffect(() => {
     setNavClassNames(getNavClassNames())
   })
+
+  useEffect(() => {
+    if (window.location.href.includes('signup')) {
+      setRightContent('close')
+    } else {
+      setRightContent('cart')
+    }
+  })
+
+  function decline() {
+    Cookie.set('account', 'declined', { expires: 7 })
+    window.location.href = '/redirect'
+  }
 
   return (
     <nav
@@ -68,11 +80,19 @@ const Navbar: FC = () => {
         </a>
       </div>
       <div className="px-4 justify-center flex flex-col">
-        <button onClick={toggleCart}>{totalItems}</button>
+        {
+          rightContent === 'cart' ? <button onClick={toggleCart}>{totalItems}</button> :       <button
+            className="absolute px-8 text-sm"
+            style={{ right: 0, fontFamily: 'InputMono' }}
+            onClick={decline}
+          >
+            Close
+          </button>
+        }
+
       </div>
     </nav>
   )
-
 }
 
 export default Navbar

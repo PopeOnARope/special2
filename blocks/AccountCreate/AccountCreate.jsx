@@ -62,7 +62,8 @@ const Signup = ({
     urlencoded.append('g', 'XKvFZS')
     urlencoded.append('email', email)
     urlencoded.append('phone_number', phoneNumber)
-    urlencoded.append('name', name)
+    urlencoded.append('first_name', name.split(' ')[0])
+    urlencoded.append('last_name', name.split(' ')[name.split(' ').length-1])
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {
@@ -87,6 +88,8 @@ const Signup = ({
           setFormStatus('error')
           setError(r.errors[0])
         }
+
+
         setFormStatus('success')
       })
       .catch((r) => {
@@ -120,13 +123,7 @@ const Signup = ({
       id="accountCreate"
     >
 
-      <button
-        className="absolute px-8 text-sm"
-        style={{ right: 0, fontFamily: 'InputMono' }}
-        onClick={decline}
-      >
-        Close
-      </button>
+
       <button
         className="absolute text-sm right-0"
         style={{ transform: 'rotate(90deg)', marginTop: '25rem', fontFamily: 'Nova Stamp Bold' }}
@@ -134,7 +131,7 @@ const Signup = ({
       >
         Sound {playing ? 'on' : 'off'}
       </button>
-      <SpecialLogo />
+
       <div
         className="flex flex-col px-8 mt-8"
         style={{ minWidth: '16rem', maxWidth: '48rem' }}
@@ -146,8 +143,8 @@ const Signup = ({
             textDecorationColor: '#ffc391',
             fontSize: '1.5rem',
           }}
+          dangerouslySetInnerHTML={{__html: title}}
         >
-          {title}
         </h3>
         <p
           className="text-sm text-center"

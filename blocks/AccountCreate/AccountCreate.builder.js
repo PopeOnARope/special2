@@ -8,7 +8,7 @@ const LazyText = dynamic(async () => {
 Builder.registerComponent(LazyText, {
   name: 'AccountCreate',
   inputs: [
-    { name: 'title', type: 'string' },
+    { name: 'title', type: 'richText' },
     {
       name: 'content',
       type: 'richText',
