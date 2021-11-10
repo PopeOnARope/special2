@@ -30,7 +30,7 @@ const Wrapper = styled.div`
     border: 1px solid black;
   }
 `
-const Checkbox = ({ value, options, onChange }) => (
+const Select = ({ value, options, onChange }) => (
   <Wrapper>
     <select value={value} onChange={onChange}>
       {options?.map((option) => (
@@ -39,4 +39,4 @@ const Checkbox = ({ value, options, onChange }) => (
     </select>
   </Wrapper>
 )
-export default Checkbox
+export default Select

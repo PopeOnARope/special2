@@ -7,6 +7,7 @@ import { grained } from '../../lib/grain'
 import Cookie from 'js-cookie'
 import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
+import FancyPhoneInput from '../../components/ui/Form/FancyPhoneInput'
 
 const ConfirmButton = styled.button`
   font-family: 'RayJohnson';
@@ -15,10 +16,9 @@ const ConfirmButton = styled.button`
   color: white;
   padding: 0.25rem;
   z-index: 100;
-&:disabled {
-  background: #555;
-}
-
+  &:disabled {
+    background: #555;
+  }
 `
 
 const Signup = ({
@@ -63,7 +63,7 @@ const Signup = ({
     urlencoded.append('email', email)
     urlencoded.append('phone_number', phoneNumber)
     urlencoded.append('first_name', name.split(' ')[0])
-    urlencoded.append('last_name', name.split(' ')[name.split(' ').length-1])
+    urlencoded.append('last_name', name.split(' ')[name.split(' ').length - 1])
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {
@@ -88,7 +88,6 @@ const Signup = ({
           setFormStatus('error')
           setError(r.errors[0])
         }
-
 
         setFormStatus('success')
       })
@@ -122,11 +121,13 @@ const Signup = ({
       className="flex flex-col items-center type-wrapper w-full h-full pt-8 "
       id="accountCreate"
     >
-
-
       <button
         className="absolute text-sm right-0"
-        style={{ transform: 'rotate(90deg)', marginTop: '25rem', fontFamily: 'Nova Stamp Bold' }}
+        style={{
+          transform: 'rotate(90deg)',
+          marginTop: '25rem',
+          fontFamily: 'Nova Stamp Bold',
+        }}
         onClickCapture={toggle}
       >
         Sound {playing ? 'on' : 'off'}
@@ -143,9 +144,8 @@ const Signup = ({
             textDecorationColor: '#ffc391',
             fontSize: '1.5rem',
           }}
-          dangerouslySetInnerHTML={{__html: title}}
-        >
-        </h3>
+          dangerouslySetInnerHTML={{ __html: title }}
+        ></h3>
         <p
           className="text-sm text-center"
           style={{ fontFamily: 'InputMono' }}
@@ -153,7 +153,7 @@ const Signup = ({
         ></p>
         <div className="input-container w-full px-16 ">
           <FancyTextInput
-            font='Nova Stamp Bold'
+            font="Nova Stamp Bold"
             name="name"
             label="Name?"
             onChange={(e) => {
@@ -165,7 +165,7 @@ const Signup = ({
             }}
           />
           <FancyTextInput
-            font='Nova Stamp Bold'
+            font="Nova Stamp Bold"
             name="email"
             label="Email?"
             onChange={(e) => {
@@ -176,15 +176,15 @@ const Signup = ({
               doSetEmailStatus(e.target.value)
             }}
           />
-          <FancyTextInput
-            font='Nova Stamp Bold'
+          <FancyPhoneInput
+            font="Nova Stamp Bold"
             name="phoneNumber"
             label="Phone?"
-            onChange={(e) => {
+            onChange={(v) => {
               if (error) {
                 setError(false)
               }
-              setPhone(e.target.value)
+              setPhone(v)
               doSetFormStatus()
             }}
           />
@@ -193,10 +193,7 @@ const Signup = ({
       <div className="flex flex-col items-center p-8">
         <ConfirmButton
           onClick={handleSubmit}
-
-          disabled={
-            formStatus === 'success' || formStatus === 'initial'
-          }
+          disabled={formStatus === 'success' || formStatus === 'initial'}
         >
           {' '}
           <span> {formStatus === 'loading' && <LoadingDots />}</span>
@@ -220,7 +217,8 @@ const Signup = ({
             cursor: 'pointer',
           }}
         >
-          <span>{declineButtonLabel}</span> <ArrowLeft height='1rem' orientation="right" />
+          <span>{declineButtonLabel}</span>{' '}
+          <ArrowLeft height="1rem" orientation="right" />
         </a>
         <p
           className="mt-20 uppercase text-left"
@@ -228,7 +226,7 @@ const Signup = ({
             fontSize: '0.8rem',
             fontWeight: 'bold',
             fontFamily: 'RayJohnson',
-            maxWidth: '50rem'
+            maxWidth: '50rem',
           }}
           dangerouslySetInnerHTML={{ __html: secondaryContent }}
         ></p>
