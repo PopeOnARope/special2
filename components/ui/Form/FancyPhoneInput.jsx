@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import IntlTelInput from 'react-intl-tel-input'
-import 'react-intl-tel-input/dist/main.css';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
 
 const OuterWrapper = styled.div`
@@ -13,7 +13,7 @@ const OuterWrapper = styled.div`
 
 const Orange = styled.div`
   background: #ffc391;
-  width: ${(props) => props.width * 0.7}rem;
+  width: ${(props) => props.width * 1}rem;
   height: 2px;
   position: absolute;
 `
@@ -21,23 +21,50 @@ const Orange = styled.div`
 const Wrapper = styled.div`
   font-family: ${(props) => props.font};
   font-weight: bold;
-  display: flex;
-  align-items: flex-end;
-  font-size: 1.25rem;
+  //font-size: 1.25rem;
+  //display: flex;
+  //justify-content: flex-start;
   position: relative;
   height: 2.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  input {
-    z-index: 10;
+  .flag-dropdown, .open {
+    bottom: 0;
+    z-index: 100;
+    background: transparent !important;
+    border: none;
+    .selected-flag, .open{
+    padding: 0;
+    :hover {
+      background: transparent !important;
+    }
+    }
+  }
+  //label{
+  //  display: inherit;
+  //  align-self: flex-start;
+  //  position: absolute;
+  //  background: transparent;
+  //
+  //}
+  .react-tel-input{
+    height: inherit;
+    font-family: ${(props) => props.font};
+
+    input {
+      font-size: 1.2rem;
+      bottom: 0;
+      z-index: 10;
     position: absolute;
     background-color: transparent;
-    //border-bottom: 2px solid black;
+    display: block;
+    border: none;
     border-radius: 0;
     width: 100%;
     ${(props) => {
       if (props.value?.length) {
-        return `& + .label-text {
+        console.log({value: props.value})
+        return `& + label {
         font-size: 0.8rem;
         margin-top: 1.4rem;
         margin-bottom: -1.25rem;
@@ -46,28 +73,32 @@ const Wrapper = styled.div`
         font-weight: 500;
       }`
       }
-    }}
+    }}}
 
     &:active,
     &:focus {
       outline: none;
 
-      & + .label-text,
+      & + label,
       & + .secondary-text {
         font-size: 0.8rem;
-        font-weight: bold;
-
-        margin-top: 1.4rem;
-        margin-bottom: -1.25rem;
+        //font-weight: bold;
+        //margin-top: 1.4rem;
+        //margin-bottom: -1.25rem;
         color: #333;
       }
     }
   }
-  .label-text,
+  &::placeholder{
+    color: black;
+    opacity: 1;
+  }
+  label,
   .secondary-text {
     z-index: 1;
     position: absolute;
     transition: all 0.3s;
+    font-size: 0.8rem;
   }
 
   .secondary-text {
@@ -85,20 +116,19 @@ const TextInput = ({
 }) => {
   const [value, setValue] = React.useState('')
 
+
   return (
     <Wrapper value={value} font={font}>
-      <IntlTelInput
-        containerClassName="intl-tel-input"
-        inputClassName="form-control"
-        onChange={(e) => {
-          setValue(formatter(e.currentTarget.value))
-          onChange(e)
+      <PhoneInput
+        country='us'
+        onChange={(_value) => {
+          setValue(formatter(_value))
+          onChange(_value)
         }}
         value={value}
+        placeholder='Phone?'
       />
-      <label className="label-text">
-        {label} <span className="secondary-text">{secondaryLabel}</span>
-      </label>
+      <label>Phone?</label>
       <OuterWrapper>
         <Orange width={value.length} />
       </OuterWrapper>
