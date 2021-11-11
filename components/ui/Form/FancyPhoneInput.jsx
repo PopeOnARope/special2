@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 
-
 const OuterWrapper = styled.div`
   height: 1px;
   background: black;
@@ -21,9 +20,7 @@ const Orange = styled.div`
 const Wrapper = styled.div`
   font-family: ${(props) => props.font};
   font-weight: bold;
-  //font-size: 1.25rem;
-  //display: flex;
-  //justify-content: flex-start;
+
   position: relative;
   height: 2.5rem;
   margin-top: 1rem;
