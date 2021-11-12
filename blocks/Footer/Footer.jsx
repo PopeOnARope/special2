@@ -7,11 +7,19 @@ import { H1, SecondaryH1 } from '../../components/Typography'
 import TextInput from '../../components/ui/Form/TextInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
 
-const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
+const Footer = ({
+  sections,
+  bottomLinks,
+  darkMode,
+  headerColor,
+  headerFont,
+  secondaryLinkFont,
+  linkFont,
+}) => {
   const bgClass = darkMode ? 'dark-mode-wrapper' : 'light-mode-wrapper'
   return (
     <div
-      className={`mx-auto ${bgClass} w-max-content type-wrapper dark:bg-gray-800`}
+      className={`mx-auto ${bgClass} w-max-content dark:bg-gray-800`}
       style={{ width: '100%' }}
     >
       <div
@@ -21,6 +29,7 @@ const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
         {sections?.map((section) => (
           <div className="md:w-1/3 flex flex-col justify-items-start mb-4">
             <h5
+              style={{ fontFamily: headerFont }}
               className={`uppercase font-bold mb-3  ${
                 headerColor === 'white' ? 'text-white' : 'text-gray-500'
               }`}
@@ -30,6 +39,7 @@ const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
 
             {section?.links?.map((link) => (
               <a
+                style={{ fontFamily: linkFont }}
                 href={link.url}
                 className="text-extrabold"
                 target={link.openInNewTab ? '_blank' : '_self'}
@@ -44,6 +54,7 @@ const Footer = ({ sections, bottomLinks, darkMode, headerColor }) => {
         {bottomLinks?.map((link) => (
           <div className="mx-5">
             <a
+              style={{ fontFamily: secondaryLinkFont }}
               className={` ${
                 headerColor === 'white' ? 'text-white' : 'text-gray-500'
               }`}

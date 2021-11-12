@@ -39,7 +39,13 @@ const Wrapper = styled.div`
   }
 `
 
-const Detail = ({ shownDetails, item, setShownDetails }) => {
+const Detail = ({
+  shownDetails,
+  item,
+  setShownDetails,
+  detailFont,
+  detailToggleFont,
+}) => {
   return (
     <div className="w-full">
       <Button
@@ -50,7 +56,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
         }}
         sx={{
           fontSize: '2.25rem',
-          fontFamily: 'Value Sans Pro',
+          fontFamily: detailToggleFont,
           color: '#fff',
           textAlign: 'left',
           fontWeight: 700,
@@ -95,7 +101,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
         <div
           sx={{
             fontSize: '1.25rem',
-            fontFamily: 'Value Sans Pro',
+            fontFamily: detailFont,
             color: '#000',
             fontWeight: 400,
             lineHeight: '2rem',
@@ -137,7 +143,14 @@ const DetailsToggle = ({ onClick }) => (
   </Themed.div>
 )
 
-const ProductDetails = ({ details, productDescription, setShowBuyButton }) => {
+const ProductDetails = ({
+  details,
+  productDescription,
+  setShowBuyButton,
+  productDescriptionFont,
+  detailToggleFont,
+  detailFont,
+}) => {
   const { toggleProductDetails } = useUI()
   const [shownDetails, setShownDetails] = React.useState('')
   React.useEffect(() => {
@@ -149,7 +162,8 @@ const ProductDetails = ({ details, productDescription, setShowBuyButton }) => {
   return (
     <Wrapper>
       <div
-        className="type-wrapper font-bold max-w-64"
+        className="font-bold max-w-64"
+        style={{ fontFamily: productDescriptionFont }}
         dangerouslySetInnerHTML={{ __html: productDescription }}
       ></div>
       <DetailsToggle
@@ -172,6 +186,8 @@ const ProductDetails = ({ details, productDescription, setShowBuyButton }) => {
               if (idx < 6) {
                 return (
                   <Detail
+                    detailFont={detailFont}
+                    detailToggleFont={detailToggleFont}
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}

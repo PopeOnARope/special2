@@ -5,91 +5,34 @@ import { H1, SecondaryH1 } from '../../components/Typography'
 import { LoadingDots } from '../../components/ui'
 import { isMobile } from '../../lib/isMobile'
 import Cloud from '../../components/icons/Cloud'
+import { useSwipeable } from 'react-swipeable'
+import { Wrapper, Loading } from './Common'
 
-const Wrapper = styled.div`
-  height: ${({ height }) => height}px;
-  width: 100%;
-  background: none;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  video,
-  img {
-    position: absolute;
-    transition: visibility 0s, opacity 0.5s linear;
-    z-index: 0;
-    height: ${(props) => props.height}px;
-    object-fit: cover;
-    top: 0;
-    left: 0;
-    width: 100%;
-  }
-  .content {
-    display: flex;
-    flex-direction: column;
-    margin-left: 50px;
-    margin-bottom: 33px;
-    z-index: 1;
-    h1 {
-      color: #ffffff;
-    }
-    .title2 {
-      margin-top: -70px;
-      margin-left: 25px;
-      padding: 0px;
-    }
-    @media (max-width: 768px) {
-      margin: 3rem;
-    }
-  }
-`
-
-const Loading = styled.div`
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  z-index: 10;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
-
-
-
-const Slide = ({ slide, height, width }) => {
+const ModelSelectorSlide = ({
+  slide,
+  height,
+  width,
+  display,
+  isCurrentSlide,
+}) => {
   const [currentSlide, setCurrentSlide] = React.useState(0)
   const [currentModel, setCurrentModel] = React.useState('model1')
   const [timeOfDay, setTimeOfDay] = React.useState('Day')
   const [loading, setLoading] = React.useState(false)
   const [deviceType, setDeviceType] = React.useState('')
-
+  const [isPreloading, setIsPreloading] = React.useState(true)
   function handleVideoLoaded() {
     setLoading(false)
   }
 
   React.useEffect(() => {
     setDeviceType(isMobile() ? 'mobile' : 'desktop')
-  })
+    setTimeout(() => {
+      setIsPreloading(false)
+    }, 500)
+  }, [])
   const { titleLine1, titleLine2, buttonLabel, buttonUrl } = slide
   const collectionAvailable = true
-
-  // function toggleSwitchMarginTop() {
-  //   if (timeOfDay === 'Night') {
-  //     return '0rem'
-  //   }
-  //   if (timeOfDay === 'Dusk') {
-  //     return '1.8rem'
-  //   }
-  //   if (timeOfDay === 'Day') {
-  //     return '3.5rem'
-  //   }
-  //   if (timeOfDay === 'Dawn') {
-  //     return '5.5rem'
-  //   }
-  // }
 
   const TimeToggle = ({ timeOfDay }) => {
     return ['Night', 'Dusk', 'Day', 'Dawn'].map((time) => (
@@ -123,10 +66,12 @@ const Slide = ({ slide, height, width }) => {
     ? fittedVideos[`${currentModel}${timeOfDay}`]
     : ''
 
-  console.log(slide.mobileVideos)
-  console.log({currentModel})
+  if (!display) {
+    return <Wrapper height={height} />
+  }
+
   return (
-    <Wrapper height={height}>
+    <Wrapper height={height} isCurrentSlide={isCurrentSlide}>
       {loading && (
         <Loading>
           loading
@@ -163,7 +108,7 @@ const Slide = ({ slide, height, width }) => {
         })}
 
       {deviceType === 'mobile' && (
-        <>
+        <div>
           <img
             src={`${fittedVideos.model1Day}.mp4`}
             autoPlay
@@ -184,14 +129,12 @@ const Slide = ({ slide, height, width }) => {
               visibility: currentModel === 'model2' ? 'visible' : 'hidden',
             }}
           />
-        </>
+        </div>
       )}
 
-      <div className="content">
-        <H1>{titleLine1}</H1>
-        {titleLine2 && (
-          <SecondaryH1 className="title2">{titleLine2}</SecondaryH1>
-        )}
+      <div className={`content ${isPreloading && 'preload'}`}>
+        <h1>{titleLine1}</h1>
+        {titleLine2 && <h1 className="title2">{titleLine2}</h1>}
         {collectionAvailable && (
           <Button displayAs="link" href={buttonUrl}>
             {buttonLabel}
@@ -199,7 +142,6 @@ const Slide = ({ slide, height, width }) => {
         )}
       </div>
       <div className="model-toggle">
-
         <button
           onClick={() => {
             setCurrentModel('model1')
@@ -211,7 +153,7 @@ const Slide = ({ slide, height, width }) => {
             <Cloud
               fill="white"
               stroke="white"
-              style={{ position: 'absolute', width: '3rem' }}
+              style={{ position: 'absolute' }}
             />
           )}
           {slide?.model1Name}
@@ -228,7 +170,7 @@ const Slide = ({ slide, height, width }) => {
             <Cloud
               fill="white"
               stroke="white"
-              style={{ position: 'absolute', width: '3rem' }}
+              style={{ position: 'absolute' }}
             />
           )}
           {slide?.model2Name}
@@ -238,4 +180,4 @@ const Slide = ({ slide, height, width }) => {
   )
 }
 
-export default Slide
+export default ModelSelectorSlide

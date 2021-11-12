@@ -1,11 +1,11 @@
 {
-  "title": "Builder.io + Shopify + Next.js",
-  "titleTemplate": "%s - Headless Demo",
-  "description": "A starter kit demo store for using headless shopify with Builder.io ->  https://github.com/BuilderIO/nextjs-shopify",
+  "title": "Spec-ial",
+  "titleTemplate": "",
+  "description": "Spec_ial upends traditional eyewear with provocative exploration. Crafted in micro-micro  — with ranging influences from art to astrology – our pieces cross over from accessory into sculpture. Conceptualized between New York, Los Angeles and Edinburgh, Spec_ial’s eyewear ignores boundaries, leaving you ... Spec_ial.",
   "openGraph": {
     "type": "website",
     "locale": "en_IE",
-    "url": "https://github.com/BuilderIO/nextjs-shopify",
-    "site_name": "Builder.io + Shopify + Next.js"
+    "url": "https://spec-ial.com",
+    "site_name": "Spec-ial"
   }
 }

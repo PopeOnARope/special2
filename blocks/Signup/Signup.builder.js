@@ -10,7 +10,7 @@ Builder.registerComponent(LazyText, {
   inputs: [
     {
       name: 'content',
-      tyoe: 'richText'
+      type: 'richText'
     }
   ],
 })

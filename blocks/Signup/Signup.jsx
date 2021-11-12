@@ -20,7 +20,8 @@ const Signup = ({ content }) => {
     urlencoded.append('g', 'XKvFZS')
     urlencoded.append('email', email)
     urlencoded.append('phone_number', phoneNumber)
-    urlencoded.append('name', name)
+    urlencoded.append('first_name', name.split(' ')[0])
+    urlencoded.append('last_name', name.split(' ')[name.split(' ').length-1])
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {

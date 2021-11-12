@@ -42,7 +42,7 @@ const NextButton: React.FC<ButtonProps> = ({ onClick, overlayColor }) => (
       style={{
         transform: 'rotate(90deg)',
       }}
-      className='hover-right'
+      className="hover-right"
     >
       <ChevronUp width="40" height="40" stroke={overlayColor || 'white'} />
     </div>
@@ -67,6 +67,11 @@ const ProductBox: React.FC<Props> = ({
   title,
   edition,
   collection,
+  productDescriptionFont,
+  detailToggleFont,
+  detailFont,
+  nameFont,
+  editionFont
 }) => {
   const [loading, setLoading] = useState(false)
   const [height, setHeight] = useState(640)
@@ -158,7 +163,7 @@ const ProductBox: React.FC<Props> = ({
       const i = w < 640 ? mobileImages || images : _images
       setHeight(window.innerHeight - 42)
       setWidth(w)
-      if(i !== images) {
+      if (i !== images) {
         setImages(i)
         setPeakingImage(i[0])
       }
@@ -204,7 +209,7 @@ const ProductBox: React.FC<Props> = ({
           height: height,
           width: '100vw',
           backgroundColor: peakingImage.backgroundColor || 'black',
-          transition: '0.3S background'
+          transition: '0.3S background',
         }}
         className="type-wrapper"
       >
@@ -230,7 +235,7 @@ const ProductBox: React.FC<Props> = ({
             zIndex: 6,
             ' @media (max-width: 768px)': {
               bottom: '18rem',
-              marginLeft: '-3rem'
+              marginLeft: '-3rem',
             },
           }}
         >
@@ -331,23 +336,35 @@ const ProductBox: React.FC<Props> = ({
         from="left"
         zIndex={8}
       >
-        <ProductDetails details={details} productDescription={description} setShowBuyButton={setShowBuyButton} />
+        <ProductDetails
+          details={details}
+          productDescription={description}
+          setShowBuyButton={setShowBuyButton}
+          productDescriptionFont={productDescriptionFont}
+          detailToggleFont={detailToggleFont}
+          detailFont={detailFont}
+        />
       </Sidebar>
       {/*CONTENT SECTION*/}
       <div
         className="w-full md:w-3/5 lg:w-1/2 xl:w-2/5 text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content"
-        style={{ bottom: '0', right: '0', transition: '0.5s all', opacity: showBuyButton ? 100 : 0 }}
+        style={{
+          bottom: '0',
+          right: '0',
+          transition: '0.5s all',
+          opacity: showBuyButton ? 100 : 0,
+        }}
       >
         <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">
           <h1
             className="mb-0 pb-0 text-4xl mb-0 pb-0 font-extrabold"
-            style={{ color: peakingImage?.overlayColor || 'white' }}
+            style={{ color: peakingImage?.overlayColor || 'white', fontFamily: nameFont }}
           >
             {collection}
           </h1>
           <h2
             className="mb-0 pb-0 text-md"
-            style={{ color: peakingImage?.overlayColor || 'white' }}
+            style={{ color: peakingImage?.overlayColor || 'white', fontFamily: nameFont }}
           >
             __{title}
           </h2>
@@ -377,7 +394,7 @@ const ProductBox: React.FC<Props> = ({
         </Button>
         <p
           className="mt-4"
-          style={{ color: peakingImage?.overlayColor || 'white' }}
+          style={{ color: peakingImage?.overlayColor || 'white', fontFamily: editionFont }}
         >
           {edition}
         </p>

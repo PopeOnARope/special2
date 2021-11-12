@@ -11,7 +11,14 @@ Builder.registerComponent(LazyText, {
     {
       name: 'speed',
       type: 'number',
-      defaultValue: 20
+      defaultValue: 20,
+    },
+    {
+      name:'background',
+      type: 'color'
+    },    {
+      name:'color',
+      type: 'color'
     },
     {
       name: 'links',
@@ -26,6 +33,7 @@ Builder.registerComponent(LazyText, {
           name: 'url',
           type: 'string',
         },
+        { name: 'image', type: 'file' },
       ],
     },
   ],

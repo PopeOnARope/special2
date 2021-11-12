@@ -2229,8 +2229,20 @@ html {
   height: 0.5rem;
 }
 
+.h-full{
+  height: 100%;
+}
+
+.text-sm{
+  font-size: 0.875rem;
+}
+
 .text-lg{
   font-size: 1.125rem;
+}
+
+.text-xl{
+  font-size: 1.25rem;
 }
 
 .text-4xl{
@@ -2283,8 +2295,16 @@ html {
   margin-top: 1.5rem;
 }
 
+.mt-8{
+  margin-top: 2rem;
+}
+
 .ml-10{
   margin-left: 2.5rem;
+}
+
+.mt-20{
+  margin-top: 5rem;
 }
 
 .mb-20{
@@ -2364,6 +2384,11 @@ html {
   padding-right: 2.5rem;
 }
 
+.px-16{
+  padding-left: 4rem;
+  padding-right: 4rem;
+}
+
 .pt-0{
   padding-top: 0;
 }
@@ -2374,6 +2399,10 @@ html {
 
 .pb-4{
   padding-bottom: 1rem;
+}
+
+.pt-8{
+  padding-top: 2rem;
 }
 
 .pointer-events-none{
@@ -2396,8 +2425,16 @@ html {
   position: relative;
 }
 
+.right-0{
+  right: 0;
+}
+
 .resize{
   resize: both;
+}
+
+.text-left{
+  text-align: left;
 }
 
 .text-center{
@@ -2426,6 +2463,10 @@ html {
 
 .capitalize{
   text-transform: capitalize;
+}
+
+.underline{
+  text-decoration: underline;
 }
 
 .visible{
@@ -2484,6 +2525,10 @@ html {
 .hover\:scale-105:hover{
   --transform-scale-x: 1.05;
   --transform-scale-y: 1.05;
+}
+
+.rotate-90{
+  --transform-rotate: 90deg;
 }
 
 .transition{

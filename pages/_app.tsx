@@ -20,8 +20,10 @@ import '../blocks/Marquee/Marquee.builder'
 import '../blocks/Signup/Signup.builder'
 import '../blocks/About/About.builder'
 import '../blocks/Text/Text.builder'
-
-
+import '../blocks/AccountCreate/AccountCreate.builder'
+import '../blocks/Video/Video.builder'
+import '../blocks/Redirect/Redirect.builder'
+import '../src/typography.css'
 
 
 Builder.register('insertMenu', {

@@ -13,6 +13,24 @@ Builder.registerComponent(LazyText, {
       type: 'boolean',
     },
     {
+      name: 'headerFont',
+      type: 'string',
+      defaultValue: 'Value Sans Pro',
+      enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+    },
+    {
+      name: 'linkFont',
+      type: 'string',
+      defaultValue: 'Value Sans Pro',
+      enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+    },
+    {
+      name: 'secondaryLinkFont',
+      type: 'string',
+      defaultValue: 'Value Sans Pro',
+      enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+    },
+    {
       name: 'sections',
       type: 'list',
       defaultValue: [{ title: 'Title' }],

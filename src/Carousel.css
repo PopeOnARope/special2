@@ -2,6 +2,8 @@
   color: white;
   z-index: 3;
   position: absolute;
+  right: 0;
+  top: 50%;
   align-self: center;
   transform: rotate(-90deg);
   width: 5rem;
@@ -88,8 +90,20 @@
   margin-right: 2rem;
 }
 
+.model-toggle button svg {
+  width: 3rem;
+}
+
 @media (max-width: 768px) {
   .model-toggle {
-    bottom: 12rem;
+    bottom: 7rem;
+    right: 1rem;
+  }
+  .model-toggle button {
+    font-size: 1rem !important;
+    padding: 2rem;
+  }
+  .model-toggle button svg {
+    width: 4.5rem;
   }
 }

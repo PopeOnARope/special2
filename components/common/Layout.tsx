@@ -79,18 +79,24 @@ const InnerLayout: React.FC<{
       ...colorOverrides,
     },
   }
+
+  const [location, setLocation] = React.useState('')
+
+  React.useEffect(()=>{
+    setLocation(window.location.href)
+  })
   const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
     <ThemeProvider theme={theme}>
-      <Navbar />
+      {location.length &&
+       location.indexOf('redirect') < 0 &&
+        <Navbar />}
       <div
         sx={{
           margin: `0 auto`,
           px: 0,
-          // maxWidth: 1920,
           minWidth: '60vw',
-          // minHeight: 800,
         }}
       >
         <main>{children}</main>
@@ -120,7 +126,7 @@ const InnerLayout: React.FC<{
       <NoSSR>
         <FeatureBar
           title="We use cookies to ensure that we give you the best experience."
-          hide={Builder.isEditing ? true : acceptedCookies}
+          hide={Builder.isEditing || location.indexOf('redirect')>-1 ? true : acceptedCookies}
           action={
             <button
               className="bg-black text-white flex flex-row text-lg w-96 justify-between items-center px-8 py-2 type-wrapper "
