@@ -145,8 +145,7 @@ const Customize = ({
         {(flowState === 1 || flowState === 2) && (
           <>
             <div
-              className={`image-wrapper h-96 w-full mb-2`}
-              style={{ height: '300px' }}
+              className={`image-wrapper w-full mb-2`}
             >
               <div
                 className="text-container absolute text-center text-lg"
