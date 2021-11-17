@@ -21,7 +21,7 @@ import { LoadingDots, Sidebar } from '@components/ui'
 import ProductLoader from './ProductLoader'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
 import { useSwipeable } from 'react-swipeable'
-import Customize from './Customize'
+import TextInput from '@components/ui/Form/TextInput'
 
 interface Props {
   className?: string
@@ -73,7 +73,6 @@ const ProductBox: React.FC<Props> = ({
   detailFont,
   nameFont,
   editionFont,
-  checkoutType,
 }) => {
   const [loading, setLoading] = useState(false)
   const [height, setHeight] = useState(640)
@@ -81,13 +80,6 @@ const ProductBox: React.FC<Props> = ({
   const [margin, setMargin] = useState(0)
   const [images, setImages] = useState([])
   const [showBuyButton, setShowBuyButton] = useState(true)
-  const [leftArmText, setLeftArmText] = useState('')
-  const [rightArmText, setRightArmText] = useState('')
-  const [size, setSize] = useState('regular')
-
-  const customProperties = { leftArmText, rightArmText, size }
-  // methods that need to be passed to the customize component
-
 
   const addItem = useAddItemToCart()
 
@@ -150,14 +142,6 @@ const ProductBox: React.FC<Props> = ({
     } catch (err) {
       setLoading(false)
     }
-  }
-
-  const customMethods = {
-    ...customProperties,
-    setLeftArmText,
-    setRightArmText,
-    setSize,
-    addToCart
   }
 
   React.useEffect(() => {
@@ -391,35 +375,31 @@ const ProductBox: React.FC<Props> = ({
           >
             __{title}
           </h2>
+          <TextInput/>
         </div>
 
-        {checkoutType === 'custom' ? (
-          <Customize variant={variant}  {...customMethods} />
-        ) : (
-          <Button
-            style={{ width: '100%' }}
-            sx={{
-              background:
-                'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-              transition: '.5s ease-out',
-              backgroundSize: '200%',
-              ' &:hover': {
-                boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
-                color: '#000',
-                backgroundPosition: 'left',
-              },
-            }}
-            icon={<Plus />}
-            name="add-to-cart"
-            disabled={loading}
-            onClick={addToCart}
-          >
-            <span className="flex flex-row justify-between mr-2">
-              <span>Bag {loading && <LoadingDots />}</span>
-              {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
-            </span>
-          </Button>
-        )}
+        <Button
+          style={{ width: '100%' }}
+          sx={{
+            background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
+            transition: '.5s ease-out',
+            backgroundSize: '200%',
+            ' &:hover': {
+              boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
+              color: '#000',
+              backgroundPosition: 'left',
+            },
+          }}
+          icon={<Plus />}
+          name="add-to-cart"
+          disabled={loading}
+          onClick={addToCart}
+        >
+          <span className="flex flex-row justify-between mr-2">
+            <span>Bag {loading && <LoadingDots />}</span>
+            {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
+          </span>
+        </Button>
         <p
           className="mt-4"
           style={{

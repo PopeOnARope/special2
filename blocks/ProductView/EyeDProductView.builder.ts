@@ -2,25 +2,19 @@ import { Builder, builder } from '@builder.io/react'
 import { restrictedRegister } from 'blocks/utils'
 import dynamic from 'next/dynamic'
 const isDemo = Boolean(process.env.IS_DEMO)
-const LazyProductView = dynamic(
+const LazyEyeDProductView = dynamic(
   () =>
     isDemo
       ? import(`blocks/ProductView/ProductViewDemo`)
-      : import(`blocks/ProductView/ProductView`),
+      : import(`blocks/ProductView/EyeDProductView`),
   { ssr: true }
 )
 
 restrictedRegister(
-  LazyProductView,
+  LazyEyeDProductView,
   {
-    name: 'ProductView',
+    name: 'EyeDProductView',
     inputs: [
-      {
-        name: 'checkoutType',
-        type: 'string',
-        enum: ['basic', 'custom'],
-        defaultValue: 'basic'
-      },
       {
         name: 'nameFont',
         type: 'string',
@@ -150,7 +144,7 @@ restrictedRegister(
         defaultValue: 'Title'
       },
       { name: 'edition', type: 'text',
-      defaultValue: 'Edition'},
+        defaultValue: 'Edition'},
     ],
     image: 'https://unpkg.com/css.gg@2.0.0/icons/svg/inpicture.svg',
     description:
@@ -168,7 +162,7 @@ restrictedRegister(
 )
 
 restrictedRegister(
-  LazyProductView,
+  LazyEyeDProductView,
   {
     name: 'ProductBox',
     inputs: [
