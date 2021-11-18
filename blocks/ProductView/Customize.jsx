@@ -162,15 +162,15 @@ const Customize = ({
                 className="text-container absolute text-center text-2xl bpw"
                 style={{
                   width: '136px',
-                  marginTop: screenWidth > 768 ? '98px' : '62px',
+                  marginTop: screenWidth > 768 ? '6.125rem' : '3.875rem',
                   marginLeft:
                     flowState === 1
                       ? screenWidth > 768
-                        ? '260px'
-                        : '135px'
+                        ? '16.5rem'
+                        : '8.43rem'
                       : screenWidth > 768
-                      ? '124px'
-                      : '55px',
+                      ? '7.75rem'
+                      : '3.4375rem',
                   color: 'rgb(225, 180, 65)',
                 }}
               >
