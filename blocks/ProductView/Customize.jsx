@@ -1,5 +1,27 @@
 import React from 'react'
 import { getPrice } from '@lib/shopify/storefront-data-hooks/src/utils/product'
+import styled from 'styled-components'
+
+const CustomizationWindow = styled.div`
+  display: ${(props) => props.display};
+  color: white;
+  margin-right: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: black;
+  height: 32rem;
+  position: absolute;
+  margin-top: -33rem;
+  @media (max-width: 768px) {
+    height: 39rem;
+    margin-top: -40rem;
+  }
+  @media (max-width: 580px) {
+    height: 36rem;
+    margin-top: -37rem;
+  }
+  transition: 0.3s all;
+  width: ${(props) => props.width}px;
+`
 
 const flow = [
   {
@@ -58,6 +80,7 @@ const Customize = ({
   leftArmText,
   rightArmText,
   size,
+  screenWidth,
 }) => {
   const [flowState, setFlowState] = React.useState(0)
   const [width, setWidth] = React.useState(0)
@@ -117,17 +140,7 @@ const Customize = ({
 
   return (
     <div>
-      <div
-        className="customization-window absolute bg-black mr-2 py-4 px-6 text-white"
-        style={{
-          display: flow[flowState].display,
-          height: `32rem`,
-          opacity: flow[flowState].display === 'none' ? 0 : 1,
-          transition: '0.3s all',
-          marginTop: '-33rem',
-          width: `${width}px`,
-        }}
-      >
+      <CustomizationWindow display={flow[flowState].display} width={width}>
         <button
           onClick={() => {
             setLeftArmText('')
@@ -144,20 +157,30 @@ const Customize = ({
         {/*switchable content*/}
         {(flowState === 1 || flowState === 2) && (
           <>
-            <div
-              className={`image-wrapper w-full mb-2`}
-            >
+            <div className={`px-16 md:p-0 image-wrapper w-full mb-2`}>
               <div
-                className="text-container absolute text-center text-lg"
+                className="text-container absolute text-center text-2xl bpw"
                 style={{
                   width: '136px',
-                  marginTop: '108px',
-                  marginLeft: flowState === 1 ? '280px' : '124px',
+                  marginTop: screenWidth > 768 ? '98px' : '62px',
+                  marginLeft:
+                    flowState === 1
+                      ? screenWidth > 768
+                        ? '260px'
+                        : '135px'
+                      : screenWidth > 768
+                      ? '124px'
+                      : '55px',
+                  color: 'rgb(225, 180, 65)',
                 }}
               >
-                {flowState === 2 ? leftArmText : rightArmText}
+                <span
+                  style={{ textShadow: '3px 3px 5px rgba(0,0,0,0.57)' }}
+                >
+                  {flowState === 2 ? leftArmText : rightArmText}
+                </span>
               </div>
-              <img src={flow[flowState].image} />
+              <img src={flow[flowState].image} style={{width: screenWidth > 768 ? '100%': '480px'}} />
             </div>
             <div>
               <h2>RIGHT ARM</h2>
@@ -219,7 +242,7 @@ const Customize = ({
             <p className="text-sm">{flow[flowState].subDescription}</p>
           </div>
         )}
-      </div>
+      </CustomizationWindow>
       <button
         id="buy-button"
         className=" w-full flex justify-between bg-black text-white p-4 type-wrapper"

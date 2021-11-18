@@ -2233,10 +2233,6 @@ html {
   height: 0.5rem;
 }
 
-.h-96{
-  height: 24rem;
-}
-
 .h-full{
   height: 100%;
 }
@@ -2251,6 +2247,10 @@ html {
 
 .text-xl{
   font-size: 1.25rem;
+}
+
+.text-2xl{
+  font-size: 1.5rem;
 }
 
 .text-4xl{
@@ -2380,11 +2380,6 @@ html {
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.px-6{
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
 }
 
 .py-8{
@@ -3946,6 +3941,10 @@ html {
   .sm\:prose-2xl > :last-child{
     margin-bottom: 0;
   }
+
+  .sm\:w-144{
+    width: 36rem;
+  }
 }
 
 @media (min-width: 768px){
@@ -5250,8 +5249,17 @@ html {
     max-width: 48rem;
   }
 
+  .md\:p-0{
+    padding: 0;
+  }
+
   .md\:p-4{
     padding: 1rem;
+  }
+
+  .md\:px-16{
+    padding-left: 4rem;
+    padding-right: 4rem;
   }
 
   .md\:pt-0{
