@@ -6,6 +6,8 @@
 
 @import 'typography.css';
 
+@import 'fx.css';
+
 /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
@@ -2510,6 +2512,10 @@ html {
   width: 24rem;
 }
 
+.w-144{
+  width: 36rem;
+}
+
 .w-1\/2{
   width: 50%;
 }
@@ -3941,10 +3947,6 @@ html {
   .sm\:prose-2xl > :last-child{
     margin-bottom: 0;
   }
-
-  .sm\:w-144{
-    width: 36rem;
-  }
 }
 
 @media (min-width: 768px){
@@ -5255,11 +5257,6 @@ html {
 
   .md\:p-4{
     padding: 1rem;
-  }
-
-  .md\:px-16{
-    padding-left: 4rem;
-    padding-right: 4rem;
   }
 
   .md\:pt-0{
