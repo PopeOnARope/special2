@@ -74,7 +74,7 @@ const Navbar: FC = () => {
         </button>
       </div>
       <div className="px-4 justify-center flex flex-col">
-        <a href="/" style={{ mixBlendMode: 'difference' }}>
+        <a href="/home" style={{ mixBlendMode: 'difference' }}>
           {' '}
           <SpecialLogo />
         </a>
