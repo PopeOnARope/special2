@@ -23,7 +23,7 @@ const Navbar: FC = () => {
     let classNames = ''
     if (
       window.location.href.includes('collection/seven') ||
-      window.location.href.includes('product') ||
+      window.location.href.includes('seven') ||
       window.location.href.includes('signup') ||
       displaySideNav ||
       displayCart

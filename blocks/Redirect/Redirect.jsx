@@ -13,7 +13,7 @@ const Redirect = ()=>{
 
 
       if(Cookies.get('account') || Cookies.get('account') === 'declined') {
-        window.location.href = '/release2'
+        window.location.href = '/'
       } else {
         window.location.href = '/signup'
       }

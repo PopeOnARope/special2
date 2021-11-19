@@ -85,9 +85,8 @@ const ProductBox: React.FC<Props> = ({
   const [rightArmText, setRightArmText] = useState('')
   const [size, setSize] = useState('regular')
 
-  const customProperties = { leftArmText, rightArmText, size }
+  const customAttributes = { leftArmText, rightArmText, size }
   // methods that need to be passed to the customize component
-
 
   const addItem = useAddItemToCart()
 
@@ -144,7 +143,14 @@ const ProductBox: React.FC<Props> = ({
   const addToCart = async () => {
     setLoading(true)
     try {
-      await addItem(variant.id, 1)
+      // process custom attr into key value pairing
+      const toSpaced = (str) =>
+        str.replace(/[A-Z]/g, (letter) => ` ${letter.toLowerCase()}`)
+      const attr = Object.keys(customAttributes).map((key) => ({
+        key: toSpaced(key),
+        value: customAttributes[key],
+      }))
+      await addItem(variant.id, 1, attr)
       openCart()
       setLoading(false)
     } catch (err) {
@@ -153,11 +159,11 @@ const ProductBox: React.FC<Props> = ({
   }
 
   const customMethods = {
-    ...customProperties,
+    ...customAttributes,
     setLeftArmText,
     setRightArmText,
     setSize,
-    addToCart
+    addToCart,
   }
 
   React.useEffect(() => {
@@ -364,7 +370,11 @@ const ProductBox: React.FC<Props> = ({
       </Sidebar>
       {/*CONTENT SECTION*/}
       <div
-        className={` ${ checkoutType==='basic' ? 'w-full md:w-3/5 lg:w-1/2 xl:w-2/5' : 'w-144'} text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content`}
+        className={` ${
+          checkoutType === 'basic'
+            ? 'w-full md:w-3/5 lg:w-1/2 xl:w-2/5'
+            : 'w-144'
+        } text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content`}
         style={{
           bottom: '0',
           right: '0',
@@ -394,21 +404,10 @@ const ProductBox: React.FC<Props> = ({
         </div>
 
         {checkoutType === 'custom' ? (
-          <Customize variant={variant}  {...customMethods} screenWidth={width} />
+          <Customize variant={variant} {...customMethods} screenWidth={width} />
         ) : (
-          <Button
-            style={{ width: '100%' }}
-            sx={{
-              background:
-                'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-              transition: '.5s ease-out',
-              backgroundSize: '200%',
-              ' &:hover': {
-                boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
-                color: '#000',
-                backgroundPosition: 'left',
-              },
-            }}
+          <button
+            className="hover-button active"
             icon={<Plus />}
             name="add-to-cart"
             disabled={loading}
@@ -418,7 +417,7 @@ const ProductBox: React.FC<Props> = ({
               <span>Bag {loading && <LoadingDots />}</span>
               {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
             </span>
-          </Button>
+          </button>
         )}
         <p
           className="mt-4"

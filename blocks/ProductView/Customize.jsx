@@ -66,6 +66,15 @@ const flow = [
   },
 ]
 
+function formatText(txt) {
+  var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
+  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+  const lastChar = txt[txt.length - 1]
+  if (lastChar === ' ' || format.test(lastChar)) {
+    return capitalize(txt.substring(0, txt.length - 1))
+  } else return capitalize(txt)
+}
+
 const selectedSizeStyles = {
   boxShadow: '-7px 7px 0px 0px #915800',
   background: 'rgb(157, 126, 44)',
@@ -89,11 +98,12 @@ const Customize = ({
   console.log({ leftArmText, rightArmText })
 
   function onTextChange(e) {
+    const value = formatText(e.target.value)
     if (flowState === 1) {
-      setRightArmText(e.target.value)
+      setRightArmText(value)
     }
     if (flowState === 2) {
-      setLeftArmText(e.target.value)
+      setLeftArmText(value)
     }
   }
 
@@ -115,7 +125,7 @@ const Customize = ({
     if (flowState === 0) {
       return (
         <>
-          <span>Customize and Buy</span>
+          <span>Customize and Preorder</span>
           <span>
             {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
           </span>
@@ -159,7 +169,7 @@ const Customize = ({
           <>
             <div className={`px-16 md:p-0 image-wrapper w-full mb-2`}>
               <div
-                className="text-container absolute text-center text-2xl bpw"
+                className="text-container absolute text-center text-2xl bpw shine"
                 style={{
                   width: '136px',
                   marginTop: screenWidth > 768 ? '6.125rem' : '3.875rem',
@@ -171,16 +181,16 @@ const Customize = ({
                       : screenWidth > 768
                       ? '7.75rem'
                       : '3.4375rem',
-                  color: 'rgb(225, 180, 65)',
                 }}
               >
-                <span
-                  style={{ textShadow: '3px 3px 5px rgba(0,0,0,0.57)' }}
-                >
+                <span style={{}}>
                   {flowState === 2 ? leftArmText : rightArmText}
                 </span>
               </div>
-              <img src={flow[flowState].image} style={{width: screenWidth > 768 ? '100%': '480px'}} />
+              <img
+                src={flow[flowState].image}
+                style={{ width: screenWidth > 768 ? '100%' : '480px' }}
+              />
             </div>
             <div>
               <h2>RIGHT ARM</h2>
@@ -245,7 +255,7 @@ const Customize = ({
       </CustomizationWindow>
       <button
         id="buy-button"
-        className=" w-full flex justify-between bg-black text-white p-4 type-wrapper"
+        className={`hover-button ${flowState === 0 && 'active'}`}
         onClick={handleButtonClick}
       >
         {getButtonContent()}
