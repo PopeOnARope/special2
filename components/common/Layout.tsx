@@ -90,7 +90,7 @@ const InnerLayout: React.FC<{
   console.log({location})
   return (
     <ThemeProvider theme={theme}>
-      {location !== '' || location !== '/' &&
+      {location !== '' && location !== '/' &&
         <Navbar />}
       <div
         sx={{
