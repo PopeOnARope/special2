@@ -75,7 +75,7 @@ const Signup = ({
       body: urlencoded,
     })
     setTimeout(() => {
-      window.location.href = '/release2'
+      window.location.href = '/home'
     }, 1000)
     return response.json()
   }
