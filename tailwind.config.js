@@ -21,6 +21,14 @@ module.exports = {
       maxWidth: {
         '8xl': '1920px',
       },
+      spacing: {
+        '72': '18rem',
+        '84': '21rem',
+        '96': '24rem',
+        '100': '25rem',
+        '144': '36rem',
+        '200': '50rem'
+      },
       colors: {
         primary: 'var(--primary)',
         'primary-2': 'var(--primary-2)',

@@ -16,6 +16,12 @@ restrictedRegister(
     name: 'ProductView',
     inputs: [
       {
+        name: 'checkoutType',
+        type: 'string',
+        enum: ['basic', 'custom'],
+        defaultValue: 'basic'
+      },
+      {
         name: 'nameFont',
         type: 'string',
         defaultValue: 'Value Sans Pro',

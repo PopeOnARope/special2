@@ -21,6 +21,7 @@ import { LoadingDots, Sidebar } from '@components/ui'
 import ProductLoader from './ProductLoader'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
 import { useSwipeable } from 'react-swipeable'
+import Customize from './Customize'
 
 interface Props {
   className?: string
@@ -71,7 +72,8 @@ const ProductBox: React.FC<Props> = ({
   detailToggleFont,
   detailFont,
   nameFont,
-  editionFont
+  editionFont,
+  checkoutType,
 }) => {
   const [loading, setLoading] = useState(false)
   const [height, setHeight] = useState(640)
@@ -79,6 +81,12 @@ const ProductBox: React.FC<Props> = ({
   const [margin, setMargin] = useState(0)
   const [images, setImages] = useState([])
   const [showBuyButton, setShowBuyButton] = useState(true)
+  const [leftArmText, setLeftArmText] = useState('')
+  const [rightArmText, setRightArmText] = useState('')
+  const [size, setSize] = useState('regular')
+
+  const customAttributes = { leftArmText, rightArmText, size }
+  // methods that need to be passed to the customize component
 
   const addItem = useAddItemToCart()
 
@@ -135,12 +143,27 @@ const ProductBox: React.FC<Props> = ({
   const addToCart = async () => {
     setLoading(true)
     try {
-      await addItem(variant.id, 1)
+      // process custom attr into key value pairing
+      const toSpaced = (str) =>
+        str.replace(/[A-Z]/g, (letter) => ` ${letter.toLowerCase()}`)
+      const attr = Object.keys(customAttributes).map((key) => ({
+        key: toSpaced(key),
+        value: customAttributes[key],
+      }))
+      await addItem(variant.id, 1, attr)
       openCart()
       setLoading(false)
     } catch (err) {
       setLoading(false)
     }
+  }
+
+  const customMethods = {
+    ...customAttributes,
+    setLeftArmText,
+    setRightArmText,
+    setSize,
+    addToCart,
   }
 
   React.useEffect(() => {
@@ -347,7 +370,11 @@ const ProductBox: React.FC<Props> = ({
       </Sidebar>
       {/*CONTENT SECTION*/}
       <div
-        className="w-full md:w-3/5 lg:w-1/2 xl:w-2/5 text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content"
+        className={` ${
+          checkoutType === 'basic'
+            ? 'w-full md:w-3/5 lg:w-1/2 xl:w-2/5'
+            : 'w-144'
+        } text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content`}
         style={{
           bottom: '0',
           right: '0',
@@ -358,43 +385,46 @@ const ProductBox: React.FC<Props> = ({
         <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">
           <h1
             className="mb-0 pb-0 text-4xl mb-0 pb-0 font-extrabold"
-            style={{ color: peakingImage?.overlayColor || 'white', fontFamily: nameFont }}
+            style={{
+              color: peakingImage?.overlayColor || 'white',
+              fontFamily: nameFont,
+            }}
           >
             {collection}
           </h1>
           <h2
             className="mb-0 pb-0 text-md"
-            style={{ color: peakingImage?.overlayColor || 'white', fontFamily: nameFont }}
+            style={{
+              color: peakingImage?.overlayColor || 'white',
+              fontFamily: nameFont,
+            }}
           >
             __{title}
           </h2>
         </div>
 
-        <Button
-          style={{ width: '100%' }}
-          sx={{
-            background: 'linear-gradient(to left, #000 50%, #FFC391 50%) right',
-            transition: '.5s ease-out',
-            backgroundSize: '200%',
-            ' &:hover': {
-              boxShadow: '6px 5px 10px rgba(0,0,0,0.2)',
-              color: '#000',
-              backgroundPosition: 'left',
-            },
-          }}
-          icon={<Plus />}
-          name="add-to-cart"
-          disabled={loading}
-          onClick={addToCart}
-        >
-          <span className="flex flex-row justify-between mr-2">
-            <span>Bag {loading && <LoadingDots />}</span>
-            {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
-          </span>
-        </Button>
+        {checkoutType === 'custom' ? (
+          <Customize variant={variant} {...customMethods} screenWidth={width} />
+        ) : (
+          <button
+            className="hover-button active"
+            icon={<Plus />}
+            name="add-to-cart"
+            disabled={loading}
+            onClick={addToCart}
+          >
+            <span className="flex flex-row justify-between mr-2">
+              <span>Bag {loading && <LoadingDots />}</span>
+              {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
+            </span>
+          </button>
+        )}
         <p
           className="mt-4"
-          style={{ color: peakingImage?.overlayColor || 'white', fontFamily: editionFont }}
+          style={{
+            color: peakingImage?.overlayColor || 'white',
+            fontFamily: editionFont,
+          }}
         >
           {edition}
         </p>

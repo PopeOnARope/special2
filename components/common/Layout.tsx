@@ -83,14 +83,14 @@ const InnerLayout: React.FC<{
   const [location, setLocation] = React.useState('')
 
   React.useEffect(()=>{
-    setLocation(window.location.href)
+    setLocation(window.location.pathname)
   })
   const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
+  console.log({location})
   return (
     <ThemeProvider theme={theme}>
-      {location.length &&
-       location.indexOf('redirect') < 0 &&
+      {location !== '' && location !== '/' &&
         <Navbar />}
       <div
         sx={{
@@ -126,7 +126,7 @@ const InnerLayout: React.FC<{
       <NoSSR>
         <FeatureBar
           title="We use cookies to ensure that we give you the best experience."
-          hide={Builder.isEditing || location.indexOf('redirect')>-1 ? true : acceptedCookies}
+          hide={Builder.isEditing || location === '' || location === '/' ? true : acceptedCookies}
           action={
             <button
               className="bg-black text-white flex flex-row text-lg w-96 justify-between items-center px-8 py-2 type-wrapper "

@@ -61,7 +61,7 @@ const Signup = ({
     var urlencoded = new URLSearchParams()
     urlencoded.append('g', 'XKvFZS')
     urlencoded.append('email', email)
-    urlencoded.append('phone_number', phoneNumber)
+    urlencoded.append('phone_number', `+${phoneNumber}`)
     urlencoded.append('first_name', name.split(' ')[0])
     urlencoded.append('last_name', name.split(' ')[name.split(' ').length - 1])
 
@@ -75,7 +75,7 @@ const Signup = ({
       body: urlencoded,
     })
     setTimeout(() => {
-      window.location.href = '/release2'
+      window.location.href = '/home'
     }, 1000)
     return response.json()
   }
@@ -125,7 +125,7 @@ const Signup = ({
         className="absolute text-sm right-0"
         style={{
           transform: 'rotate(90deg)',
-          marginTop: '25rem',
+          marginTop: '50%',
           fontFamily: 'Nova Stamp Bold',
         }}
         onClickCapture={toggle}
@@ -180,6 +180,7 @@ const Signup = ({
             font="Nova Stamp Bold"
             name="phoneNumber"
             label="Phone?"
+            // secondaryLabel='I consent to re'
             onChange={(v) => {
               if (error) {
                 setError(false)

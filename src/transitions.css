@@ -13,8 +13,6 @@
   transition: all 0.3s;
 }
 
-
-
 .fade-down-enter {
   opacity: 0;
   margin-top: -100px;
@@ -31,7 +29,6 @@
   margin-top: 100px;
   opacity: 0;
   transition: all 1.5s;
-
 }
 
 .hover-right {
@@ -86,4 +83,21 @@
   100% {
     transform: translate(0, -0px);
   }
+}
+
+.hover-button {
+  background: linear-gradient(to left, #000 50%, #ffc391 50%) right;
+  transition: 0.5s ease-out;
+  background-size: 200%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0;
+  width: 100%;
+  padding: 1rem;
+  color: white;
+}
+.hover-button.active:hover {
+  box-shadow: 6px 5px 10px rgba(0, 0, 0, 0.2);
+  color: #000;
+  background-position: left;
 }

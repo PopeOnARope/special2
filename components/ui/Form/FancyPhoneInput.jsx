@@ -113,11 +113,11 @@ const TextInput = ({
 }) => {
   const [value, setValue] = React.useState('')
 
-
   return (
     <Wrapper value={value} font={font}>
       <PhoneInput
         country='us'
+        prefix='+'
         onChange={(_value) => {
           setValue(formatter(_value))
           onChange(_value)

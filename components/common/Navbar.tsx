@@ -23,7 +23,7 @@ const Navbar: FC = () => {
     let classNames = ''
     if (
       window.location.href.includes('collection/seven') ||
-      window.location.href.includes('product') ||
+      window.location.href.includes('seven') ||
       window.location.href.includes('signup') ||
       displaySideNav ||
       displayCart
@@ -56,7 +56,7 @@ const Navbar: FC = () => {
 
   function decline() {
     Cookie.set('account', 'declined', { expires: 7 })
-    window.location.href = '/redirect'
+    window.location.href = '/'
   }
 
   return (
@@ -74,7 +74,7 @@ const Navbar: FC = () => {
         </button>
       </div>
       <div className="px-4 justify-center flex flex-col">
-        <a href="/" style={{ mixBlendMode: 'difference' }}>
+        <a href="/home" style={{ mixBlendMode: 'difference' }}>
           {' '}
           <SpecialLogo />
         </a>

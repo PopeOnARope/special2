@@ -2,6 +2,12 @@
 
 /*input mono*/
 @font-face {
+  font-family: "Ballpark Weiner";
+  src: url("../assets/fonts/BallparkWeiner.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
   font-family: "InputMono";
   src: url("../assets/fonts/InputMono-Regular.woff2") format("woff2");
   font-weight: normal;
@@ -68,6 +74,13 @@ strong {
   font-weight: bolder;
 }
 
+.vsp {
+  font-family: 'Value Sans Pro';
+}
+
+.bpw {
+  font-family: 'Ballpark Weiner';
+}
 
 
 

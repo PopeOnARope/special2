@@ -84,13 +84,15 @@ const CartItem = ({
   return (
     <div className="flex flex-row justify-between p-2 w-full min-h-8 md:p-4 lg:justify-around lg:justify max-w-4xl">
       <div className="w-1/3 md:w-1/4 relative">
+        {item.variant.image &&  item.variant.image.altText &&
         <Image
           layout="fill"
           objectFit='cover'
           objectPosition="center"
-          alt={item.variant.image.altText}
+          alt={item.variant.image?.altText}
           src={item.variant.image.src}
         />
+        }
       </div>
       <div className='px-2'>
         <Themed.div
@@ -130,84 +132,6 @@ const CartItem = ({
             onChange={(e)=>{updateQuantity(e.target.value)}}
           />
           <button className='mt-2 text-gray-500' onClick={()=>{updateQuantity(0)}}>remove</button>
-      </div>
-    </div>
-  )
-
-  return (
-    <div >
-      <div
-        sx={{
-          padding: 1,
-          border: '1px solid gray',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Image
-          height={130}
-          width={130}
-          unoptimized
-          alt={item.variant.image.altText}
-          src={item.variant.image.src}
-        />
-      </div>
-      <div>
-        <Themed.div
-          as={Link}
-          href={`/product/${item.variant.product.handle}/`}
-          sx={{ fontSize: 3, m: 0, fontWeight: 700 }}
-        >
-          <>
-            {item.title}
-            <Text
-              sx={{
-                fontSize: 4,
-                fontWeight: 700,
-                display: 'block',
-                marginLeft: 'auto',
-              }}
-            >
-              {getPrice(
-                item.variant.priceV2.amount,
-                item.variant.priceV2.currencyCode || 'USD'
-              )}
-            </Text>
-          </>
-        </Themed.div>
-        <Themed.ul sx={{ mt: 2, mb: 0, padding: 0, listStyle: 'none' }}>
-          <li>
-            <div sx={{ display: 'flex', justifyItems: 'center' }}>
-              <IconButton onClick={() => increaseQuantity(-1)}>
-                <Minus width={18} height={18} />
-              </IconButton>
-
-              <label>
-                <Input
-                  sx={{
-                    height: '100%',
-                    textAlign: 'center',
-                  }}
-                  type="number"
-                  max={99}
-                  min={0}
-                  value={quantity}
-                  onChange={handleQuantity}
-                  onBlur={handleBlur}
-                />
-              </label>
-              <IconButton onClick={() => increaseQuantity(1)}>
-                <Plus width={18} height={18} />
-              </IconButton>
-            </div>
-          </li>
-          {item.variant.selectedOptions.map((option: any) => (
-            <li key={option.value}>
-              {option.name}:{option.value}
-            </li>
-          ))}
-        </Themed.ul>
       </div>
     </div>
   )
