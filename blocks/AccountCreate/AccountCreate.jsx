@@ -44,15 +44,15 @@ const Signup = ({
   }
   React.useEffect(() => {
     setHeight(window.innerHeight)
-    grained('accountCreate', {
-      animate: true,
-      patternWidth: 100,
-      patternHeight: 100,
-      grainOpacity: 0.04,
-      grainDensity: 1.79,
-      grainWidth: 4.27,
-      grainHeight: 1,
-    })
+    // grained('accountCreate', {
+    //   animate: true,
+    //   patternWidth: 100,
+    //   patternHeight: 100,
+    //   grainOpacity: 0.04,
+    //   grainDensity: 1.79,
+    //   grainWidth: 4.27,
+    //   grainHeight: 1,
+    // })
   }, [])
 
   async function postData() {
