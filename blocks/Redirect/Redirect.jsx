@@ -10,13 +10,14 @@ const Redirect = ()=>{
     const _cookie = document.cookie
     console.log({cookie})
     const handleRedirect = ()=>{
-
-
-      if(Cookies.get('account') || Cookies.get('account') === 'declined') {
         window.location.href = '/home'
-      } else {
-        window.location.href = '/signup'
-      }
+
+      //
+      // if(Cookies.get('account') || Cookies.get('account') === 'declined') {
+      //   window.location.href = '/home'
+      // } else {
+      //   window.location.href = '/signup'
+      // }
     }
 
     setTimeout(handleRedirect, 2000)
