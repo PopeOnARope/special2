@@ -18,6 +18,10 @@ module.exports = {
       transitionProperty:{
         'opacity': 'opacity'
       },
+      fontSize:{
+        '3xs': '0.4rem',
+        '2xs': '0.5rem'
+      },
       maxWidth: {
         '8xl': '1920px',
       },

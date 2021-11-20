@@ -8,17 +8,9 @@ const CustomizationWindow = styled.div`
   margin-right: 0.5rem;
   padding: 1rem 1.5rem;
   background: black;
-  height: 32rem;
+  height: 21rem;
   position: absolute;
-  margin-top: -33rem;
-  @media (max-width: 768px) {
-    height: 39rem;
-    margin-top: -40rem;
-  }
-  @media (max-width: 580px) {
-    height: 36rem;
-    margin-top: -37rem;
-  }
+  margin-top: -22rem;
   transition: 0.3s all;
   width: ${(props) => props.width}px;
 `
@@ -35,7 +27,7 @@ const flow = [
   {
     display: 'inherit',
     image:
-      'https://cdn.builder.io/api/v1/image/assets%2Fd58e15993bf84115968f2dd035ee71a4%2F3ea6b7ee3c1c412fac591d4f15d90c9a',
+      'https://cdn.builder.io/api/v1/image/assets%2Fd58e15993bf84115968f2dd035ee71a4%2Ff79d3114dd96453f95fc6a0b7b949a4c',
     title: 'CUSTOMIZE',
     subTitle: 'RIGHT ARM',
     description:
@@ -46,7 +38,7 @@ const flow = [
   {
     display: 'inherit',
     image:
-      'https://cdn.builder.io/api/v1/image/assets%2Fd58e15993bf84115968f2dd035ee71a4%2Ffe9f789336994bd8aaf103f0fc99321b',
+      'https://cdn.builder.io/api/v1/image/assets%2Fd58e15993bf84115968f2dd035ee71a4%2F564869613efb439eaf7c5d39b17ae046',
     title: 'CUSTOMIZE',
     subTitle: 'LEFT ARM',
     description:
@@ -68,7 +60,8 @@ const flow = [
 
 function formatText(txt) {
   var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/
-  const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
+  const capitalize = (str) =>
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
   const lastChar = txt[txt.length - 1]
   if (lastChar === ' ' || format.test(lastChar)) {
     return capitalize(txt.substring(0, txt.length - 1))
@@ -125,7 +118,7 @@ const Customize = ({
     if (flowState === 0) {
       return (
         <>
-          <span>Customize and Preorder</span>
+          <span>Customize and Pre-order</span>
           <span>
             {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
           </span>
@@ -151,6 +144,21 @@ const Customize = ({
   return (
     <div>
       <CustomizationWindow display={flow[flowState].display} width={width}>
+        {flowState !== 0 && (
+          <button
+            style={{
+              marginTop: '-0.75rem',
+              marginLeft: '-0.75rem',
+              position: 'absolute',
+            }}
+            className="text-xl"
+            onClick={() => {
+              setFlowState(flowState - 1)
+            }}
+          >
+            &lt;
+          </button>
+        )}
         <button
           onClick={() => {
             setLeftArmText('')
@@ -162,24 +170,26 @@ const Customize = ({
         >
           X
         </button>
-        <h1 className="text-white font-bold text-center">{flow[flowState].title}</h1>
+        <h1 className="text-white font-bold text-center">
+          {flow[flowState].title}
+        </h1>
 
         {/*switchable content*/}
         {(flowState === 1 || flowState === 2) && (
           <>
-            <div className={`px-16 md:p-0 image-wrapper w-full mb-2`}>
+            <div className={`px-4 md:p-0 image-wrapper w-full mb-2`}>
               <div
-                className="text-container absolute text-center text-2xl bpw shine"
+                className="text-container absolute text-center text-xl md:text-2xl bpw shine"
                 style={{
                   width: '136px',
-                  marginTop: screenWidth > 768 ? '6.125rem' : '3.875rem',
+                  marginTop: screenWidth > 768 ? '0.5rem' : '0.5rem',
                   marginLeft:
                     flowState === 1
                       ? screenWidth > 768
-                        ? '16.5rem'
-                        : '8.43rem'
+                        ? '16.1rem'
+                        : '11rem'
                       : screenWidth > 768
-                      ? '7.75rem'
+                      ? '7rem'
                       : '3.4375rem',
                 }}
               >
@@ -187,17 +197,18 @@ const Customize = ({
                   {flowState === 2 ? leftArmText : rightArmText}
                 </span>
               </div>
-              <img
-                src={flow[flowState].image}
-                style={{ width: screenWidth > 768 ? '100%' : '480px' }}
-              />
+              <img src={flow[flowState].image} />
+              <p className="text-3xs text-center im">
+                The rendering above is a mockup and the final product might look
+                different
+              </p>
             </div>
             <div>
-              <h2>RIGHT ARM</h2>
+              <h2>{flow[flowState].subTitle}</h2>
               <p style={{ fontFamily: 'InputMono', fontSize: '0.8rem' }}>
                 {flow[flowState].description}
               </p>
-              <div className="flex justify-center p-8">
+              <div className="flex justify-center flex-col items-center p-8">
                 <input
                   placeholder="9 characters"
                   onChange={onTextChange}
@@ -211,6 +222,10 @@ const Customize = ({
                     color: 'black',
                   }}
                 />
+                <p className="text-3xs text-center mt-4 im">
+                  Due to the custom nature of this product, we do not offer
+                  returns. In certain circumstances, we can offer store credit.
+                </p>
               </div>
             </div>
           </>
@@ -222,7 +237,7 @@ const Customize = ({
                 onClick={() => {
                   setSize('regular')
                 }}
-                className="px-8 py-4 pb-12 w-full"
+                className="px-8 py-2 pb-4 w-full"
                 style={size === 'regular' ? { ...selectedSizeStyles } : {}}
               >
                 <h1 className="text-left text-xl font-bold ">Regular</h1>
@@ -237,7 +252,7 @@ const Customize = ({
                 onClick={() => {
                   setSize('wide')
                 }}
-                className="px-8 py-4 pb-12 w-full"
+                className="px-8 py-2 pb-4 w-full"
                 style={size === 'wide' ? { ...selectedSizeStyles } : {}}
               >
                 <h1 className="text-left text-xl font-bold ">Wide</h1>
@@ -245,11 +260,11 @@ const Customize = ({
                   className="text-left text-sm"
                   style={{ fontFamily: 'InputMono' }}
                 >
-                  For small and medium face sizes.{' '}
+                  For large and extralarge face sizes.{' '}
                 </p>
               </button>
             </div>
-            <p className="text-sm">{flow[flowState].subDescription}</p>
+            <p className="text-xs im">{flow[flowState].subDescription}</p>
           </div>
         )}
       </CustomizationWindow>

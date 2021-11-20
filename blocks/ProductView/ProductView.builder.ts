@@ -19,7 +19,7 @@ restrictedRegister(
         name: 'checkoutType',
         type: 'string',
         enum: ['basic', 'custom'],
-        defaultValue: 'basic'
+        defaultValue: 'basic',
       },
       {
         name: 'nameFont',
@@ -29,6 +29,12 @@ restrictedRegister(
       },
       {
         name: 'editionFont',
+        type: 'string',
+        defaultValue: 'Value Sans Pro',
+        enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+      },
+      {
+        name: 'editionDescriptionFont',
         type: 'string',
         defaultValue: 'Value Sans Pro',
         enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
@@ -80,7 +86,7 @@ restrictedRegister(
       {
         name: 'images',
         type: 'list',
-        defaultValue:[{image: '', overlayColor: 'rgba(255,255,255,1)'}],
+        defaultValue: [{ image: '', overlayColor: 'rgba(255,255,255,1)' }],
         subFields: [
           {
             name: 'image',
@@ -93,25 +99,25 @@ restrictedRegister(
           {
             name: 'overlayColor',
             type: 'color',
-            defaultValue: 'rgba(255,255,255,1)'
+            defaultValue: 'rgba(255,255,255,1)',
           },
           {
             name: 'backgroundColor',
             type: 'color',
-            defaultValue: 'rgba(255,255,255,1)'
+            defaultValue: 'rgba(255,255,255,1)',
           },
           {
             name: 'display',
             type: 'string',
             enum: ['cover', 'contain'],
-            defaultValue: 'cover'
+            defaultValue: 'cover',
           },
         ],
       },
       {
         name: 'mobileImages',
         type: 'list',
-        defaultValue:[{image: '', overlayColor: 'rgba(255,255,255,1)'}],
+        defaultValue: [{ image: '', overlayColor: 'rgba(255,255,255,1)' }],
         subFields: [
           {
             name: 'image',
@@ -124,33 +130,33 @@ restrictedRegister(
           {
             name: 'overlayColor',
             type: 'color',
-            defaultValue: 'rgba(255,255,255,1)'
+            defaultValue: 'rgba(255,255,255,1)',
           },
           {
             name: 'backgroundColor',
             type: 'color',
-            defaultValue: 'rgba(255,255,255,1)'
+            defaultValue: 'rgba(255,255,255,1)',
           },
           {
             name: 'display',
             type: 'string',
             enum: ['cover', 'contain'],
-            defaultValue: 'cover'
+            defaultValue: 'cover',
           },
         ],
       },
       {
         name: 'collection',
         type: 'text',
-        defaultValue: 'Collection'
+        defaultValue: 'Collection',
       },
       {
         name: 'title',
         type: 'text',
-        defaultValue: 'Title'
+        defaultValue: 'Title',
       },
-      { name: 'edition', type: 'text',
-      defaultValue: 'Edition'},
+      { name: 'edition', type: 'text', defaultValue: 'Edition' },
+      { name: 'editionDescription', type: 'text', defaultValue: '' },
     ],
     image: 'https://unpkg.com/css.gg@2.0.0/icons/svg/inpicture.svg',
     description:
