@@ -44,15 +44,15 @@ const Signup = ({
   }
   React.useEffect(() => {
     setHeight(window.innerHeight)
-    grained('accountCreate', {
-      animate: true,
-      patternWidth: 100,
-      patternHeight: 100,
-      grainOpacity: 0.04,
-      grainDensity: 1.79,
-      grainWidth: 4.27,
-      grainHeight: 1,
-    })
+    // grained('accountCreate', {
+    //   animate: true,
+    //   patternWidth: 100,
+    //   patternHeight: 100,
+    //   grainOpacity: 0.04,
+    //   grainDensity: 1.79,
+    //   grainWidth: 4.27,
+    //   grainHeight: 1,
+    // })
   }, [])
 
   async function postData() {
@@ -138,7 +138,7 @@ const Signup = ({
         style={{ minWidth: '16rem', maxWidth: '48rem' }}
       >
         <h3
-          className="text-xl text-bold floating text-center"
+          className="text-xl text-bold floating text-center nsb"
           style={{
             textDecoration: 'underline',
             textDecorationColor: '#ffc391',
@@ -238,7 +238,7 @@ const Signup = ({
             alignSelf: 'center',
             fontSize: '0.5rem',
           }}
-          className="text-center"
+          className="text-center im"
           dangerouslySetInnerHTML={{ __html: finePrint }}
         ></p>
       </div>

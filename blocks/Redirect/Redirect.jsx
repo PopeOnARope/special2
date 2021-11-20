@@ -11,7 +11,6 @@ const Redirect = ()=>{
     console.log({cookie})
     const handleRedirect = ()=>{
 
-
       if(Cookies.get('account') || Cookies.get('account') === 'declined') {
         window.location.href = '/home'
       } else {

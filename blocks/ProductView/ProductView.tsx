@@ -67,12 +67,14 @@ const ProductBox: React.FC<Props> = ({
   seoDescription = product.description,
   title,
   edition,
+  editionDescription = '',
   collection,
   productDescriptionFont,
   detailToggleFont,
   detailFont,
   nameFont,
   editionFont,
+  editionDescriptionFont,
   checkoutType,
 }) => {
   const [loading, setLoading] = useState(false)
@@ -427,6 +429,15 @@ const ProductBox: React.FC<Props> = ({
           }}
         >
           {edition}
+        </p>
+        <p
+          className="mt-2 text-xs"
+          style={{
+            color: peakingImage?.overlayColor || 'white',
+            fontFamily: editionDescriptionFont,
+          }}
+        >
+          {editionDescription}
         </p>
       </div>
     </div>

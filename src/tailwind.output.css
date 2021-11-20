@@ -2239,6 +2239,10 @@ html {
   height: 100%;
 }
 
+.text-xs{
+  font-size: 0.75rem;
+}
+
 .text-sm{
   font-size: 0.875rem;
 }
@@ -2251,12 +2255,12 @@ html {
   font-size: 1.25rem;
 }
 
-.text-2xl{
-  font-size: 1.5rem;
-}
-
 .text-4xl{
   font-size: 2.25rem;
+}
+
+.text-3xs{
+  font-size: 0.4rem;
 }
 
 .m-1{
@@ -2428,10 +2432,6 @@ html {
   padding-bottom: 2rem;
 }
 
-.pb-12{
-  padding-bottom: 3rem;
-}
-
 .pointer-events-none{
   pointer-events: none;
 }
@@ -2564,10 +2564,6 @@ html {
 
 .transition{
   transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-}
-
-.ease-out{
-  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
 .ease-in-out{
@@ -5228,6 +5224,10 @@ html {
 
   .md\:justify-center{
     justify-content: center;
+  }
+
+  .md\:text-2xl{
+    font-size: 1.5rem;
   }
 
   .md\:my-20{
