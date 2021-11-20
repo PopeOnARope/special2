@@ -138,7 +138,7 @@ const Signup = ({
         style={{ minWidth: '16rem', maxWidth: '48rem' }}
       >
         <h3
-          className="text-xl text-bold floating text-center"
+          className="text-xl text-bold floating text-center nsb"
           style={{
             textDecoration: 'underline',
             textDecorationColor: '#ffc391',
@@ -238,7 +238,7 @@ const Signup = ({
             alignSelf: 'center',
             fontSize: '0.5rem',
           }}
-          className="text-center"
+          className="text-center msb"
           dangerouslySetInnerHTML={{ __html: finePrint }}
         ></p>
       </div>

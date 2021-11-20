@@ -162,7 +162,7 @@ const Customize = ({
         >
           X
         </button>
-        <h1 className="text-white font-bold">{flow[flowState].title}</h1>
+        <h1 className="text-white font-bold text-center">{flow[flowState].title}</h1>
 
         {/*switchable content*/}
         {(flowState === 1 || flowState === 2) && (
