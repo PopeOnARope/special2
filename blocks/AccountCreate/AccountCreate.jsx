@@ -238,7 +238,7 @@ const Signup = ({
             alignSelf: 'center',
             fontSize: '0.5rem',
           }}
-          className="text-center msb"
+          className="text-center im"
           dangerouslySetInnerHTML={{ __html: finePrint }}
         ></p>
       </div>
