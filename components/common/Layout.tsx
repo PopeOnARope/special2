@@ -126,7 +126,7 @@ const InnerLayout: React.FC<{
       <NoSSR>
         <FeatureBar
           title="We use cookies to ensure that we give you the best experience."
-          hide={Builder.isEditing || location === '' || location === '/' ? true : acceptedCookies}
+          hide={Builder.isEditing || location === '' || location === '/' || location === '/signup' ? true : acceptedCookies}
           action={
             <button
               className="bg-black text-white flex flex-row text-lg w-96 justify-between items-center px-8 py-2 type-wrapper "

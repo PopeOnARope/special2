@@ -44,15 +44,15 @@ const Signup = ({
   }
   React.useEffect(() => {
     setHeight(window.innerHeight)
-    // grained('accountCreate', {
-    //   animate: true,
-    //   patternWidth: 100,
-    //   patternHeight: 100,
-    //   grainOpacity: 0.04,
-    //   grainDensity: 1.79,
-    //   grainWidth: 4.27,
-    //   grainHeight: 1,
-    // })
+    grained('accountCreate', {
+      animate: true,
+      patternWidth: 100,
+      patternHeight: 100,
+      grainOpacity: 0.04,
+      grainDensity: 1.79,
+      grainWidth: 4.27,
+      grainHeight: 1,
+    })
   }, [])
 
   async function postData() {
@@ -144,13 +144,12 @@ const Signup = ({
             textDecorationColor: '#ffc391',
             fontSize: '1.5rem',
           }}
-          dangerouslySetInnerHTML={{ __html: title }}
-        ></h3>
-        <p
-          className="text-sm text-center"
-          style={{ fontFamily: 'InputMono' }}
-          dangerouslySetInnerHTML={{ __html: content }}
-        ></p>
+        >
+          {title}
+        </h3>
+        <p className="text-sm text-center" style={{ fontFamily: 'InputMono' }}>
+          {content}
+        </p>
         <div className="input-container w-full px-16 ">
           <FancyTextInput
             font="Nova Stamp Bold"
@@ -229,8 +228,7 @@ const Signup = ({
             fontFamily: 'RayJohnson',
             maxWidth: '50rem',
           }}
-          dangerouslySetInnerHTML={{ __html: secondaryContent }}
-        ></p>
+        >{secondaryContent}</p>
         <p
           style={{
             bottom: 0,
@@ -239,8 +237,7 @@ const Signup = ({
             fontSize: '0.5rem',
           }}
           className="text-center im"
-          dangerouslySetInnerHTML={{ __html: finePrint }}
-        ></p>
+        >{finePrint}</p>
       </div>
     </div>
   )

@@ -8,20 +8,19 @@ const LazyText = dynamic(async () => {
 Builder.registerComponent(LazyText, {
   name: 'AccountCreate',
   inputs: [
-    { name: 'title', type: 'richText' },
+    { name: 'title', type: 'string' },
     {
       name: 'content',
-      type: 'richText',
+      type: 'string',
     },
     {
       name: 'secondaryContent',
-      type: 'richText',
+      type: 'string',
       defaultValue: 'Spec_ial is special etc...'
-
     },
     {
       name: 'finePrint',
-      type: 'richText',
+      type: 'string',
     },
     {
       name: 'declineButtonLabel',
