@@ -1,27 +1,37 @@
 import React from 'react'
 import { getPrice } from '@lib/shopify/storefront-data-hooks/src/utils/product'
 import styled from 'styled-components'
+import {
+  CSSTransition,
+  SwitchTransition,
+  Transition,
+} from 'react-transition-group'
 
 const CustomizationWindow = styled.div`
-  display: ${(props) => props.display};
+  //display: ${(props) => props.display};
+  opacity:  ${props=> !props.flowState ? '0' : '1'};
+
   color: white;
   margin-right: 0.5rem;
   padding: 1rem 1.5rem;
   background: black;
-  height: 21rem;
+  height: ${props=> !props.flowState ? '0rem' : '21rem'};
   position: absolute;
   margin-top: -22rem;
-  transition: 0.3s all;
+  transition: ${props=> !props.flowState ? '0.8s height, 1s opacity' : '0.8s height, 0.2s opacity'};
   width: ${(props) => props.width}px;
 `
 
 const flow = [
   {
     display: 'none',
-    image: '',
-    title: '',
-    subTitle: '',
-    description: '',
+    image:
+      'https://cdn.builder.io/api/v1/image/assets%2Fd58e15993bf84115968f2dd035ee71a4%2Ff79d3114dd96453f95fc6a0b7b949a4c',
+    title: 'CUSTOMIZE',
+    subTitle: 'RIGHT ARM',
+    description:
+      'Customize the right arm. It can be anything: your name, nickname, a\n' +
+      "          phrase, handle, partner's name, etc.",
     subDescription: '',
   },
   {
@@ -143,7 +153,10 @@ const Customize = ({
 
   return (
     <div>
-      <CustomizationWindow display={flow[flowState].display} width={width}>
+      {flow.map((step) => (
+        <img src={step.image} style={{ display: 'none' }} />
+      ))}
+      <CustomizationWindow display={flow[flowState].display} flowState={flowState} width={width}>
         {flowState !== 0 && (
           <button
             style={{
@@ -175,98 +188,107 @@ const Customize = ({
         </h1>
 
         {/*switchable content*/}
-        {(flowState === 1 || flowState === 2) && (
-          <>
-            <div className={`px-4 md:p-0 image-wrapper w-full mb-2`}>
-              <div
-                className="text-container absolute text-center text-xl md:text-2xl bpw shine"
-                style={{
-                  width: '136px',
-                  marginTop: screenWidth > 768 ? '0.5rem' : '0.5rem',
-                  marginLeft:
-                    flowState === 1
-                      ? screenWidth > 768
-                        ? '16.1rem'
-                        : '11rem'
-                      : screenWidth > 768
-                      ? '7rem'
-                      : '3.4375rem',
-                }}
-              >
-                <span style={{}}>
-                  {flowState === 2 ? leftArmText : rightArmText}
-                </span>
-              </div>
-              <img src={flow[flowState].image} />
-              <p className="text-3xs text-center im">
-                The rendering above is a mockup and the final product might look
-                different
-              </p>
-            </div>
+        <SwitchTransition>
+          <CSSTransition classNames="in-out" timeout={200} key={flowState}>
             <div>
-              <h2>{flow[flowState].subTitle}</h2>
-              <p style={{ fontFamily: 'InputMono', fontSize: '0.8rem' }}>
-                {flow[flowState].description}
-              </p>
-              <div className="flex justify-center flex-col items-center p-8">
-                <input
-                  placeholder="9 characters"
-                  onChange={onTextChange}
-                  value={flowState === 2 ? leftArmText : rightArmText}
-                  maxLength={9}
-                  style={{
-                    height: '2.5rem',
-                    width: '12rem',
-                    padding: '0.25rem',
-                    fontFamily: 'InputMono',
-                    color: 'black',
-                  }}
-                />
-                <p className="text-3xs text-center mt-4 im">
-                  Due to the custom nature of this product, we do not offer
-                  returns. In certain circumstances, we can offer store credit.
-                </p>
-              </div>
+              {(flowState === 1 || flowState === 2) && (
+                <>
+                  <div className={`px-4 md:p-0 image-wrapper w-full mb-2`}>
+                    <div
+                      className="text-container absolute text-center text-xl md:text-2xl bpw shine"
+                      style={{
+                        width: '136px',
+                        marginTop: screenWidth > 768 ? '0.5rem' : '0.5rem',
+                        marginLeft:
+                          flowState === 1
+                            ? screenWidth > 768
+                              ? '16.1rem'
+                              : '11rem'
+                            : screenWidth > 768
+                            ? '7rem'
+                            : '3.4375rem',
+                      }}
+                    >
+                      <span style={{}}>
+                        {flowState === 2 ? leftArmText : rightArmText}
+                      </span>
+                    </div>
+                    <img src={flow[flowState].image} layout="intrinsic" />
+                    <p className="text-3xs text-center im">
+                      The rendering above is a mockup and the final product
+                      might look different
+                    </p>
+                  </div>
+                  <div>
+                    <h2>{flow[flowState].subTitle}</h2>
+                    <p style={{ fontFamily: 'InputMono', fontSize: '0.8rem' }}>
+                      {flow[flowState].description}
+                    </p>
+                    <div className="flex justify-center flex-col items-center p-8">
+                      <input
+                        placeholder="9 characters"
+                        onChange={onTextChange}
+                        value={flowState === 2 ? leftArmText : rightArmText}
+                        maxLength={9}
+                        style={{
+                          height: '2.5rem',
+                          width: '12rem',
+                          padding: '0.25rem',
+                          fontFamily: 'InputMono',
+                          color: 'black',
+                        }}
+                      />
+                      <p className="text-3xs text-center mt-4 im">
+                        Due to the custom nature of this product, we do not
+                        offer returns. In certain circumstances, we can offer
+                        store credit.
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
+              {flowState === 3 && (
+                <div className="flex flex-col justify-between h-full pb-8">
+                  <div className="buttons-wrapper p-2 py-8 pr-8">
+                    <button
+                      onClick={() => {
+                        setSize('regular')
+                      }}
+                      className="px-8 py-2 pb-4 w-full"
+                      style={
+                        size === 'regular' ? { ...selectedSizeStyles } : {}
+                      }
+                    >
+                      <h1 className="text-left text-xl font-bold ">Regular</h1>
+                      <p
+                        className="text-left text-sm"
+                        style={{ fontFamily: 'InputMono' }}
+                      >
+                        For small and medium face sizes.{' '}
+                      </p>
+                    </button>
+                    <button
+                      onClick={() => {
+                        setSize('wide')
+                      }}
+                      className="px-8 py-2 pb-4 w-full"
+                      style={size === 'wide' ? { ...selectedSizeStyles } : {}}
+                    >
+                      <h1 className="text-left text-xl font-bold ">Wide</h1>
+                      <p
+                        className="text-left text-sm"
+                        style={{ fontFamily: 'InputMono' }}
+                      >
+                        For large and extralarge face sizes.{' '}
+                      </p>
+                    </button>
+                  </div>
+                  <p className="text-xs im">{flow[flowState].subDescription}</p>
+                </div>
+              )}
             </div>
-          </>
-        )}
-        {flowState === 3 && (
-          <div className="flex flex-col justify-between h-full pb-8">
-            <div className="buttons-wrapper p-2 py-8 pr-8">
-              <button
-                onClick={() => {
-                  setSize('regular')
-                }}
-                className="px-8 py-2 pb-4 w-full"
-                style={size === 'regular' ? { ...selectedSizeStyles } : {}}
-              >
-                <h1 className="text-left text-xl font-bold ">Regular</h1>
-                <p
-                  className="text-left text-sm"
-                  style={{ fontFamily: 'InputMono' }}
-                >
-                  For small and medium face sizes.{' '}
-                </p>
-              </button>
-              <button
-                onClick={() => {
-                  setSize('wide')
-                }}
-                className="px-8 py-2 pb-4 w-full"
-                style={size === 'wide' ? { ...selectedSizeStyles } : {}}
-              >
-                <h1 className="text-left text-xl font-bold ">Wide</h1>
-                <p
-                  className="text-left text-sm"
-                  style={{ fontFamily: 'InputMono' }}
-                >
-                  For large and extralarge face sizes.{' '}
-                </p>
-              </button>
-            </div>
-            <p className="text-xs im">{flow[flowState].subDescription}</p>
-          </div>
-        )}
+          </CSSTransition>
+        </SwitchTransition>
       </CustomizationWindow>
       <button
         id="buy-button"
