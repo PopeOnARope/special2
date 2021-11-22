@@ -375,7 +375,7 @@ const ProductBox: React.FC<Props> = ({
         className={` ${
           checkoutType === 'basic'
             ? 'w-full md:w-3/5 lg:w-1/2 xl:w-2/5'
-            : 'w-144'
+            : 'w-140 sm:w-144'
         } text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content`}
         style={{
           bottom: '0',
