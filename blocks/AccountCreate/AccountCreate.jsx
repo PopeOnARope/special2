@@ -45,7 +45,7 @@ const Signup = ({
   const [height, setHeight] = React.useState(768)
   function decline() {
     Cookie.set('account', 'declined', { expires: 7 })
-    window.location.href = '/redirect'
+    window.location.href = '/'
   }
   React.useEffect(() => {
     setHeight(window.innerHeight)
