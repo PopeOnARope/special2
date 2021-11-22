@@ -8,6 +8,7 @@ import Cookie from 'js-cookie'
 import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
 import FancyPhoneInput from '../../components/ui/Form/FancyPhoneInput'
+import Checkbox from '../../components/ui/Form/Checkbox'
 
 const ConfirmButton = styled.button`
   font-family: 'RayJohnson';
@@ -36,7 +37,7 @@ const Signup = ({
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
-  const [agree, setAgree] = React.useState(true)
+  const [agree, setAgree] = React.useState(false)
   const [error, setError] = React.useState('')
   const [playing, toggle] = useAudio(sound)
 
@@ -192,6 +193,13 @@ const Signup = ({
               setPhone(v)
               doSetFormStatus()
             }}
+          />
+          <Checkbox
+            label="I consent to recieve SMS messages from Spec_ial"
+            onChange={(e) => {
+              setAgree(e.target.checked)
+            }}
+            checked={agree}
           />
         </div>
       </div>

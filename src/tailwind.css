@@ -51,6 +51,12 @@
   }
 }
 
+
+
+.react-tel-input .country-list {
+  z-index: 100 !important;
+}
+
 button:focus{
   outline: none;
 }

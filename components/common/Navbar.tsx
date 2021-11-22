@@ -25,6 +25,7 @@ const Navbar: FC = () => {
       window.location.href.includes('collection/seven') ||
       window.location.href.includes('seven') ||
       window.location.href.includes('signup') ||
+      window.location.href.includes('eye_d') ||
       displaySideNav ||
       displayCart
     ) {

@@ -251,13 +251,13 @@ const ProductBox: React.FC<Props> = ({
           ></div>
         </div>
         <Themed.div
-          className="text-white absolute z-50 hover:cursor-pointer"
+          className="text-white absolute hover:cursor-pointer"
           sx={{
             marginLeft: '-3.5rem',
             position: 'absolute',
             bottom: '10rem',
             alignSelf: 'flex-end',
-            zIndex: 6,
+            zIndex: 8,
             ' @media (max-width: 768px)': {
               bottom: '18rem',
               marginLeft: '-3rem',
@@ -269,7 +269,7 @@ const ProductBox: React.FC<Props> = ({
               transform: 'rotate(90deg)',
               display: 'flex',
               flexDirection: 'inherit',
-              color: peakingImage?.overlayColor || 'white',
+              color: peakingImage?.overlayColor || 'white'
             }}
             className="active:outline-none focus:outline-none hover-right"
             onClick={toggleProductDetails}
@@ -376,12 +376,13 @@ const ProductBox: React.FC<Props> = ({
           checkoutType === 'basic'
             ? 'w-full md:w-3/5 lg:w-1/2 xl:w-2/5'
             : 'w-140 sm:w-144'
-        } text-center md:text-left p-8 md:pl-0 md:pt-0  z-10 absolute fit-content`}
+        } text-center md:text-left p-8 md:pl-0 md:pt-0 absolute fit-content`}
         style={{
           bottom: '0',
           right: '0',
           transition: '0.5s all',
           opacity: showBuyButton ? 100 : 0,
+          'z-index': '5'
         }}
       >
         <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">
