@@ -9,16 +9,22 @@ import {
 
 const CustomizationWindow = styled.div`
   //display: ${(props) => props.display};
-  opacity:  ${props=> !props.flowState ? '0' : '1'};
+  opacity: ${(props) => (!props.flowState ? '0' : '1')};
 
   color: white;
   margin-right: 0.5rem;
   padding: 1rem 1.5rem;
   background: black;
-  height: ${props=> !props.flowState ? '0rem' : '21rem'};
+  height: ${(props) => (!props.flowState ? '0rem' : '21rem')};
   position: absolute;
   margin-top: -22rem;
-  transition: ${props=> !props.flowState ? '0.8s height, 1s opacity' : '0.8s height, 0.2s opacity'};
+
+  @media (max-width: 640px) {
+    height: 25rem;
+    margin-top: -26rem;
+  }
+  transition: ${(props) =>
+    !props.flowState ? '0.8s height, 1s opacity' : '0.8s height, 0.2s opacity'};
   width: ${(props) => props.width}px;
 `
 
@@ -98,6 +104,11 @@ const Customize = ({
   const [width, setWidth] = React.useState(0)
   const [height, setHeight] = React.useState(0)
 
+  // const input = React.useRef()
+  // console.log({ input })
+  // React.useEffect(() => {
+  //   input?.current?.focus()
+  // })
   console.log({ leftArmText, rightArmText })
 
   function onTextChange(e) {
@@ -156,13 +167,18 @@ const Customize = ({
       {flow.map((step) => (
         <img src={step.image} style={{ display: 'none' }} />
       ))}
-      <CustomizationWindow display={flow[flowState].display} flowState={flowState} width={width}>
+      <CustomizationWindow
+        display={flow[flowState].display}
+        flowState={flowState}
+        width={width}
+      >
         {flowState !== 0 && (
           <button
             style={{
               marginTop: '-0.75rem',
               marginLeft: '-0.75rem',
               position: 'absolute',
+              left: '1.5rem',
             }}
             className="text-xl"
             onClick={() => {
@@ -226,6 +242,7 @@ const Customize = ({
                     </p>
                     <div className="flex justify-center flex-col items-center p-8">
                       <input
+                        autoFocus
                         placeholder="9 characters"
                         onChange={onTextChange}
                         value={flowState === 2 ? leftArmText : rightArmText}
@@ -292,7 +309,7 @@ const Customize = ({
       </CustomizationWindow>
       <button
         id="buy-button"
-        className={`hover-button ${flowState === 0 && 'active'}`}
+        className={`hover-button w-full ${flowState === 0 && 'active'}`}
         onClick={handleButtonClick}
       >
         {getButtonContent()}
