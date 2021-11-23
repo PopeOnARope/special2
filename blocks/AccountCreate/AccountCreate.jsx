@@ -104,13 +104,6 @@ const Signup = ({
         }
       })
   }
-  function doSetEmailStatus(value) {
-    if (validateEmail(value) && agree) {
-      setFormStatus('ready')
-    } else {
-      setFormStatus('initial')
-    }
-  }
 
   function doSetFormStatus() {
     if (validateEmail(email) && agree) {
@@ -119,6 +112,8 @@ const Signup = ({
       setFormStatus('initial')
     }
   }
+
+  console.log({formStatus})
 
   return (
     <div
@@ -177,7 +172,7 @@ const Signup = ({
                 setError(false)
               }
               setEmail(e.target.value)
-              doSetEmailStatus(e.target.value)
+              doSetFormStatus(e.target.value)
             }}
           />
           <FancyPhoneInput
@@ -197,6 +192,7 @@ const Signup = ({
             label={consent}
             onChange={(e) => {
               setAgree(e.target.checked)
+              doSetFormStatus()
             }}
             checked={agree}
           />
