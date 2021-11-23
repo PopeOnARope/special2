@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin: 32px;
   margin-top: 0;
   display: inline-flex;
   font-family: Value Sans Pro;

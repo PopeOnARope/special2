@@ -42,13 +42,11 @@ const Signup = ({
   const [playing, toggle] = useAudio(sound)
 
   const [formStatus, setFormStatus] = React.useState('initial')
-  const [height, setHeight] = React.useState(768)
   function decline() {
     Cookie.set('account', 'declined', { expires: 7 })
     window.location.href = '/'
   }
   React.useEffect(() => {
-    setHeight(window.innerHeight)
     grained('accountCreate', {
       animate: true,
       patternWidth: 100,
@@ -203,7 +201,7 @@ const Signup = ({
           />
         </div>
       </div>
-      <div className="flex flex-col items-center p-8">
+      <div className="flex flex-col items-center p-8 pt-4">
         <ConfirmButton
           onClick={handleSubmit}
           disabled={formStatus === 'success' || formStatus === 'initial'}
