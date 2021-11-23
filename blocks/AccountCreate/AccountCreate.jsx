@@ -8,6 +8,7 @@ import Cookie from 'js-cookie'
 import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
 import FancyPhoneInput from '../../components/ui/Form/FancyPhoneInput'
+import Checkbox from '../../components/ui/Form/Checkbox'
 
 const ConfirmButton = styled.button`
   font-family: 'RayJohnson';
@@ -15,7 +16,7 @@ const ConfirmButton = styled.button`
   background: black;
   color: white;
   padding: 0.25rem;
-  z-index: 100;
+  z-index: 10;
   &:disabled {
     background: #555;
   }
@@ -28,11 +29,15 @@ const Signup = ({
   declineButtonLabel,
   secondaryContent,
   sound,
+  titleFont = 'Nova Stamp Bold',
+  contentFont = 'InputMono',
+  secondaryContentFont = 'Nova Stamp Bold',
+  finePrintFont = 'InputMono',
 }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
-  const [agree, setAgree] = React.useState(true)
+  const [agree, setAgree] = React.useState(false)
   const [error, setError] = React.useState('')
   const [playing, toggle] = useAudio(sound)
 
@@ -40,7 +45,7 @@ const Signup = ({
   const [height, setHeight] = React.useState(768)
   function decline() {
     Cookie.set('account', 'declined', { expires: 7 })
-    window.location.href = '/redirect'
+    window.location.href = '/'
   }
   React.useEffect(() => {
     setHeight(window.innerHeight)
@@ -143,11 +148,12 @@ const Signup = ({
             textDecoration: 'underline',
             textDecorationColor: '#ffc391',
             fontSize: '1.5rem',
+            fontFamily: titleFont,
           }}
         >
           {title}
         </h3>
-        <p className="text-sm text-center" style={{ fontFamily: 'InputMono' }}>
+        <p className="text-sm text-center" style={{ fontFamily: contentFont }}>
           {content}
         </p>
         <div className="input-container w-full px-16 ">
@@ -188,6 +194,13 @@ const Signup = ({
               doSetFormStatus()
             }}
           />
+          <Checkbox
+            label="I consent to recieve SMS messages from Spec_ial"
+            onChange={(e) => {
+              setAgree(e.target.checked)
+            }}
+            checked={agree}
+          />
         </div>
       </div>
       <div className="flex flex-col items-center p-8">
@@ -225,19 +238,24 @@ const Signup = ({
           style={{
             fontSize: '0.8rem',
             fontWeight: 'bold',
-            fontFamily: 'RayJohnson',
+            fontFamily: secondaryContentFont,
             maxWidth: '50rem',
           }}
-        >{secondaryContent}</p>
+        >
+          {secondaryContent}
+        </p>
         <p
           style={{
             bottom: 0,
             position: 'absolute',
             alignSelf: 'center',
             fontSize: '0.5rem',
+            fontFamily: finePrintFont,
           }}
-          className="text-center im"
-        >{finePrint}</p>
+          className="text-center"
+        >
+          {finePrint}
+        </p>
       </div>
     </div>
   )

@@ -10,7 +10,6 @@ import {
 const CustomizationWindow = styled.div`
   //display: ${(props) => props.display};
   opacity: ${(props) => (!props.flowState ? '0' : '1')};
-
   color: white;
   margin-right: 0.5rem;
   padding: 1rem 1.5rem;
@@ -163,7 +162,7 @@ const Customize = ({
   }
 
   return (
-    <div>
+    <div style={{ zIndex: flowState ? 1 : 100}}>
       {flow.map((step) => (
         <img src={step.image} style={{ display: 'none' }} />
       ))}

@@ -2101,6 +2101,10 @@ video {
   margin-bottom: 0;
 }
 
+.react-tel-input .country-list {
+  z-index: 100 !important;
+}
+
 button:focus{
   outline: none;
 }
@@ -2512,8 +2516,8 @@ html {
   width: 24rem;
 }
 
-.w-144{
-  width: 36rem;
+.w-140{
+  width: 35rem;
 }
 
 .w-1\/2{
@@ -3942,6 +3946,10 @@ html {
 
   .sm\:prose-2xl > :last-child{
     margin-bottom: 0;
+  }
+
+  .sm\:w-144{
+    width: 36rem;
   }
 }
 
