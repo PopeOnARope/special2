@@ -33,7 +33,7 @@ const Signup = ({
   contentFont = 'InputMono',
   secondaryContentFont = 'Nova Stamp Bold',
   finePrintFont = 'InputMono',
-  consent='I agree to Spec_ial’s terms of service and give my consent receive emails and sms messages'
+  consent = 'I agree to Spec_ial’s terms of service and give my consent receive emails and sms messages',
 }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
@@ -79,9 +79,7 @@ const Signup = ({
       redirect: 'follow', // manual, *follow, error
       body: urlencoded,
     })
-    // setTimeout(() => {
-    //   window.location.href = '/home'
-    // }, 1000)
+    window.location.href = '/home'
     return response.json()
   }
   function handleSubmit() {
@@ -114,11 +112,11 @@ const Signup = ({
     }
   }
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     doSetFormStatus()
   })
 
-  console.log({formStatus})
+  console.log({ formStatus })
 
   return (
     <div
