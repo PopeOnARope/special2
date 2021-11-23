@@ -156,7 +156,7 @@ const Signup = ({
         </p>
         <div className="input-container w-full px-16 ">
           <FancyTextInput
-            font="Nova Stamp Bold"
+            font={titleFont}
             name="name"
             label="Name?"
             onChange={(e) => {
@@ -168,7 +168,7 @@ const Signup = ({
             }}
           />
           <FancyTextInput
-            font="Nova Stamp Bold"
+            font={titleFont}
             name="email"
             label="Email?"
             onChange={(e) => {
@@ -180,7 +180,7 @@ const Signup = ({
             }}
           />
           <FancyPhoneInput
-            font="Nova Stamp Bold"
+            font={titleFont}
             name="phoneNumber"
             label="Phone?"
             // secondaryLabel='I consent to re'
