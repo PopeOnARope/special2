@@ -33,6 +33,7 @@ const Signup = ({
   contentFont = 'InputMono',
   secondaryContentFont = 'Nova Stamp Bold',
   finePrintFont = 'InputMono',
+  consent='I agree to Spec_ial’s terms of service and give my consent receive emails and sms messages'
 }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
@@ -193,7 +194,7 @@ const Signup = ({
             }}
           />
           <Checkbox
-            label="I consent to recieve SMS messages from Spec_ial"
+            label={consent}
             onChange={(e) => {
               setAgree(e.target.checked)
             }}

@@ -34,7 +34,7 @@ Builder.registerComponent(LazyText, {
       enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
     },
     {
-      name: 'finePrint',
+      name: 'consent',
       type: 'string',
     },
     {
@@ -45,11 +45,6 @@ Builder.registerComponent(LazyText, {
     {
       name: 'declineButtonLabel',
       type: 'string',
-    },
-    {
-      name: 'submitButtonLabel',
-      type: 'string',
-      defaultValue: 'No thanks I am not interested in sweet deals >',
     },
     {
       name: 'sound',

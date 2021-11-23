@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display: inline-flex;
   font-family: Value Sans Pro;
   label {
-    font-size: 1.2rem !important;
+    font-size: 0.5rem !important;
   }
   .checkbox-custom,
   .radio-custom {
