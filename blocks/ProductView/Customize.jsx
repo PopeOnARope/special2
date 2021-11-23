@@ -8,8 +8,9 @@ import {
 } from 'react-transition-group'
 
 const CustomizationWindow = styled.div`
-  //display: ${(props) => props.display};
   opacity: ${(props) => (!props.flowState ? '0' : '1')};
+  display: ${(props) => (!props.flowState ? 'none' : 'inherit')};
+  // pointer-events: ${(props) => (!props.flowState ? 'none' : 'auto')};
   color: white;
   margin-right: 0.5rem;
   padding: 1rem 1.5rem;
@@ -98,6 +99,8 @@ const Customize = ({
   rightArmText,
   size,
   screenWidth,
+  toggleProductDetails,
+  displayProductDetails,
 }) => {
   const [flowState, setFlowState] = React.useState(0)
   const [width, setWidth] = React.useState(0)
@@ -126,6 +129,9 @@ const Customize = ({
     console.log(window.innerHeight)
   })
   function handleButtonClick() {
+    if (displayProductDetails) {
+      toggleProductDetails()
+    }
     if (flowState < 3) {
       setFlowState(flowState + 1)
     } else {
@@ -162,7 +168,7 @@ const Customize = ({
   }
 
   return (
-    <div style={{ zIndex: flowState ? 1 : 100}}>
+    <div style={{ zIndex: flowState ? 1 : 100 }}>
       {flow.map((step) => (
         <img src={step.image} style={{ display: 'none' }} />
       ))}

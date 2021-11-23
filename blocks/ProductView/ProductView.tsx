@@ -269,7 +269,7 @@ const ProductBox: React.FC<Props> = ({
               transform: 'rotate(90deg)',
               display: 'flex',
               flexDirection: 'inherit',
-              color: peakingImage?.overlayColor || 'white'
+              color: peakingImage?.overlayColor || 'white',
             }}
             className="active:outline-none focus:outline-none hover-right"
             onClick={toggleProductDetails}
@@ -365,6 +365,7 @@ const ProductBox: React.FC<Props> = ({
           details={details}
           productDescription={description}
           setShowBuyButton={setShowBuyButton}
+          showBuyButton={showBuyButton}
           productDescriptionFont={productDescriptionFont}
           detailToggleFont={detailToggleFont}
           detailFont={detailFont}
@@ -381,8 +382,9 @@ const ProductBox: React.FC<Props> = ({
           bottom: '0',
           right: '0',
           transition: '0.5s all',
-          opacity: showBuyButton ? 100 : 0,
-          'z-index': '5'
+          // opacity: showBuyButton ? 100 : 0,
+          bottom: showBuyButton ? 0 : '-25rem',
+          'z-index': '9',
         }}
       >
         <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">
@@ -407,7 +409,13 @@ const ProductBox: React.FC<Props> = ({
         </div>
 
         {checkoutType === 'custom' ? (
-          <Customize variant={variant} {...customMethods} screenWidth={width} />
+          <Customize
+            variant={variant}
+            displayProductDetails={displayProductDetails}
+            toggleProductDetails={toggleProductDetails}
+            {...customMethods}
+            screenWidth={width}
+          />
         ) : (
           <button
             className="hover-button active"

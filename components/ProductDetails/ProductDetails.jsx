@@ -45,14 +45,20 @@ const Detail = ({
   setShownDetails,
   detailFont,
   detailToggleFont,
+  setShowBuyButton
 }) => {
   return (
     <div className="w-full">
       <Button
         onClick={() => {
-          shownDetails === item.title
-            ? setShownDetails('')
-            : setShownDetails(item.title)
+          if (shownDetails === item.title) {
+            setShownDetails('')
+            setShowBuyButton(true)
+          } else {
+            setShownDetails(item.title)
+            setShowBuyButton(false)
+
+          }
         }}
         sx={{
           fontSize: '2.25rem',
@@ -81,7 +87,7 @@ const Detail = ({
             opacity: 1,
           },
           ' @media (max-width: 768px)': {
-            fontSize: '2rem',
+            fontSize: '1.75rem',
           },
         }}
       >
@@ -147,17 +153,16 @@ const ProductDetails = ({
   details,
   productDescription,
   setShowBuyButton,
+  showBuyButton,
   productDescriptionFont,
   detailToggleFont,
   detailFont,
 }) => {
   const { toggleProductDetails } = useUI()
   const [shownDetails, setShownDetails] = React.useState('')
-  React.useEffect(() => {
-    if (isMobile()) {
-      setShowBuyButton(!shownDetails.length)
-    }
-  })
+  // React.useEffect(() => {
+  //   setShowBuyButton(!shownDetails.length)
+  // })
 
   return (
     <Wrapper>
@@ -168,8 +173,8 @@ const ProductDetails = ({
       ></div>
       <DetailsToggle
         onClick={() => {
-          toggleProductDetails()
           setShowBuyButton(true)
+          toggleProductDetails()
         }}
       />
       <Themed.div
@@ -191,6 +196,7 @@ const ProductDetails = ({
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
+                    setShowBuyButton={setShowBuyButton}
                     isShownDetails={shownDetails === item?.title}
                   />
                 )
@@ -205,6 +211,7 @@ const ProductDetails = ({
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
+                    setShowBuyButton={setShowBuyButton}
                   />
                 )
             })}

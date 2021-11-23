@@ -1,9 +1,9 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
+import { FC, useEffect, useState } from 'react'
 import { jsx, Close, Themed } from 'theme-ui'
-import { useResponsiveValue } from '@theme-ui/match-media'
-import { FC } from 'react'
 import { BaseModal, ModalCloseTarget } from 'react-spring-modal'
+import { isMobile } from '../../../lib/isMobile'
 
 interface Props {
   open: boolean
@@ -17,9 +17,13 @@ const Sidebar: FC<Props> = ({
   open = false,
   onClose,
   from = 'right',
-  zIndex=6
+  zIndex = 6,
 }) => {
-  const width = useResponsiveValue(['100%', 500])
+  const [_isMobile, setIsMobile] = useState(false)
+  useEffect(() => {
+    setIsMobile(isMobile())
+  })
+
   return (
     <BaseModal
       isOpen={open}
@@ -31,6 +35,7 @@ const Sidebar: FC<Props> = ({
           top: 0,
           right: 0,
           height: '100%',
+          overflow: _isMobile ? 'scroll' : 'inherit',
         },
       }}
       overlayProps={{
@@ -46,7 +51,6 @@ const Sidebar: FC<Props> = ({
         },
       }}
     >
-
       {children}
     </BaseModal>
   )
