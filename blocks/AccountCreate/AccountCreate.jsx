@@ -68,6 +68,7 @@ const Signup = ({
     urlencoded.append('phone_number', `+${phoneNumber}`)
     urlencoded.append('first_name', name.split(' ')[0])
     urlencoded.append('last_name', name.split(' ')[name.split(' ').length - 1])
+    urlencoded.append('sms_consent', 'true')
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {
@@ -78,9 +79,9 @@ const Signup = ({
       redirect: 'follow', // manual, *follow, error
       body: urlencoded,
     })
-    setTimeout(() => {
-      window.location.href = '/home'
-    }, 1000)
+    // setTimeout(() => {
+    //   window.location.href = '/home'
+    // }, 1000)
     return response.json()
   }
   function handleSubmit() {
