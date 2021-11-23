@@ -113,6 +113,10 @@ const Signup = ({
     }
   }
 
+  React.useEffect(()=>{
+    doSetFormStatus()
+  })
+
   console.log({formStatus})
 
   return (
@@ -160,7 +164,7 @@ const Signup = ({
                 setError(false)
               }
               setName(e.target.value)
-              doSetFormStatus()
+              // doSetFormStatus()
             }}
           />
           <FancyTextInput
@@ -172,7 +176,7 @@ const Signup = ({
                 setError(false)
               }
               setEmail(e.target.value)
-              doSetFormStatus(e.target.value)
+              // doSetFormStatus(e.target.value)
             }}
           />
           <FancyPhoneInput
@@ -185,14 +189,14 @@ const Signup = ({
                 setError(false)
               }
               setPhone(v)
-              doSetFormStatus()
+              // doSetFormStatus()
             }}
           />
           <Checkbox
             label={consent}
             onChange={(e) => {
               setAgree(e.target.checked)
-              doSetFormStatus()
+              // doSetFormStatus()
             }}
             checked={agree}
           />
