@@ -128,7 +128,7 @@ const Signup = ({
         className="absolute text-sm right-0"
         style={{
           transform: 'rotate(90deg)',
-          marginTop: '50%',
+          top: '50%',
           fontFamily: 'Nova Stamp Bold',
         }}
         onClickCapture={toggle}
