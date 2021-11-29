@@ -69,6 +69,8 @@ const Signup = ({
     urlencoded.append('first_name', name.split(' ')[0])
     urlencoded.append('last_name', name.split(' ')[name.split(' ').length - 1])
     urlencoded.append('sms_consent', 'true')
+    urlencoded.append('$consent', '[sms, email]')
+
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {
