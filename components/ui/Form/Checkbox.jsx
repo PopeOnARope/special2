@@ -2,11 +2,11 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin-top: 0;
+  margin-top: 0.5rem;
   display: inline-flex;
-  font-family: Value Sans Pro;
+  font-family: InputMono;
   label {
-    font-size: 0.5rem !important;
+
   }
   .checkbox-custom,
   .radio-custom {
@@ -20,6 +20,7 @@ const Wrapper = styled.div`
     vertical-align: middle;
     margin: 5px;
     cursor: pointer;
+    font-size: 0.7rem !important;
   }
 
   .checkbox-custom-label,
