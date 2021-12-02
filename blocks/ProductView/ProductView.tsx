@@ -418,13 +418,13 @@ const ProductBox: React.FC<Props> = ({
           />
         ) : (
           <button
-            className="hover-button active"
+            className="hover-button active flex"
             icon={<Plus />}
             name="add-to-cart"
             disabled={loading}
             onClick={addToCart}
           >
-            <span className="flex flex-row justify-between mr-2">
+            <span className="flex flex-row justify-between mr-2 w-full">
               <span>Bag {loading && <LoadingDots />}</span>
               {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
             </span>
