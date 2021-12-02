@@ -8,9 +8,14 @@ import { withChildren } from '@builder.io/react'
 import Footer from '../../blocks/Footer/Footer'
 
 const SideNav = () => {
-  const { navigationLinks, footerSections, bottomLinks, toggleSideNav } = useUI()
+  const {
+    navigationLinks,
+    footerSections,
+    bottomLinks,
+    toggleSideNav,
+  } = useUI()
   const [height, setheight] = React.useState(780)
-  React.useEffect(()=>{
+  React.useEffect(() => {
     setheight(window.innerHeight)
   })
   return (
@@ -23,7 +28,7 @@ const SideNav = () => {
         justifyContent: 'space-between',
       }}
     >
-      <Themed.div sx={{padding: '4rem 0rem 0rem 3rem'}}>
+      <Themed.div sx={{ padding: '4rem 0rem 0rem 3rem' }}>
         {navigationLinks?.map((link) => {
           return (
             <Themed.div
@@ -60,6 +65,10 @@ const SideNav = () => {
                     fontSize: '3rem',
                     margin: '0rem',
                   },
+                  ' @media (max-width: 480px)': {
+                    fontSize: '2rem',
+                    margin: '0rem',
+                  },
                 }}
               >
                 {link.title}
@@ -69,7 +78,11 @@ const SideNav = () => {
           )
         })}
       </Themed.div>
-      <Footer sections={footerSections} bottomLinks={bottomLinks } headerColor='white' />
+      <Footer
+        sections={footerSections}
+        bottomLinks={bottomLinks}
+        headerColor="white"
+      />
     </Themed.div>
   )
 }
