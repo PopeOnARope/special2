@@ -1,13 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 import useAudio from './useAudio'
-import { ChevronUp } from '../../components/icons'
-import Button from '../Button/Button'
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import ModelSelectorSlide from './ModelSelectorSlide'
 import BasicVideoSlide from './BasicVideoSlide'
 import { useSwipeable } from 'react-swipeable'
 import smoothscroll from 'smoothscroll-polyfill'
+import { isMobile } from '../../lib/isMobile'
 
 const Wrapper = styled.div`
   height: ${({ height }) => height}px;
@@ -36,25 +34,24 @@ const Carousel = (props) => {
   const [height, setHeight] = React.useState(780)
   const [width, setWidth] = React.useState(780)
   const [currentSlide, setCurrentSlide] = React.useState(0)
-  const [currentModel, setCurrentModel] = React.useState('model1')
-  const [timeOfDay, setTimeOfDay] = React.useState('Day')
   const [isTransitioning, setIsTransitioning] = React.useState(false)
   const [isLastSlide, setIsLastSlide] = React.useState(false)
+  const [_isMobile, setIsMobile] = React.useState(true)
 
   const [playing, toggle] = useAudio(props.sound)
 
   React.useEffect(() => {
+    setHeight(window.innerHeight - 42)
+    setWidth(window.innerWidth)
+    smoothscroll.polyfill()
+    setIsMobile(isMobile())
+
     window.addEventListener('resize', () => {
       setWidth(window.innerWidth)
       setHeight(window.innerHeight - 42)
     })
   })
 
-  React.useEffect(() => {
-    setHeight(window.innerHeight - 42)
-    setWidth(window.innerWidth)
-    smoothscroll.polyfill()
-  }, [])
 
   React.useEffect(() => {
     setIsLastSlide(slides.length - 1 === currentSlide)
@@ -62,7 +59,6 @@ const Carousel = (props) => {
 
   const handleScroll = React.useCallback(
     (e) => {
-      console.log('scrolling')
       //check if this is the last slide
       const _isLastSlide = slides.length - 1 === currentSlide
       const isFirstSlide = currentSlide === 0
@@ -81,7 +77,6 @@ const Carousel = (props) => {
       if (isTransitioning) {
         e.preventDefault()
       } else {
-        // e.preventDefault()
         if (!_isLastSlide && scrollDirection === 'down') {
           e.preventDefault()
           setTimeout(() => {
@@ -111,7 +106,6 @@ const Carousel = (props) => {
   }, [handleScroll])
 
   const onSwiping = (e) => {
-    console.log('swiping')
     //if last slide and direction is down, scrollTo deltaY
     if (isTransitioning) {
       return
@@ -155,26 +149,29 @@ const Carousel = (props) => {
 
   return (
     <Wrapper height={height} {...handlers}>
-      <button className="sound-control" onClickCapture={toggle} height={height}>
-        Sound Is {playing ? 'on' : 'off'}
-      </button>
-      {/*<SwitchTransition mode="out-in">*/}
-      {/*  <CSSTransition key={currentSlide} classNames="slide" timeout={300}>*/}
+      {!_isMobile && (
+        <button
+          className="sound-control"
+          onClickCapture={toggle}
+          height={height}
+        >
+          Sound Is {playing ? 'on' : 'off'}
+        </button>
+      )}
       <SlidesWrapper
         marginTop={currentSlide * height}
         isTransitioning={isTransitioning}
         width={width}
       >
         {slides.map((slide, idx) => {
-          console.log({ currentSlide })
           return slide.type === 'modelSelector' ? (
             <ModelSelectorSlide
               height={height}
               width={width}
               slide={slide}
               key={idx.toString()}
-              display={idx >= currentSlide -2 && idx <= currentSlide + 1}
-              isCurrentSlide={idx===currentSlide}
+              display={idx >= currentSlide - 2 && idx <= currentSlide + 1}
+              isCurrentSlide={idx === currentSlide}
             />
           ) : (
             <BasicVideoSlide
@@ -182,29 +179,12 @@ const Carousel = (props) => {
               width={width}
               slide={slide}
               key={idx.toString()}
-              display={idx > currentSlide -2 && idx < currentSlide + 2}
-              isCurrentSlide={idx===currentSlide}
+              display={idx > currentSlide - 2 && idx < currentSlide + 2}
+              isCurrentSlide={idx === currentSlide}
             />
           )
         })}
       </SlidesWrapper>
-      {/*{slides[currentSlide].type === 'modelSelector' ? (*/}
-      {/*  <ModelSelectorSlide*/}
-      {/*    sound={props.sound}*/}
-      {/*    height={height}*/}
-      {/*    width={width}*/}
-      {/*    slide={slides[currentSlide]}*/}
-      {/*  />*/}
-      {/*) : (*/}
-      {/*  <BasicVideoSlide*/}
-      {/*    sound={props.sound}*/}
-      {/*    height={height}*/}
-      {/*    width={width}*/}
-      {/*    slide={slides[currentSlide]}*/}
-      {/*  />*/}
-      {/*)}*/}
-      {/*  </CSSTransition>*/}
-      {/*</SwitchTransition>*/}
     </Wrapper>
   )
 }

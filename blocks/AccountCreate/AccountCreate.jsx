@@ -9,6 +9,8 @@ import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
 import FancyPhoneInput from '../../components/ui/Form/FancyPhoneInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
+import klaviyoConfig from '@config/klaviyo'
+import { isMobile } from '../../lib/isMobile'
 
 const ConfirmButton = styled.button`
   font-family: 'RayJohnson';
@@ -41,6 +43,9 @@ const Signup = ({
   const [agree, setAgree] = React.useState(false)
   const [error, setError] = React.useState('')
   const [playing, toggle] = useAudio(sound)
+  const [apiKey] = React.useState(klaviyoConfig.apiKey)
+  const [list_id] = React.useState(klaviyoConfig.list_id)
+  const [_isMobile, setIsMobile] = React.useState(true)
 
   const [formStatus, setFormStatus] = React.useState('initial')
   function decline() {
@@ -48,6 +53,7 @@ const Signup = ({
     window.location.href = '/'
   }
   React.useEffect(() => {
+    setIsMobile(isMobile())
     grained('accountCreate', {
       animate: true,
       patternWidth: 100,
@@ -59,42 +65,55 @@ const Signup = ({
     })
   }, [])
 
-  async function postData() {
-    // const data = `g='XKvFZS'&email=${email}&name=${name}&phoneNumber=${phoneNumber}`
+  async function submitForm() {
+    const first_name = name.split(' ')[0]
+    const last_name = name.split(' ')[name.split(' ').length - 1]
 
-    var urlencoded = new URLSearchParams()
-    urlencoded.append('g', 'XKvFZS')
-    urlencoded.append('email', email)
-    urlencoded.append('phone_number', `+${phoneNumber}`)
-    urlencoded.append('first_name', name.split(' ')[0])
-    urlencoded.append('last_name', name.split(' ')[name.split(' ').length - 1])
-    urlencoded.append('sms_consent', 'true')
-    urlencoded.append('$consent', '[sms, email]')
-
-
-    const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
-    const response = await fetch(url, {
+    const options = {
       method: 'POST',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
-      redirect: 'follow', // manual, *follow, error
-      body: urlencoded,
-    })
-    window.location.href = '/home'
+      body: JSON.stringify({
+        profiles: [
+          {
+            email,
+            phone_number: phoneNumber,
+            first_name,
+            last_name,
+            sms_consent: true,
+          },
+        ],
+      }),
+    }
+    const url = `https://a.klaviyo.com/api/v2/list/${list_id}/subscribe?api_key=${apiKey}`
+
+    // var urlencoded = new URLSearchParams()
+    // urlencoded.append('g', 'XKvFZS')
+    // urlencoded.append('email', email)
+    // urlencoded.append('phone_number', `+${phoneNumber}`)
+    // urlencoded.append('first_name', name.split(' ')[0])
+    // urlencoded.append('last_name', name.split(' ')[name.split(' ').length - 1])
+    // urlencoded.append('sms_consent', 'true')
+    // urlencoded.append('$consent', '["sms", "email"]')
+    //
+    // const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
+    const response = await fetch(url, options)
     return response.json()
   }
   function handleSubmit() {
     //set state to loading
     setFormStatus('loading')
-    postData()
+    submitForm()
       .then((r) => {
         if (r.errors.length) {
           setFormStatus('error')
           setError(r.errors[0])
+        } else {
+          setFormStatus('success')
+          window.location.href = '/home'
         }
-
-        setFormStatus('success')
       })
       .catch((r) => {
         setFormStatus('error')
@@ -118,25 +137,24 @@ const Signup = ({
     doSetFormStatus()
   })
 
-  console.log({ formStatus })
-
   return (
     <div
       className="flex flex-col items-center type-wrapper w-full h-full pt-8 "
       id="accountCreate"
     >
-      <button
-        className="absolute text-sm right-0"
-        style={{
-          transform: 'rotate(90deg)',
-          top: '50%',
-          fontFamily: 'Nova Stamp Bold',
-        }}
-        onClickCapture={toggle}
-      >
-        Sound {playing ? 'on' : 'off'}
-      </button>
-
+      {!_isMobile && (
+        <button
+          className="absolute text-sm right-0"
+          style={{
+            transform: 'rotate(90deg)',
+            top: '50%',
+            fontFamily: 'Nova Stamp Bold',
+          }}
+          onClickCapture={toggle}
+        >
+          Sound {playing ? 'on' : 'off'}
+        </button>
+      )}
       <div
         className="flex flex-col px-8 mt-8"
         style={{ minWidth: '16rem', maxWidth: '48rem' }}

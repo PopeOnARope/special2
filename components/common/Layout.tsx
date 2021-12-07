@@ -87,7 +87,6 @@ const InnerLayout: React.FC<{
   })
   const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
-  console.log({location})
   return (
     <ThemeProvider theme={theme}>
       {location !== '' && location !== '/' &&

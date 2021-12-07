@@ -8,7 +8,6 @@ const Redirect = ()=>{
   React.useEffect(()=>{
 
     const _cookie = document.cookie
-    console.log({cookie})
     const handleRedirect = ()=>{
 
       if(Cookies.get('account') || Cookies.get('account') === 'declined') {

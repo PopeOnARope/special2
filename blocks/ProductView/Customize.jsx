@@ -111,7 +111,6 @@ const Customize = ({
   // React.useEffect(() => {
   //   input?.current?.focus()
   // })
-  console.log({ leftArmText, rightArmText })
 
   function onTextChange(e) {
     const value = formatText(e.target.value)
@@ -126,7 +125,6 @@ const Customize = ({
   React.useEffect(() => {
     setWidth(document.getElementById('buy-button').clientWidth)
     setHeight(window.innerHeight)
-    console.log(window.innerHeight)
   })
   function handleButtonClick() {
     if (displayProductDetails) {
