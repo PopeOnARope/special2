@@ -93,6 +93,12 @@ restrictedRegister(
             type: 'file',
           },
           {
+            name: 'type',
+            type: 'string',
+            enum: ['video', 'image'],
+            defaultValue: 'image',
+          },
+          {
             name: 'altText',
             type: 'text',
           },
@@ -122,6 +128,12 @@ restrictedRegister(
           {
             name: 'image',
             type: 'file',
+          },
+          {
+            name: 'type',
+            type: 'string',
+            enum: ['video', 'image'],
+            defaultValue: 'image',
           },
           {
             name: 'altText',

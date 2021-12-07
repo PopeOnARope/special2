@@ -21,6 +21,7 @@ import ProductLoader from './ProductLoader'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
 import { useSwipeable } from 'react-swipeable'
 import Customize from './Customize'
+import { isMobile } from '@lib/isMobile'
 
 interface Props {
   className?: string
@@ -86,6 +87,7 @@ const ProductBox: React.FC<Props> = ({
   const [rightArmText, setRightArmText] = useState('')
   const [size, setSize] = useState('regular')
   const [isTransitioning, setIsTransitioning] = useState(false)
+  const [_isMobile, setIsMobile] = React.useState(true)
 
   const customAttributes = { leftArmText, rightArmText, size }
 
@@ -115,6 +117,7 @@ const ProductBox: React.FC<Props> = ({
     setHeight(window.innerHeight)
     setImages(i)
     setPeakingImage(i[0])
+    setIsMobile(isMobile())
   }, [])
 
   const peakingImageIndex = images
@@ -201,7 +204,6 @@ const ProductBox: React.FC<Props> = ({
       //check if this is the last slide
       const _isLastSlide = images.length - 1 === peakingImageIndex
       const isFirstSlide = peakingImageIndex === 0
-      //check if we are at the top of the document
       //check if the user scrolled up or down
       const scrollDirection = e.deltaY > 0 ? 'down' : 'up'
       //if we are at the top of the page and the user is scrolling up, go to the previous slide.
@@ -382,16 +384,41 @@ const ProductBox: React.FC<Props> = ({
                 <div
                   style={{ width: width, height: height, position: 'relative' }}
                 >
-                  <Image
-                    src={image.image}
-                    layout="fill"
-                    objectFit={image.display || 'cover'}
-                    objectPosition="center"
-                    alt={title}
-                    priority
-                    quality={100}
-                    className="object-center object-cover pointer-events-none"
-                  />
+                  {(!image.type || image.type !== 'video') && (
+                    <Image
+                      src={image.image}
+                      layout="fill"
+                      objectFit={image.display || 'cover'}
+                      objectPosition="center"
+                      alt={title}
+                      priority
+                      quality={100}
+                      className="object-center object-cover pointer-events-none"
+                    />
+                  )}
+                  {image.type === 'video' && !_isMobile && (
+                    <video
+                      style={{ minHeight: '100%', objectFit: 'cover' }}
+                      layout="fill"
+                      src={image.image}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    ></video>
+                  )}
+                  {
+                    // need to use image tag to autoplay videos on mobile
+                    image.type === 'video' && _isMobile && (
+                    <img
+                      style={{ minHeight: '100%', objectFit: 'cover' }}
+                      src={image.image}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  )}
                 </div>
               ))}
             </div>
