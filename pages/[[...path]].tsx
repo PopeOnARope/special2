@@ -3,11 +3,13 @@ import type {
   GetStaticPropsContext,
   InferGetStaticPropsType,
 } from 'next'
+import React from 'react'
 import { NextSeo } from 'next-seo'
 import { useRouter } from 'next/router'
 import { Layout } from '@components/common'
 import { BuilderComponent, Builder, builder } from '@builder.io/react'
 import builderConfig from '@config/builder'
+import facebookConfig from '@config/facebook'
 import DefaultErrorPage from 'next/error'
 import Head from 'next/head'
 import { resolveBuilderContent } from '@lib/resolve-builder-content'
@@ -62,6 +64,19 @@ export default function Path({
   locale,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
+
+  React.useEffect(() => {
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.init(facebookConfig.facebookPixelId) // facebookPixelId
+        ReactPixel.pageView()
+        router.events.on('routeChangeComplete', () => {
+          ReactPixel.pageView()
+        })
+      })
+  }, [router.events])
+
   const { theme } = useThemeUI()
   if (router.isFallback) {
     return <h1>Loading...</h1>

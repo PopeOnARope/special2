@@ -26,9 +26,12 @@ module.exports = bundleAnalyzer({
   },
   env: {
     // expose env to the browser
-    SHOPIFY_STOREFRONT_API_TOKEN: 'e840e958f494b2cbc143f9574d5b88b8',
-    SHOPIFY_STORE_DOMAIN: 'checkout.spec-ial.com',
-    BUILDER_PUBLIC_KEY: 'd58e15993bf84115968f2dd035ee71a4',
+    SHOPIFY_STOREFRONT_API_TOKEN: process.env.SHOPIFY_STOREFRONT_API_TOKEN,
+    SHOPIFY_STORE_DOMAIN: process.env.SHOPIFY_STORE_DOMAIN,
+    BUILDER_PUBLIC_KEY: process.env.BUILDER_PUBLIC_KEY,
+    KLAVIYO_API_KEY: process.env.KLAVIYO_API_KEY,
+    KLAVIYO_LIST_ID: process.env.KLAVIYO_LIST_ID,
+    FACEBOOK_PIXEL_ID: process.env.FACEBOOK_PIXEL_ID,
     IS_DEMO: false,
   },
   i18n: {
