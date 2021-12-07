@@ -1,11 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
-
-import Button from '../Button/Button'
-
-import { H1, SecondaryH1 } from '../../components/Typography'
-import TextInput from '../../components/ui/Form/TextInput'
-import Checkbox from '../../components/ui/Form/Checkbox'
 
 const Footer = ({
   sections,
@@ -39,7 +32,7 @@ const Footer = ({
 
             {section?.links?.map((link) => (
               <a
-                style={{ fontFamily: linkFont }}
+                style={{ fontFamily: linkFont, fontSize: '0.75rem' }}
                 href={link.url}
                 className="text-extrabold"
                 target={link.openInNewTab ? '_blank' : '_self'}
