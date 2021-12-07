@@ -3,8 +3,7 @@
 //@ts-nocheck
 import React, { useMemo, useState, useEffect } from 'react'
 import { Themed, jsx } from 'theme-ui'
-import Button from '../Button/Button'
-
+import smoothscroll from 'smoothscroll-polyfill'
 import { ArrowLeft, ChevronUp, Plus } from '../../components/icons'
 import { NextSeo } from 'next-seo'
 import { useUI } from '@components/ui/context'
@@ -86,9 +85,9 @@ const ProductBox: React.FC<Props> = ({
   const [leftArmText, setLeftArmText] = useState('')
   const [rightArmText, setRightArmText] = useState('')
   const [size, setSize] = useState('regular')
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   const customAttributes = { leftArmText, rightArmText, size }
-  // methods that need to be passed to the customize component
 
   const addItem = useAddItemToCart()
 
@@ -133,14 +132,14 @@ const ProductBox: React.FC<Props> = ({
 
   const handlers = useSwipeable({
     onSwipedLeft: handleNext,
+    onSwipedUp: handleNext,
     onSwipedRight: handlePrevious,
+    onSwipedDown: handlePrevious,
     preventDefaultTouchmoveEvent: false,
     trackMouse: true,
   })
 
   const [variant, setVariant] = useState(variants[0] || {})
-
-  const checkoutUrl = useCheckoutUrl()
 
   const addToCart = async () => {
     setLoading(true)
@@ -180,6 +179,7 @@ const ProductBox: React.FC<Props> = ({
       }, 1200)
       localStorage.setItem('namespace.visited', 1)
     }
+    smoothscroll.polyfill()
   }, [])
 
   React.useEffect(() => {
@@ -194,6 +194,50 @@ const ProductBox: React.FC<Props> = ({
       }
     })
   })
+
+  //TODO Could this be broken out into a custom hook?
+  const handleScroll = React.useCallback(
+    (e) => {
+      //check if this is the last slide
+      const _isLastSlide = images.length - 1 === peakingImageIndex
+      const isFirstSlide = peakingImageIndex === 0
+      //check if we are at the top of the document
+      //check if the user scrolled up or down
+      const scrollDirection = e.deltaY > 0 ? 'down' : 'up'
+      //if we are at the top of the page and the user is scrolling up, go to the previous slide.
+
+      //if last slide, don't add it back and return.
+      if (isTransitioning) {
+        e.preventDefault()
+      } else {
+        if (!_isLastSlide && scrollDirection === 'down') {
+          e.preventDefault()
+          setTimeout(() => {
+            setIsTransitioning(false)
+          }, 900)
+          setIsTransitioning(true)
+          handleNext()
+        }
+
+        if (!isFirstSlide && scrollDirection === 'up') {
+          e.preventDefault()
+          setTimeout(() => {
+            setIsTransitioning(false)
+          }, 900)
+          setIsTransitioning(true)
+          handlePrevious()
+        }
+      }
+    },
+    [peakingImageIndex, isTransitioning]
+  )
+
+  React.useEffect(() => {
+    window.addEventListener('wheel', handleScroll, { passive: false })
+    return function cleanup() {
+      window.removeEventListener('wheel', handleScroll)
+    }
+  }, [handleScroll])
 
   if (!images) {
     return (
@@ -226,7 +270,6 @@ const ProductBox: React.FC<Props> = ({
           }}
         />
       )}
-      {/* TODO: remove the minimum height of innerLayout so there is no overflow in height */}
 
       <div
         sx={{
