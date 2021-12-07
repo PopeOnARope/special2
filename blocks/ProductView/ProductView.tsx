@@ -424,7 +424,7 @@ const ProductBox: React.FC<Props> = ({
             disabled={loading}
             onClick={addToCart}
           >
-            <span className="flex flex-row justify-between mr-2 w-full">
+            <span className="flex flex-row justify-between mr-2 w-full ">
               <span>Bag {loading && <LoadingDots />}</span>
               {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
             </span>
