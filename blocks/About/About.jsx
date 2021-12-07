@@ -12,7 +12,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   height: 100%;
-  background: #ffc391;
+  //background: #ffc391;
   padding: 0rem 46px;
   display: inherit;
 
