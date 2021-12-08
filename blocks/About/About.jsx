@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Detail = ({ shownDetails, item, setShownDetails, detailFont }) => {
+const Detail = ({ shownDetails, item, setShownDetails, detailFont, toggleFont }) => {
   return (
     <div className="w-full pb-4">
       <Button
@@ -46,7 +46,7 @@ const Detail = ({ shownDetails, item, setShownDetails, detailFont }) => {
         }}
         sx={{
           fontSize: '2rem',
-          fontFamily: detailFont || 'Value Sans Pro',
+          fontFamily: toggleFont || 'Value Sans Pro',
           color: '#fff',
           textAlign: 'left',
           fontWeight: 600,
@@ -100,10 +100,11 @@ const Detail = ({ shownDetails, item, setShownDetails, detailFont }) => {
         <div
           sx={{
             fontSize: '1.25rem',
-            fontFamily: 'Value Sans Pro',
+            fontFamily: detailFont || 'Value Sans Pro',
             color: '#000',
             fontWeight: 400,
             lineHeight: '2rem',
+
             // marginLeft: '1.25rem',
           }}
           dangerouslySetInnerHTML={{ __html: item.content }}
@@ -113,32 +114,15 @@ const Detail = ({ shownDetails, item, setShownDetails, detailFont }) => {
   )
 }
 
-const DetailsToggle = ({ onClick, toggleFont }) => (
-  <Themed.div
-    className="text-white hover:cursor-pointer"
-    sx={{
-      marginLeft: '-1rem',
-      fontFamily: toggleFont || 'Value Sans Pro',
-      bottom: '6rem',
-      alignSelf: 'flex-end',
-      zIndex: 6,
-      position: 'absolute',
-      ' @media (max-width: 768px)': {
-        bottom: '14rem',
-        marginLeft: '0rem',
-      },
-    }}
-  ></Themed.div>
-)
 
-const About = ({ sections, toggleFont='Value Sans Pro', detailFont='Value Sans Pro' }) => {
+
+const About = ({ sections, toggleFont='InputMono', detailFont='Value Sans Pro' }) => {
   const { toggleProductDetails } = useUI()
 
   const [shownDetails, setShownDetails] = React.useState('')
 
   return (
     <Wrapper>
-      <DetailsToggle toggleFont={toggleFont} onClick={toggleProductDetails} />
       <Themed.div
         sx={{
           display: 'flex',
@@ -151,10 +135,11 @@ const About = ({ sections, toggleFont='Value Sans Pro', detailFont='Value Sans P
           <div className="flex flex-col w-full">
             {sections?.map((item, idx) => {
               if (idx < 6) {
-
                 return (
                   <Detail
                     item={item}
+                    toggleFont={toggleFont}
+                    detailFont={detailFont}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
                     isShownDetails={shownDetails === item?.title}
@@ -168,6 +153,8 @@ const About = ({ sections, toggleFont='Value Sans Pro', detailFont='Value Sans P
               if (idx >= 6)
                 return (
                   <Detail
+                    detailFont={detailFont}
+                    toggleFont={toggleFont}
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
