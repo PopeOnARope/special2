@@ -2420,6 +2420,10 @@ html {
   padding-bottom: 0;
 }
 
+.pt-4{
+  padding-top: 1rem;
+}
+
 .pb-4{
   padding-bottom: 1rem;
 }
@@ -2536,14 +2540,6 @@ html {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-}
-
-.z-10{
-  z-index: 10;
-}
-
-.z-50{
-  z-index: 50;
 }
 
 .transform{

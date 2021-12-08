@@ -45,7 +45,7 @@ const Detail = ({
   setShownDetails,
   detailFont,
   detailToggleFont,
-  setShowBuyButton
+  setShowBuyButton,
 }) => {
   return (
     <div className="w-full">
@@ -57,7 +57,6 @@ const Detail = ({
           } else {
             setShownDetails(item.title)
             setShowBuyButton(false)
-
           }
         }}
         sx={{
@@ -104,14 +103,9 @@ const Detail = ({
         )}
       </Button>
       <Collapse isOpened={shownDetails === item.title}>
-        <div
-          sx={{
-            fontSize: '1.25rem',
+        <div className='product-detail'
+          style={{
             fontFamily: detailFont,
-            color: '#000',
-            fontWeight: 400,
-            lineHeight: '2rem',
-            // marginLeft: '1.25rem',
           }}
           dangerouslySetInnerHTML={{ __html: item.value }}
         ></div>

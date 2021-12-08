@@ -41,21 +41,22 @@ const Carousel = (props) => {
   const [playing, toggle] = useAudio(props.sound)
 
   React.useEffect(() => {
-    setHeight(window.innerHeight - 42)
+    setHeight(window.innerHeight - 64)
     setWidth(window.innerWidth)
     smoothscroll.polyfill()
     setIsMobile(isMobile())
 
     window.addEventListener('resize', () => {
       setWidth(window.innerWidth)
-      setHeight(window.innerHeight - 42)
+      setHeight(window.innerHeight - 64)
     })
-  })
+  }, [])
 
 
   React.useEffect(() => {
     setIsLastSlide(slides.length - 1 === currentSlide)
   }, [currentSlide])
+
 
   const handleScroll = React.useCallback(
     (e) => {

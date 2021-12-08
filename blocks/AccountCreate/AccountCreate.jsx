@@ -9,8 +9,6 @@ import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
 import FancyPhoneInput from '../../components/ui/Form/FancyPhoneInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
-import klaviyoConfig from '@config/klaviyo'
-import { isMobile } from '../../lib/isMobile'
 
 const ConfirmButton = styled.button`
   font-family: 'RayJohnson';
@@ -25,27 +23,24 @@ const ConfirmButton = styled.button`
 `
 
 const Signup = ({
-  content,
-  finePrint,
-  title,
-  declineButtonLabel,
-  secondaryContent,
-  sound,
-  titleFont = 'Nova Stamp Bold',
-  contentFont = 'InputMono',
-  secondaryContentFont = 'Nova Stamp Bold',
-  finePrintFont = 'InputMono',
-  consent = 'I agree to Spec_ial’s terms of service and give my consent receive emails and sms messages',
-}) => {
+                  content,
+                  finePrint,
+                  title,
+                  declineButtonLabel,
+                  secondaryContent,
+                  sound,
+                  titleFont = 'Nova Stamp Bold',
+                  contentFont = 'InputMono',
+                  secondaryContentFont = 'Nova Stamp Bold',
+                  finePrintFont = 'InputMono',
+                  consent = 'I agree to Spec_ial’s terms of service and give my consent receive emails and sms messages',
+                }) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
   const [agree, setAgree] = React.useState(false)
   const [error, setError] = React.useState('')
   const [playing, toggle] = useAudio(sound)
-  const [apiKey] = React.useState(klaviyoConfig.apiKey)
-  const [list_id] = React.useState(klaviyoConfig.list_id)
-  const [_isMobile, setIsMobile] = React.useState(true)
 
   const [formStatus, setFormStatus] = React.useState('initial')
   function decline() {
@@ -53,7 +48,6 @@ const Signup = ({
     window.location.href = '/'
   }
   React.useEffect(() => {
-    setIsMobile(isMobile())
     grained('accountCreate', {
       animate: true,
       patternWidth: 100,
@@ -65,55 +59,41 @@ const Signup = ({
     })
   }, [])
 
-  async function submitForm() {
-    const first_name = name.split(' ')[0]
-    const last_name = name.split(' ')[name.split(' ').length - 1]
+  async function postData() {
+    // const data = `g='XKvFZS'&email=${email}&name=${name}&phoneNumber=${phoneNumber}`
 
-    const options = {
+    var urlencoded = new URLSearchParams()
+    urlencoded.append('g', 'XKvFZS')
+    urlencoded.append('email', email)
+    urlencoded.append('$phone_number', `+${phoneNumber}`)
+    urlencoded.append('$first_name', name.split(' ')[0])
+    urlencoded.append('$last_name', name.split(' ')[name.split(' ').length - 1])
+    urlencoded.append('sms_consent', 'true')
+    urlencoded.append('$consent', '[sms, email]')
+    urlencoded.append('$fields', '$phone_number, $first_name, $last_name, sms_consent, $consent ')
+
+    const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded',
       },
-      body: JSON.stringify({
-        profiles: [
-          {
-            email,
-            phone_number: phoneNumber,
-            first_name,
-            last_name,
-            sms_consent: true,
-          },
-        ],
-      }),
-    }
-    const url = `https://a.klaviyo.com/api/v2/list/${list_id}/subscribe?api_key=${apiKey}`
-
-    // var urlencoded = new URLSearchParams()
-    // urlencoded.append('g', 'XKvFZS')
-    // urlencoded.append('email', email)
-    // urlencoded.append('phone_number', `+${phoneNumber}`)
-    // urlencoded.append('first_name', name.split(' ')[0])
-    // urlencoded.append('last_name', name.split(' ')[name.split(' ').length - 1])
-    // urlencoded.append('sms_consent', 'true')
-    // urlencoded.append('$consent', '["sms", "email"]')
-    //
-    // const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
-    const response = await fetch(url, options)
+      redirect: 'follow', // manual, *follow, error
+      body: urlencoded,
+    })
+    window.location.href = '/home'
     return response.json()
   }
   function handleSubmit() {
     //set state to loading
     setFormStatus('loading')
-    submitForm()
+    postData()
       .then((r) => {
         if (r.errors.length) {
           setFormStatus('error')
           setError(r.errors[0])
-        } else {
-          setFormStatus('success')
-          window.location.href = '/home'
         }
+        setFormStatus('success')
       })
       .catch((r) => {
         setFormStatus('error')
@@ -126,6 +106,7 @@ const Signup = ({
   }
 
   function doSetFormStatus() {
+
     if (validateEmail(email) && agree) {
       setFormStatus('ready')
     } else {
@@ -134,7 +115,7 @@ const Signup = ({
   }
 
   React.useEffect(() => {
-    doSetFormStatus()
+    if(formStatus !== 'loading' && formStatus !=='success')  doSetFormStatus()
   })
 
   return (
@@ -142,19 +123,18 @@ const Signup = ({
       className="flex flex-col items-center type-wrapper w-full h-full pt-8 "
       id="accountCreate"
     >
-      {!_isMobile && (
-        <button
-          className="absolute text-sm right-0"
-          style={{
-            transform: 'rotate(90deg)',
-            top: '50%',
-            fontFamily: 'Nova Stamp Bold',
-          }}
-          onClickCapture={toggle}
-        >
-          Sound {playing ? 'on' : 'off'}
-        </button>
-      )}
+      <button
+        className="absolute text-sm right-0"
+        style={{
+          transform: 'rotate(90deg)',
+          top: '50%',
+          fontFamily: 'Nova Stamp Bold',
+        }}
+        onClickCapture={toggle}
+      >
+        Sound {playing ? 'on' : 'off'}
+      </button>
+
       <div
         className="flex flex-col px-8 mt-8"
         style={{ minWidth: '16rem', maxWidth: '48rem' }}
@@ -230,11 +210,11 @@ const Signup = ({
           <span> {formStatus === 'loading' && <LoadingDots />}</span>
           <span>
             {(formStatus === 'initial' || formStatus === 'ready') &&
-              'BECOME A MEMBER'}
+            'BECOME A MEMBER'}
           </span>
           <span>
             {formStatus === 'success' &&
-              'Thank you for joining! We will be in touch'}
+            'Thank you for joining! We will be in touch'}
           </span>
         </ConfirmButton>
 

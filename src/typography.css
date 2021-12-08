@@ -90,4 +90,15 @@ strong {
   font-family: 'InputMono';
 }
 
+.product-detail {
+  font-size: 0.75rem;
+  color: #000;
+  font-weight: 400;
+  line-height: 2rem;
+}
+@media (max-width: 480px) {
+  .product-detail {
+  font-size: 0.75rem;
+  }
+}
 
