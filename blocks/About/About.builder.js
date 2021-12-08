@@ -9,6 +9,18 @@ Builder.registerComponent(LazyText, {
   name: 'About',
   inputs: [
     {
+      name: 'toggleFont',
+      type: 'string',
+      defaultValue: 'Value Sans Pro',
+      enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+    },
+    {
+      name: 'detailFont',
+      type: 'string',
+      defaultValue: 'Value Sans Pro',
+      enum: ['Value Sans Pro', 'InputMono', 'RayJohnson', 'Nova Stamp Bold'],
+    },
+    {
       name: 'sections',
       type: 'list',
       subFields: [

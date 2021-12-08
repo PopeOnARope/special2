@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   }
 `
 
-const Detail = ({ shownDetails, item, setShownDetails }) => {
+const Detail = ({ shownDetails, item, setShownDetails, detailFont }) => {
   return (
     <div className="w-full pb-4">
       <Button
@@ -46,7 +46,7 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
         }}
         sx={{
           fontSize: '2rem',
-          fontFamily: 'Value Sans Pro',
+          fontFamily: detailFont || 'Value Sans Pro',
           color: '#fff',
           textAlign: 'left',
           fontWeight: 600,
@@ -113,11 +113,12 @@ const Detail = ({ shownDetails, item, setShownDetails }) => {
   )
 }
 
-const DetailsToggle = ({ onClick }) => (
+const DetailsToggle = ({ onClick, toggleFont }) => (
   <Themed.div
     className="text-white hover:cursor-pointer"
     sx={{
       marginLeft: '-1rem',
+      fontFamily: toggleFont || 'Value Sans Pro',
       bottom: '6rem',
       alignSelf: 'flex-end',
       zIndex: 6,
@@ -130,14 +131,14 @@ const DetailsToggle = ({ onClick }) => (
   ></Themed.div>
 )
 
-const About = ({ sections }) => {
+const About = ({ sections, toggleFont='Value Sans Pro', detailFont='Value Sans Pro' }) => {
   const { toggleProductDetails } = useUI()
 
   const [shownDetails, setShownDetails] = React.useState('')
 
   return (
     <Wrapper>
-      <DetailsToggle onClick={toggleProductDetails} />
+      <DetailsToggle toggleFont={toggleFont} onClick={toggleProductDetails} />
       <Themed.div
         sx={{
           display: 'flex',
