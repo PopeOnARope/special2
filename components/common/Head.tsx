@@ -18,7 +18,9 @@ const Head: FC<{ seoInfo: any }> = (props) => {
         <meta property="og:title" content="Spec_ial" />
         <meta property="og:description" content="Spec_ial upends traditional eyewear with provocative exploration. Crafted in micro-micro  — with ranging influences from art to astrology – our pieces cross over from accessory into sculpture. Conceptualized between New York, Los Angeles and Edinburgh, Spec_ial’s eyewear ignores boundaries, leaving you ... Spec_ial." />
         <meta property="og:url" content="https://spec-ial.com" />
-        {/*<meta property="og:image" content="https://ahrefs.com/blog/wp-content/uploads/2019/12/fb-how-to-become-an-seo-expert.png" />*/}
+        <meta name="facebook-domain-verification" content="et0zjvu86iusjxi3uh15yfntu6nuao" />
+
+          {/*<meta property="og:image" content="https://ahrefs.com/blog/wp-content/uploads/2019/12/fb-how-to-become-an-seo-expert.png" />*/}
       </NextHead>
     </>
   )
