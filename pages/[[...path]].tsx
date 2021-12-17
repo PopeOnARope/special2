@@ -68,13 +68,13 @@ export default function Path({
   React.useEffect(() => {
     import('react-facebook-pixel')
       .then((x) => x.default)
-      .then((ReactPixel) => {
-        ReactPixel.init(facebookConfig.facebookPixelId) // facebookPixelId
-        ReactPixel.pageView()
-        router.events.on('routeChangeComplete', () => {
-          ReactPixel.pageView()
-        })
-      })
+      // .then((ReactPixel) => {
+      //   ReactPixel.init(facebookConfig.facebookPixelId) // facebookPixelId
+      //   ReactPixel.pageView()
+      //   router.events.on('routeChangeComplete', () => {
+      //     ReactPixel.pageView()
+      //   })
+      // })
   }, [router.events])
 
   const { theme } = useThemeUI()
