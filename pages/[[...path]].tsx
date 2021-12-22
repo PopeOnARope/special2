@@ -65,17 +65,17 @@ export default function Path({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter()
 
-  React.useEffect(() => {
-    import('react-facebook-pixel')
-      .then((x) => x.default)
-      // .then((ReactPixel) => {
-      //   ReactPixel.init(facebookConfig.facebookPixelId) // facebookPixelId
-      //   ReactPixel.pageView()
-      //   router.events.on('routeChangeComplete', () => {
-      //     ReactPixel.pageView()
-      //   })
-      // })
-  }, [router.events])
+  // React.useEffect(() => {
+  //   import('react-facebook-Pixel')
+  //     .then((x) => x.default)
+  //     .then((ReactPixel) => {
+  //       ReactPixel.init(facebookConfig.facebookPixelId) // facebookPixelId
+  //       ReactPixel.pageView()
+  //       router.events.on('routeChangeComplete', () => {
+  //         ReactPixel.pageView()
+  //       })
+  //     })
+  // }, [router.events])
 
   const { theme } = useThemeUI()
   if (router.isFallback) {

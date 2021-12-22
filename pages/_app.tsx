@@ -1,9 +1,10 @@
 import '@assets/main.css'
 import 'keen-slider/keen-slider.min.css'
 
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import type { AppProps } from 'next/app'
 import '../src/tailwind.output.css';
+import facebookConfig from '@config/facebook'
 
 import { builder, Builder } from '@builder.io/react'
 import builderConfig from '@config/builder'
@@ -40,6 +41,15 @@ const Noop: FC = ({ children }) => <>{children}</>
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   const Layout = (Component as any).Layout || Noop
+
+  // useEffect(() => {
+  //   import('react-facebook-pixel')
+  //     .then((x) => x.default)
+  //     .then((ReactPixel) => {
+  //       ReactPixel.init(facebookConfig.facebookPixelId) // facebookPixelId
+  //       ReactPixel.pageView()
+  //     })
+  // })
 
   return (
     <>
