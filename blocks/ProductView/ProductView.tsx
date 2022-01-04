@@ -121,6 +121,16 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
+
+    fbq('track', 'ViewContent', {
+      content_name: title,
+      content_category: '..',//Category name here
+      content_ids: [product.id],//Shopify product id here
+      content_type: 'product',
+      value: variant.price,
+      currency: 'USD'
+    });
+
   }, [])
 
   const peakingImageIndex = images
