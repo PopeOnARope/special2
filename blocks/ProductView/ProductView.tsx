@@ -121,7 +121,7 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-
+    console.log('track view content')
     fbq('track', 'ViewContent', {
       content_name: title,
       content_category: '..',//Category name here
@@ -159,6 +159,7 @@ const ProductBox: React.FC<Props> = ({
 
   const addToCart = async () => {
     setLoading(true)
+    console.log('add to cart')
     if(fbq) {
       fbq('track', 'AddToCart', {
         content_name: title,
