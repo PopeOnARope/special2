@@ -78,6 +78,8 @@ const ProductBox: React.FC<Props> = ({
   checkoutType,
 }) => {
   const [loading, setLoading] = useState(false)
+  const [hasRendered, setHasRendered] = useState(false)
+
   const [height, setHeight] = useState(640)
   const [width, setWidth] = useState(640)
   const [margin, setMargin] = useState(0)
@@ -118,6 +120,7 @@ const ProductBox: React.FC<Props> = ({
     setImages(i)
     setPeakingImage(i[0])
     setIsMobile(isMobile())
+    setHasRendered(true)
   }, [])
 
   const peakingImageIndex = images
@@ -146,10 +149,21 @@ const ProductBox: React.FC<Props> = ({
 
   const addToCart = async () => {
     setLoading(true)
+    if(fbq) {
+      fbq('track', 'AddToCart', {
+        content_name: title,
+        content_category: '..',//Category name here
+        content_ids: [product.id],//Shopify product id here
+        content_type: 'product',
+        value: variant.price,
+        currency: 'USD'
+      });
+    }
     try {
       // process custom attr into key value pairing
       const toSpaced = (str) =>
         str.replace(/[A-Z]/g, (letter) => ` ${letter.toLowerCase()}`)
+
       const attr = Object.keys(customAttributes).map((key) => ({
         key: toSpaced(key),
         value: customAttributes[key],
@@ -233,6 +247,7 @@ const ProductBox: React.FC<Props> = ({
     },
     [peakingImageIndex, isTransitioning]
   )
+
 
   React.useEffect(() => {
     window.addEventListener('wheel', handleScroll, { passive: false })
