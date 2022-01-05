@@ -23,18 +23,18 @@ const ConfirmButton = styled.button`
 `
 
 const Signup = ({
-                  content,
-                  finePrint,
-                  title,
-                  declineButtonLabel,
-                  secondaryContent,
-                  sound,
-                  titleFont = 'Nova Stamp Bold',
-                  contentFont = 'InputMono',
-                  secondaryContentFont = 'Nova Stamp Bold',
-                  finePrintFont = 'InputMono',
-                  consent = 'I agree to Spec_ial’s terms of service and give my consent receive emails and sms messages',
-                }) => {
+  content,
+  finePrint,
+  title,
+  declineButtonLabel,
+  secondaryContent,
+  sound,
+  titleFont = 'Nova Stamp Bold',
+  contentFont = 'InputMono',
+  secondaryContentFont = 'Nova Stamp Bold',
+  finePrintFont = 'InputMono',
+  consent = 'I agree to Spec_ial’s terms of service and give my consent receive emails and sms messages',
+}) => {
   const [name, setName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [phoneNumber, setPhone] = React.useState('')
@@ -70,7 +70,10 @@ const Signup = ({
     urlencoded.append('$last_name', name.split(' ')[name.split(' ').length - 1])
     urlencoded.append('sms_consent', 'true')
     urlencoded.append('$consent', '[sms, email]')
-    urlencoded.append('$fields', '$phone_number, $first_name, $last_name, sms_consent, $consent ')
+    urlencoded.append(
+      '$fields',
+      '$phone_number, $first_name, $last_name, sms_consent, $consent '
+    )
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
     const response = await fetch(url, {
@@ -93,7 +96,10 @@ const Signup = ({
           setFormStatus('error')
           setError(r.errors[0])
         }
-        setFormStatus('success')
+        if (fbq) {
+          fbq('track', 'Lead', { value: 95.0, currency: 'USD' })
+          setFormStatus('success')
+        }
       })
       .catch((r) => {
         setFormStatus('error')
@@ -106,7 +112,6 @@ const Signup = ({
   }
 
   function doSetFormStatus() {
-
     if (validateEmail(email) && agree) {
       setFormStatus('ready')
     } else {
@@ -115,7 +120,7 @@ const Signup = ({
   }
 
   React.useEffect(() => {
-    if(formStatus !== 'loading' && formStatus !=='success')  doSetFormStatus()
+    if (formStatus !== 'loading' && formStatus !== 'success') doSetFormStatus()
   })
 
   return (
@@ -210,11 +215,11 @@ const Signup = ({
           <span> {formStatus === 'loading' && <LoadingDots />}</span>
           <span>
             {(formStatus === 'initial' || formStatus === 'ready') &&
-            'BECOME A MEMBER'}
+              'BECOME A MEMBER'}
           </span>
           <span>
             {formStatus === 'success' &&
-            'Thank you for joining! We will be in touch'}
+              'Thank you for joining! We will be in touch'}
           </span>
         </ConfirmButton>
 
