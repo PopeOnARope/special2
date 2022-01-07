@@ -32,6 +32,7 @@ module.exports = bundleAnalyzer({
     KLAVIYO_API_KEY: process.env.KLAVIYO_API_KEY,
     KLAVIYO_LIST_ID: process.env.KLAVIYO_LIST_ID,
     FACEBOOK_PIXEL_ID: process.env.FACEBOOK_PIXEL_ID,
+    FB_ACCESS_TOKEN:process.env.FB_ACCESS_TOKEN,
     IS_DEMO: false,
   },
   i18n: {

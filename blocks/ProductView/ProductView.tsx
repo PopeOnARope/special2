@@ -22,6 +22,7 @@ import ProductDetails from '@components/ProductDetails/ProductDetails'
 import { useSwipeable } from 'react-swipeable'
 import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
+import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
 
 interface Props {
   className?: string
@@ -121,15 +122,18 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-    console.log('track view content')
-    fbq('track', 'ViewContent', {
-      content_name: title,
-      content_category: '..',//Category name here
-      content_ids: [product.id],//Shopify product id here
-      content_type: 'product',
+    console.log('track view content', {product})
+
+    fbEvent({
+      eventName: 'ViewContent',
+      products: [{
+        id: product.id,
+        quantity: 1,
+      }],
       value: variant.price,
-      currency: 'USD'
-    });
+      currency: 'USD',
+      enableStandardPixel: true
+    })
 
   }, [])
 
@@ -408,6 +412,7 @@ const ProductBox: React.FC<Props> = ({
             >
               {images.map((image, idx) => (
                 <div
+                  key={`img${idx}`}
                   style={{ width: width, height: height, position: 'relative' }}
                 >
                   {(!image.type || image.type !== 'video') && (
