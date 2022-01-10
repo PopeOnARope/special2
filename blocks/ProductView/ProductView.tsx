@@ -24,6 +24,7 @@ import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
 import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
 import Cookies from 'js-cookie'
+import { facebookConfig } from '@config/facebook'
 
 interface Props {
   className?: string
@@ -124,14 +125,43 @@ const ProductBox: React.FC<Props> = ({
     setIsMobile(isMobile())
     setHasRendered(true)
     console.log('track view content', {product})
-    FB.api(
-      '/419048403222414/events',
-      'POST',
-      {"data":"[\n  {\n    \"event_name\": \"ViewContent\",\n    \"event_time\": 1641838139,\n    \"action_source\": \"email\",\n    \"user_data\": {\n      \"em\": [\n        \"7b17fb0bd173f625b58636fb796407c22b3d16fc78302d79f0fd30c2fc2fc068\"\n      ],\n      \"ph\": [\n        null\n      ]\n    },\n    \"custom_data\": {\n      \"currency\": \"USD\",\n      \"value\": \"142.52\"\n    }\n  }\n]","test_event_code":"TEST72881"},
-      function(response) {
-        console.log({response})
+    fetch(
+      `https://graph.facebook.com/v12.0/419048403222414/events?access_token=${facebookConfig.facebookAccessToken}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          "data": [
+            {
+              "event_name": "ViewContent",
+              "event_time": Date.now(),
+              "action_source": "website",
+              "event_source_url":window.location.href,
+              "user_data": {
+                "client_user_agent":window.navigator.userAgent,
+                "em": [
+                  null
+                ],
+                "ph": [
+                  null
+                ]
+              },
+              "custom_data": {
+                "currency": "USD",
+                "value": "142.52"
+              }
+            }
+          ]
+        })
       }
-    );
+    ).then(r=>console.log({r}))
+    // FB.api(
+    //   '/419048403222414/events',
+    //   'POST',
+    //   {"data":"[\n  {\n    \"event_name\": \"ViewContent\",\n    \"event_time\": 1641838139,\n    \"action_source\": \"email\",\n    \"user_data\": {\n      \"em\": [\n        \"7b17fb0bd173f625b58636fb796407c22b3d16fc78302d79f0fd30c2fc2fc068\"\n      ],\n      \"ph\": [\n        null\n      ]\n    },\n    \"custom_data\": {\n      \"currency\": \"USD\",\n      \"value\": \"142.52\"\n    }\n  }\n]","test_event_code":"TEST72881"},
+    //   function(response) {
+    //     console.log({response})
+    //   }
+    // );
   //   fbEvent({
   //     eventName: 'ViewContent',
   //     products: [{

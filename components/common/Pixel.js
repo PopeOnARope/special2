@@ -29,7 +29,7 @@ const Pixel = () =>(
       <script
         dangerouslySetInnerHTML={{__html: `window.fbAsyncInit = function() {
         FB.init({
-          appId: '483880319830378',
+          appId: '419048403222414',
           autoLogAppEvents: true,
           xfbml: true,
           version: 'v12.0'
