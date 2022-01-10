@@ -23,6 +23,7 @@ import { useSwipeable } from 'react-swipeable'
 import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
 import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
+import Cookies from 'js-cookie'
 
 interface Props {
   className?: string
@@ -132,9 +133,10 @@ const ProductBox: React.FC<Props> = ({
       }],
       value: variant.price,
       currency: 'USD',
-      enableStandardPixel: true
+      enableStandardPixel: true,
+      emails: [Cookies.get('email')],
+      phones: [Cookies.get('phoneNumber')]
     })
-
   }, [])
 
   const peakingImageIndex = images
