@@ -114,7 +114,7 @@ const ProductBox: React.FC<Props> = ({
     image: '',
     overlayColor: 'white',
   })
-
+const { facebookAccessToken } = facebookConfig
   useEffect(() => {
     const w = window.innerWidth
     const i = w < 640 ? mobileImages || _images : _images
@@ -126,7 +126,7 @@ const ProductBox: React.FC<Props> = ({
     setHasRendered(true)
     console.log('track view content', {product})
     fetch(
-      `https://graph.facebook.com/v12.0/419048403222414/events?access_token=${facebookConfig.facebookAccessToken}`,
+      `https://graph.facebook.com/v12.0/419048403222414/events?access_token=${facebookAccessToken}`,
       {
         method: 'POST',
         body: JSON.stringify({
