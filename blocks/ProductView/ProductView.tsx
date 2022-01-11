@@ -25,6 +25,7 @@ import { isMobile } from '@lib/isMobile'
 import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
 import Cookies from 'js-cookie'
 import { facebookConfig } from '@config/facebook'
+import debug from '@rivercode/facebook-conversion-api-nextjs/src/utils/debug'
 
 interface Props {
   className?: string
@@ -114,7 +115,7 @@ const ProductBox: React.FC<Props> = ({
     image: '',
     overlayColor: 'white',
   })
-const { facebookAccessToken } = facebookConfig
+  // const { facebookAccessToken } = facebookConfig
   useEffect(() => {
     const w = window.innerWidth
     const i = w < 640 ? mobileImages || _images : _images
@@ -124,36 +125,32 @@ const { facebookAccessToken } = facebookConfig
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-    console.log('track view content', {product})
-    fetch(
-      `https://graph.facebook.com/v12.0/419048403222414/events?access_token=${facebookAccessToken}`,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          "data": [
-            {
-              "event_name": "ViewContent",
-              "event_time": Date.now(),
-              "action_source": "website",
-              "event_source_url":window.location.href,
-              "user_data": {
-                "client_user_agent":window.navigator.userAgent,
-                "em": [
-                  null
-                ],
-                "ph": [
-                  null
-                ]
-              },
-              "custom_data": {
-                "currency": "USD",
-                "value": "142.52"
-              }
-            }
-          ]
-        })
-      }
-    ).then(r=>console.log({r}))
+    console.log('track view content', { product })
+    console.log({ AT: process?.env?.FB_ACCESS_TOKEN })
+    // FB.api(
+    //   `https://graph.facebook.com/v12.0/419048403222414/events?access_token=${process?.env?.FB_ACCESS_TOKEN}`,
+    //
+    //   'POST',
+    //   {...JSON.stringify({
+    //     data: [
+    //       {
+    //         event_name: 'ViewContent',
+    //         event_time: Date.now(),
+    //         action_source: 'website',
+    //         event_source_url: window.location.href,
+    //         user_data: {
+    //           client_user_agent: window.navigator.userAgent,
+    //           em: [null],
+    //           ph: [null],
+    //         },
+    //         custom_data: {
+    //           currency: 'USD',
+    //           value: '142.52',
+    //         },
+    //       },
+    //     ],
+    //   })}
+    // ).then((r) => console.log({ r }))
     // FB.api(
     //   '/419048403222414/events',
     //   'POST',
@@ -162,18 +159,44 @@ const { facebookAccessToken } = facebookConfig
     //     console.log({response})
     //   }
     // );
-  //   fbEvent({
-  //     eventName: 'ViewContent',
-  //     products: [{
-  //       id: product.id,
-  //       quantity: 1,
-  //     }],
-  //     value: variant.price,
-  //     currency: 'USD',
-  //     enableStandardPixel: false,
-  //     emails: [Cookies.get('email')],
-  //     phones: [Cookies.get('phoneNumber')]
-  //   })
+    fetch('/api/fb-events', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        eventName: 'ViewContent',
+        event_source_url: window.location.href,
+        // eventId,
+        // emails: event.emails,
+        // phones: event.phones,
+        // products: event.products,
+        // value: event.value,
+        // currency: event.currency,
+        products: [{
+          id: product.id,
+          quantity: 1,
+        }],
+        value: variant.price,
+        currency: 'USD',
+      }),
+    }).then((response) => {
+      console.log(`Server Side Event Success:  (${response.body})`);
+    }).catch((error) => {
+      console.log(`Server Side Event:  (${error.status})`);
+    });
+      // fbEvent({
+      //   eventName: 'ViewContent',
+      //   products: [{
+      //     id: product.id,
+      //     quantity: 1,
+      //   }],
+      //   value: variant.price,
+      //   currency: 'USD',
+      //   enableStandardPixel: false,
+      //   // emails: [Cookies.get('email')],
+      //   // phones: [Cookies.get('phoneNumber')]
+      // })
   }, [])
 
   const peakingImageIndex = images
@@ -203,15 +226,15 @@ const { facebookAccessToken } = facebookConfig
   const addToCart = async () => {
     setLoading(true)
     console.log('add to cart')
-    if(fbq) {
+    if (fbq) {
       fbq('track', 'AddToCart', {
         content_name: title,
-        content_category: '..',//Category name here
-        content_ids: [product.id],//Shopify product id here
+        content_category: '..', //Category name here
+        content_ids: [product.id], //Shopify product id here
         content_type: 'product',
         value: variant.price,
-        currency: 'USD'
-      });
+        currency: 'USD',
+      })
     }
     try {
       // process custom attr into key value pairing
@@ -301,7 +324,6 @@ const { facebookAccessToken } = facebookConfig
     },
     [peakingImageIndex, isTransitioning]
   )
-
 
   React.useEffect(() => {
     window.addEventListener('wheel', handleScroll, { passive: false })
@@ -480,15 +502,16 @@ const { facebookAccessToken } = facebookConfig
                   {
                     // need to use image tag to autoplay videos on mobile
                     image.type === 'video' && _isMobile && (
-                    <img
-                      style={{ minHeight: '100%', objectFit: 'cover' }}
-                      src={image.image}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                    />
-                  )}
+                      <img
+                        style={{ minHeight: '100%', objectFit: 'cover' }}
+                        src={image.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    )
+                  }
                 </div>
               ))}
             </div>
@@ -524,7 +547,7 @@ const { facebookAccessToken } = facebookConfig
           transition: '0.5s all',
           // opacity: showBuyButton ? 100 : 0,
           bottom: showBuyButton ? 0 : '-25rem',
-          'z-index': '9',
+          zIndex: '9',
         }}
       >
         <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">
