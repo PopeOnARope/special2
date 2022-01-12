@@ -125,78 +125,21 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-    console.log('track view content', { product })
-    console.log({ AT: process?.env?.FB_ACCESS_TOKEN })
-    // FB.api(
-    //   `https://graph.facebook.com/v12.0/419048403222414/events?access_token=${process?.env?.FB_ACCESS_TOKEN}`,
-    //
-    //   'POST',
-    //   {...JSON.stringify({
-    //     data: [
-    //       {
-    //         event_name: 'ViewContent',
-    //         event_time: Date.now(),
-    //         action_source: 'website',
-    //         event_source_url: window.location.href,
-    //         user_data: {
-    //           client_user_agent: window.navigator.userAgent,
-    //           em: [null],
-    //           ph: [null],
-    //         },
-    //         custom_data: {
-    //           currency: 'USD',
-    //           value: '142.52',
-    //         },
-    //       },
-    //     ],
-    //   })}
-    // ).then((r) => console.log({ r }))
-    // FB.api(
-    //   '/419048403222414/events',
-    //   'POST',
-    //   {"data":"[\n  {\n    \"event_name\": \"ViewContent\",\n    \"event_time\": 1641838139,\n    \"action_source\": \"email\",\n    \"user_data\": {\n      \"em\": [\n        \"7b17fb0bd173f625b58636fb796407c22b3d16fc78302d79f0fd30c2fc2fc068\"\n      ],\n      \"ph\": [\n        null\n      ]\n    },\n    \"custom_data\": {\n      \"currency\": \"USD\",\n      \"value\": \"142.52\"\n    }\n  }\n]","test_event_code":"TEST72881"},
-    //   function(response) {
-    //     console.log({response})
-    //   }
-    // );
-    fetch('/api/fb-events', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        eventName: 'ViewContent',
-        event_source_url: window.location.href,
-        // eventId,
-        // emails: event.emails,
-        // phones: event.phones,
-        // products: event.products,
-        // value: event.value,
-        // currency: event.currency,
-        products: [{
+    console.log(Cookies.get('phoneNumber'), Cookies.get('email'))
+    fbEvent({
+      eventName: 'ViewContent',
+      products: [
+        {
           id: product.id,
           quantity: 1,
-        }],
-        value: variant.price,
-        currency: 'USD',
-      }),
-    }).then((response) => {
-      console.log(`Server Side Event Success:  (${response.body})`);
-    }).catch((error) => {
-      console.log(`Server Side Event:  (${error.status})`);
-    });
-      // fbEvent({
-      //   eventName: 'ViewContent',
-      //   products: [{
-      //     id: product.id,
-      //     quantity: 1,
-      //   }],
-      //   value: variant.price,
-      //   currency: 'USD',
-      //   enableStandardPixel: false,
-      //   // emails: [Cookies.get('email')],
-      //   // phones: [Cookies.get('phoneNumber')]
-      // })
+        },
+      ],
+      value: variant.price,
+      currency: 'USD',
+      enableStandardPixel: true,
+      emails: [Cookies.get('email') || ''],
+      phones: [Cookies.get('phoneNumber') || ''],
+    })
   }, [])
 
   const peakingImageIndex = images
