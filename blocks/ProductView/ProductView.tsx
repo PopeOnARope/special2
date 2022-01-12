@@ -24,6 +24,8 @@ import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
 import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
 import Cookies from 'js-cookie'
+import { facebookConfig } from '@config/facebook'
+import debug from '@rivercode/facebook-conversion-api-nextjs/src/utils/debug'
 
 interface Props {
   className?: string
@@ -113,7 +115,7 @@ const ProductBox: React.FC<Props> = ({
     image: '',
     overlayColor: 'white',
   })
-
+  // const { facebookAccessToken } = facebookConfig
   useEffect(() => {
     const w = window.innerWidth
     const i = w < 640 ? mobileImages || _images : _images
@@ -123,19 +125,20 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-    console.log('track view content', {product})
-
+    console.log(Cookies.get('phoneNumber'), Cookies.get('email'))
     fbEvent({
       eventName: 'ViewContent',
-      products: [{
-        id: product.id,
-        quantity: 1,
-      }],
+      products: [
+        {
+          id: product.id,
+          quantity: 1,
+        },
+      ],
       value: variant.price,
       currency: 'USD',
       enableStandardPixel: true,
-      emails: [Cookies.get('email')],
-      phones: [Cookies.get('phoneNumber')]
+      emails: [Cookies.get('email') || ''],
+      phones: [Cookies.get('phoneNumber') || ''],
     })
   }, [])
 
@@ -166,15 +169,15 @@ const ProductBox: React.FC<Props> = ({
   const addToCart = async () => {
     setLoading(true)
     console.log('add to cart')
-    if(fbq) {
+    if (fbq) {
       fbq('track', 'AddToCart', {
         content_name: title,
-        content_category: '..',//Category name here
-        content_ids: [product.id],//Shopify product id here
+        content_category: '..', //Category name here
+        content_ids: [product.id], //Shopify product id here
         content_type: 'product',
         value: variant.price,
-        currency: 'USD'
-      });
+        currency: 'USD',
+      })
     }
     try {
       // process custom attr into key value pairing
@@ -264,7 +267,6 @@ const ProductBox: React.FC<Props> = ({
     },
     [peakingImageIndex, isTransitioning]
   )
-
 
   React.useEffect(() => {
     window.addEventListener('wheel', handleScroll, { passive: false })
@@ -443,15 +445,16 @@ const ProductBox: React.FC<Props> = ({
                   {
                     // need to use image tag to autoplay videos on mobile
                     image.type === 'video' && _isMobile && (
-                    <img
-                      style={{ minHeight: '100%', objectFit: 'cover' }}
-                      src={image.image}
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                    />
-                  )}
+                      <img
+                        style={{ minHeight: '100%', objectFit: 'cover' }}
+                        src={image.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    )
+                  }
                 </div>
               ))}
             </div>
@@ -487,7 +490,7 @@ const ProductBox: React.FC<Props> = ({
           transition: '0.5s all',
           // opacity: showBuyButton ? 100 : 0,
           bottom: showBuyButton ? 0 : '-25rem',
-          'z-index': '9',
+          zIndex: '9',
         }}
       >
         <div className="justify-center md:justify-start flex flex-row items-end mb-2 items-baseline">

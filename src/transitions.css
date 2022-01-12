@@ -96,8 +96,11 @@
   padding: 1rem;
   color: white;
 }
-.hover-button.active:hover {
-  box-shadow: 6px 5px 10px rgba(0, 0, 0, 0.2);
-  color: #000;
-  background-position: left;
+
+@media (min-width: 480px) {
+  .hover-button.active:hover {
+    box-shadow: 6px 5px 10px rgba(0, 0, 0, 0.2);
+    color: #000;
+    background-position: left;
+  }
 }
