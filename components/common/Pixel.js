@@ -15,8 +15,7 @@ const Pixel = () =>(
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', ${facebook.facebookPixelId});
-      fbq('track', 'PageView');`,
+      fbq('init', ${facebook.facebookPixelId});`,
         }}
       />
       <noscript
@@ -25,17 +24,6 @@ const Pixel = () =>(
       src="https://www.facebook.com/tr?id=${facebook.facebookPixelId}&ev=PageView&noscript=1" />`,
         }}
       />
-
-      <script
-        dangerouslySetInnerHTML={{__html: `window.fbAsyncInit = function() {
-        FB.init({
-          appId: '419048403222414',
-          autoLogAppEvents: true,
-          xfbml: true,
-          version: 'v12.0'
-        });
-      }`}}/>
-      <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"/>
     </React.Fragment>
   )
 

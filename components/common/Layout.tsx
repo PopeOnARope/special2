@@ -21,6 +21,8 @@ import seoConfig from '@config/seo.json'
 import NoSSR from './NoSSR'
 import styled from 'styled-components'
 import { ArrowLeft } from '@components/icons'
+import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
+import Cookies from 'js-cookie'
 
 const FeatureBar = dynamic(() => import('@components/common/FeatureBar'), {
   ssr: false,
@@ -85,6 +87,20 @@ const InnerLayout: React.FC<{
   React.useEffect(()=>{
     setLocation(window.location.pathname)
   })
+  React.useEffect(()=>{
+    //@ts-ignore
+    fbEvent({
+      eventName: 'PageView',
+      emails: [Cookies.get('email') || ''],
+      phones: [Cookies.get('phoneNumber')],
+      products: [{
+        sku: 'product123',
+        quantity: 1,
+      }],
+      enableStandardPixel: false,
+    });
+
+  },[])
   const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()
   const { acceptedCookies, onAcceptCookies } = useAcceptCookies()
   return (
