@@ -24,7 +24,6 @@ import '../blocks/AccountCreate/AccountCreate.builder'
 import '../blocks/Video/Video.builder'
 import '../blocks/Redirect/Redirect.builder'
 import '../src/typography.css'
-import { FBPixelProvider } from '@rivercode/facebook-conversion-api-nextjs/components'
 
 Builder.register('insertMenu', {
   name: 'Shopify Collections Components',
@@ -61,9 +60,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Layout pageProps={pageProps}>
-        <FBPixelProvider>
           <Component {...pageProps} />
-        </FBPixelProvider>
       </Layout>
     </>
   )
