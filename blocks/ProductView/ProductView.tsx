@@ -175,7 +175,7 @@ const ProductBox: React.FC<Props> = ({
       ],
       value: variant.price,
       currency: 'USD',
-      enableStandardPixel: false,
+      enableStandardPixel: true,
       emails: [Cookies.get('email') || ''],
       phones: [Cookies.get('phoneNumber') || ''],
     })
