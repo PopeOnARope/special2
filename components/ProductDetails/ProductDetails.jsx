@@ -1,15 +1,11 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import React from 'react'
-import Footer from '../../blocks/Footer/Footer'
 import { Themed, Button, jsx } from 'theme-ui'
-import { FC, useEffect, useState } from 'react'
 import { useUI } from '@components/ui/context'
 import { ArrowLeft, Cross, Minus } from '@components/icons'
 import Collapse from 'react-collapse'
-import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import styled from 'styled-components'
-import { isMobile } from '@lib/isMobile'
 
 const Wrapper = styled.div`
   min-height: 100%;
@@ -147,16 +143,12 @@ const ProductDetails = ({
   details,
   productDescription,
   setShowBuyButton,
-  showBuyButton,
   productDescriptionFont,
   detailToggleFont,
   detailFont,
 }) => {
   const { toggleProductDetails } = useUI()
   const [shownDetails, setShownDetails] = React.useState('')
-  // React.useEffect(() => {
-  //   setShowBuyButton(!shownDetails.length)
-  // })
 
   return (
     <Wrapper>
@@ -185,6 +177,7 @@ const ProductDetails = ({
               if (idx < 6) {
                 return (
                   <Detail
+                    key={`detail${idx}`}
                     detailFont={detailFont}
                     detailToggleFont={detailToggleFont}
                     item={item}
@@ -202,6 +195,7 @@ const ProductDetails = ({
               if (idx >= 6)
                 return (
                   <Detail
+                    key={`detail${idx}`}
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
