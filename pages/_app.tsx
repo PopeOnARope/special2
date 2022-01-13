@@ -3,8 +3,7 @@ import 'keen-slider/keen-slider.min.css'
 
 import { FC, useEffect } from 'react'
 import type { AppProps } from 'next/app'
-import '../src/tailwind.output.css';
-import facebookConfig from '@config/facebook'
+import '../src/tailwind.output.css'
 
 import { builder, Builder } from '@builder.io/react'
 import builderConfig from '@config/builder'
@@ -25,17 +24,25 @@ import '../blocks/AccountCreate/AccountCreate.builder'
 import '../blocks/Video/Video.builder'
 import '../blocks/Redirect/Redirect.builder'
 import '../src/typography.css'
-
+import { FBPixelProvider } from '@rivercode/facebook-conversion-api-nextjs/components'
 
 Builder.register('insertMenu', {
   name: 'Shopify Collections Components',
-  items: [{ name: 'CollectionBox', label: 'Collection stuff' }, { name: 'ProductCollectionGrid'}, { name: 'CollectionView' }]
-});
+  items: [
+    { name: 'CollectionBox', label: 'Collection stuff' },
+    { name: 'ProductCollectionGrid' },
+    { name: 'CollectionView' },
+  ],
+})
 
- Builder.register('insertMenu', {
+Builder.register('insertMenu', {
   name: 'Shopify Products Components',
-  items: [{ name: 'ProductGrid' } , { name: 'ProductBox'}, { name: 'ProductView'}]
-});
+  items: [
+    { name: 'ProductGrid' },
+    { name: 'ProductBox' },
+    { name: 'ProductView' },
+  ],
+})
 
 const Noop: FC = ({ children }) => <>{children}</>
 
@@ -54,7 +61,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Layout pageProps={pageProps}>
-        <Component {...pageProps} />
+        <FBPixelProvider>
+          <Component {...pageProps} />
+        </FBPixelProvider>
       </Layout>
     </>
   )
