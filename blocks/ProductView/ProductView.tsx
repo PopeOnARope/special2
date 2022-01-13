@@ -9,7 +9,6 @@ import { NextSeo } from 'next-seo'
 import { useUI } from '@components/ui/context'
 import {
   useAddItemToCart,
-  useCheckoutUrl,
 } from '@lib/shopify/storefront-data-hooks'
 import {
   prepareVariantsWithOptions,
@@ -24,8 +23,6 @@ import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
 import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
 import Cookies from 'js-cookie'
-import { facebookConfig } from '@config/facebook'
-import debug from '@rivercode/facebook-conversion-api-nextjs/src/utils/debug'
 
 interface Props {
   className?: string
@@ -125,12 +122,12 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-    console.log(Cookies.get('phoneNumber'), Cookies.get('email'))
+
     fbEvent({
       eventName: 'ViewContent',
       products: [
         {
-          id: product.id,
+          sku: product.id,
           quantity: 1,
         },
       ],
@@ -168,17 +165,21 @@ const ProductBox: React.FC<Props> = ({
 
   const addToCart = async () => {
     setLoading(true)
-    console.log('add to cart')
-    if (fbq) {
-      fbq('track', 'AddToCart', {
-        content_name: title,
-        content_category: '..', //Category name here
-        content_ids: [product.id], //Shopify product id here
-        content_type: 'product',
-        value: variant.price,
-        currency: 'USD',
-      })
-    }
+    fbEvent({
+      eventName: 'AddToCart',
+      products: [
+        {
+          sku: product.id,
+          quantity: 1,
+        },
+      ],
+      value: variant.price,
+      currency: 'USD',
+      enableStandardPixel: false,
+      emails: [Cookies.get('email') || ''],
+      phones: [Cookies.get('phoneNumber') || ''],
+    })
+
     try {
       // process custom attr into key value pairing
       const toSpaced = (str) =>
