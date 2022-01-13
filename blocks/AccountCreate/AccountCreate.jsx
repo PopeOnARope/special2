@@ -9,6 +9,8 @@ import styled from 'styled-components'
 import useAudio from '../Carousel/useAudio'
 import FancyPhoneInput from '../../components/ui/Form/FancyPhoneInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
+import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
+import Cookies from 'js-cookie'
 
 const ConfirmButton = styled.button`
   font-family: 'RayJohnson';
@@ -84,7 +86,6 @@ const Signup = ({
       redirect: 'follow', // manual, *follow, error
       body: urlencoded,
     })
-    Cookie.set('name', name, { expires: 365 })
     Cookie.set('phoneNumber', phoneNumber, { expires: 365 })
     Cookie.set('email', email, { expires: 365 })
 
@@ -94,16 +95,27 @@ const Signup = ({
   function handleSubmit() {
     //set state to loading
     setFormStatus('loading')
+    fbEvent({
+      eventName: 'Lead',
+      value: 95,
+      currency: 'USD',
+      products: [
+        {
+          sku: 'all',
+          quantity: 1,
+        },
+      ],
+      enableStandardPixel: true,
+      emails: [Cookies.get('email') || ''],
+      phones: [Cookies.get('phoneNumber') || ''],
+    })
     postData()
       .then((r) => {
         if (r.errors.length) {
           setFormStatus('error')
           setError(r.errors[0])
         }
-        if (fbq) {
-          fbq('track', 'Lead', { value: 95.0, currency: 'USD' })
           setFormStatus('success')
-        }
       })
       .catch((r) => {
         setFormStatus('error')
