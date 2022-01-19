@@ -149,6 +149,13 @@ const ProductDetails = ({
 }) => {
   const { toggleProductDetails } = useUI()
   const [shownDetails, setShownDetails] = React.useState('')
+  const detailProps = {
+    detailFont:detailFont,
+    detailToggleFont:detailToggleFont,
+    shownDetails:shownDetails,
+    setShownDetails:setShownDetails,
+    setShowBuyButton:setShowBuyButton,
+  }
 
   return (
     <Wrapper>
@@ -178,13 +185,8 @@ const ProductDetails = ({
                 return (
                   <Detail
                     key={`detail${idx}`}
-                    detailFont={detailFont}
-                    detailToggleFont={detailToggleFont}
                     item={item}
-                    shownDetails={shownDetails}
-                    setShownDetails={setShownDetails}
-                    setShowBuyButton={setShowBuyButton}
-                    isShownDetails={shownDetails === item?.title}
+                    {...detailProps}
                   />
                 )
               }
@@ -197,9 +199,7 @@ const ProductDetails = ({
                   <Detail
                     key={`detail${idx}`}
                     item={item}
-                    shownDetails={shownDetails}
-                    setShownDetails={setShownDetails}
-                    setShowBuyButton={setShowBuyButton}
+                    {...detailProps}
                   />
                 )
             })}
