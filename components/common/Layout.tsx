@@ -89,16 +89,7 @@ const InnerLayout: React.FC<{
   })
   React.useEffect(()=>{
     //@ts-ignore
-    fbEvent({
-      eventName: 'PageView',
-      emails: [Cookies.get('email') || ''],
-      phones: [Cookies.get('phoneNumber')],
-      products: [{
-        sku: 'product123',
-        quantity: 1,
-      }],
-      enableStandardPixel: false,
-    });
+    // wde
 
   },[])
   const { displayCart, closeCart, displaySideNav, closeSideNav } = useUI()

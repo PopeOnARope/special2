@@ -21,8 +21,9 @@ import ProductDetails from '@components/ProductDetails/ProductDetails'
 import { useSwipeable } from 'react-swipeable'
 import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
-import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
+// import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
 import Cookies from 'js-cookie'
+import capiRequest from '@lib/capiRequest'
 
 interface Props {
   className?: string
@@ -122,21 +123,29 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-
-    fbEvent({
-      eventName: 'ViewContent',
-      products: [
-        {
-          sku: product.id,
-          quantity: 1,
-        },
-      ],
+    capiRequest('track', 'AddToCart', {
+      content_name: title, //Product name here
+      content_category: collection, //Category name here
+      content_ids: [variant.id], //Shopify product id here
+      content_type: 'product',
       value: variant.price,
       currency: 'USD',
-      enableStandardPixel: true,
-      emails: [Cookies.get('email') || ''],
-      phones: [Cookies.get('phoneNumber') || ''],
     })
+
+    // fbEvent({
+    //   eventName: 'ViewContent',
+    //   products: [
+    //     {
+    //       sku: product.id,
+    //       quantity: 1,
+    //     },
+    //   ],
+    //   value: variant.price,
+    //   currency: 'USD',
+    //   enableStandardPixel: true,
+    //   emails: [Cookies.get('email') || ''],
+    //   phones: [Cookies.get('phoneNumber') || ''],
+    // })
   }, [])
 
   const peakingImageIndex = images
@@ -165,20 +174,20 @@ const ProductBox: React.FC<Props> = ({
 
   const addToCart = async () => {
     setLoading(true)
-    fbEvent({
-      eventName: 'AddToCart',
-      products: [
-        {
-          sku: product.id,
-          quantity: 1,
-        },
-      ],
-      value: variant.price,
-      currency: 'USD',
-      enableStandardPixel: true,
-      emails: [Cookies.get('email') || ''],
-      phones: [Cookies.get('phoneNumber') || ''],
-    })
+    // fbEvent({
+    //   eventName: 'AddToCart',
+    //   products: [
+    //     {
+    //       sku: product.id,
+    //       quantity: 1,
+    //     },
+    //   ],
+    //   value: variant.price,
+    //   currency: 'USD',
+    //   enableStandardPixel: true,
+    //   emails: [Cookies.get('email') || ''],
+    //   phones: [Cookies.get('phoneNumber') || ''],
+    // })
 
     try {
       // process custom attr into key value pairing
