@@ -104,6 +104,13 @@ const Customize = ({
 }) => {
   const [flowState, setFlowState] = React.useState(0)
   const [width, setWidth] = React.useState(0)
+  const [height, setHeight] = React.useState(0)
+
+  // const input = React.useRef()
+  // console.log({ input })
+  // React.useEffect(() => {
+  //   input?.current?.focus()
+  // })
 
   function onTextChange(e) {
     const value = formatText(e.target.value)
@@ -117,6 +124,7 @@ const Customize = ({
 
   React.useEffect(() => {
     setWidth(document.getElementById('buy-button').clientWidth)
+    setHeight(window.innerHeight)
   })
   function handleButtonClick() {
     if (displayProductDetails) {
@@ -134,7 +142,7 @@ const Customize = ({
     if (flowState === 0) {
       return (
         <>
-          <span>Customize & Buy</span>
+          <span>Customize and Pre-order</span>
           <span>
             {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
           </span>
@@ -159,8 +167,8 @@ const Customize = ({
 
   return (
     <div style={{ zIndex: flowState ? 1 : 100 }}>
-      {flow.map((step, idx) => (
-        <img key={`img${idx}`} src={step.image} style={{ display: 'none' }} />
+      {flow.map((step) => (
+        <img src={step.image} style={{ display: 'none' }} />
       ))}
       <CustomizationWindow
         display={flow[flowState].display}
