@@ -21,8 +21,6 @@ import ProductDetails from '@components/ProductDetails/ProductDetails'
 import { useSwipeable } from 'react-swipeable'
 import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
-// import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
-import Cookies from 'js-cookie'
 import capiRequest from '@lib/capiRequest'
 
 interface Props {
