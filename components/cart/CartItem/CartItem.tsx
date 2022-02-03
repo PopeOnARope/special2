@@ -81,15 +81,15 @@ const CartItem = ({
     }
   }, [item.quantity])
 
+      console.log({item:item.variant.image.src})
   return (
     <div className="flex flex-row justify-between p-2 w-full min-h-8 md:p-4 lg:justify-around lg:justify max-w-4xl">
       <div className="w-1/3 md:w-1/4 relative">
-        {item.variant.image &&  item.variant.image.altText &&
+        {item.variant.image &&
         <Image
           layout="fill"
           objectFit='cover'
           objectPosition="center"
-          alt={item.variant.image?.altText}
           src={item.variant.image.src}
         />
         }
