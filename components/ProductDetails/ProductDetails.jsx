@@ -196,6 +196,8 @@ const ProductDetails = ({
                 return (
                   <Detail
                     key={`detail${idx}`}
+                    detailFont={detailFont}
+                    detailToggleFont={detailToggleFont}
                     item={item}
                     shownDetails={shownDetails}
                     setShownDetails={setShownDetails}
