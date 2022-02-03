@@ -11,6 +11,7 @@ import FancyPhoneInput from '../../components/ui/Form/FancyPhoneInput'
 import Checkbox from '../../components/ui/Form/Checkbox'
 import { fbEvent } from '@rivercode/facebook-conversion-api-nextjs'
 import Cookies from 'js-cookie'
+import capiRequest from '../../lib/capiRequest'
 
 const ConfirmButton = styled.button`
   font-family: 'RayJohnson';
@@ -95,19 +96,11 @@ const Signup = ({
   function handleSubmit() {
     //set state to loading
     setFormStatus('loading')
-    fbEvent({
-      eventName: 'Lead',
+    capiRequest('track', 'Lead', {
+      test_event_id: 'TEST30335',
       value: 95,
       currency: 'USD',
-      products: [
-        {
-          sku: 'all',
-          quantity: 1,
-        },
-      ],
-      enableStandardPixel: true,
-      emails: [Cookies.get('email') || ''],
-      phones: [Cookies.get('phoneNumber') || ''],
+
     })
     postData()
       .then((r) => {
