@@ -33,6 +33,7 @@ module.exports = bundleAnalyzer({
     KLAVIYO_LIST_ID: process.env.KLAVIYO_LIST_ID,
     FACEBOOK_PIXEL_ID: process.env.FACEBOOK_PIXEL_ID,
     FB_ACCESS_TOKEN:process.env.FB_ACCESS_TOKEN,
+    NEXT_PUBLIC_GOOGLE_ANALYTICS:process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
     IS_DEMO: false,
   },
   i18n: {
