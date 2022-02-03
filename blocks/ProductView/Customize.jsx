@@ -15,9 +15,9 @@ const CustomizationWindow = styled.div`
   margin-right: 0.5rem;
   padding: 1rem 1.5rem;
   background: black;
-  height: ${(props) => (!props.flowState ? '0rem' : '21rem')};
+  height: ${(props) => (!props.flowState ? '0rem' : '22rem')};
   position: absolute;
-  margin-top: -22rem;
+  margin-top: -23rem;
 
   @media (max-width: 640px) {
     height: 25rem;
@@ -29,6 +29,7 @@ const CustomizationWindow = styled.div`
 `
 
 const flow = [
+  //the first flow step is only needed so that the customization modal can transition smoothly into place with the content already loaded
   {
     display: 'none',
     image:
@@ -36,8 +37,7 @@ const flow = [
     title: 'CUSTOMIZE',
     subTitle: 'RIGHT ARM',
     description:
-      'Customize the right arm. It can be anything: your name, nickname, a\n' +
-      "          phrase, handle, partner's name, etc.",
+      'Customize the right arm: It can be anything- your name, nickname, a phrase, your handle, a partner\'s name, etc. We only offer the vintage gold font pictured above.',
     subDescription: '',
   },
   {
@@ -47,8 +47,7 @@ const flow = [
     title: 'CUSTOMIZE',
     subTitle: 'RIGHT ARM',
     description:
-      'Customize the right arm. It can be anything: your name, nickname, a\n' +
-      "          phrase, handle, partner's name, etc.",
+      'Customize the right arm: It can be anything- your name, nickname, a phrase, your handle, a partner\'s name, etc. We only offer the vintage gold font pictured above.',
     subDescription: '',
   },
   {
@@ -58,8 +57,7 @@ const flow = [
     title: 'CUSTOMIZE',
     subTitle: 'LEFT ARM',
     description:
-      'Customize the left arm. It can be anything: your name, nickname, a\n' +
-      "          phrase, handle, partner's name, etc.",
+      'Customize the right arm: It can be anything- your name, nickname, a phrase, your handle, a partner\'s name, etc. We only offer the vintage gold font pictured above.',
     subDescription:
       'For a more even / clean look use the same word / name as the right arm.',
   },
@@ -70,7 +68,7 @@ const flow = [
     subTitle: '',
     description: '',
     subDescription:
-      'Choosing a size: If most glasses fit or run big, get the Regular size. If most sunglasses run small or slightly small, go with Wide.',
+      'Choosing a frame size: If most sunglasses fit or run big select the Regular size. If most sunglasses run smaller select the Wide size.',
   },
 ]
 
@@ -106,11 +104,6 @@ const Customize = ({
   const [width, setWidth] = React.useState(0)
   const [height, setHeight] = React.useState(0)
 
-  // const input = React.useRef()
-  // console.log({ input })
-  // React.useEffect(() => {
-  //   input?.current?.focus()
-  // })
 
   function onTextChange(e) {
     const value = formatText(e.target.value)
@@ -142,7 +135,7 @@ const Customize = ({
     if (flowState === 0) {
       return (
         <>
-          <span>Customize and Pre-order</span>
+          <span>Customize and Buy</span>
           <span>
             {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
           </span>
