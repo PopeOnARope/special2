@@ -82,7 +82,7 @@ const Carousel = (props) => {
           e.preventDefault()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 1200)
+          }, 1600)
           setIsTransitioning(true)
           nextSlide()
         }
@@ -91,7 +91,7 @@ const Carousel = (props) => {
           e.preventDefault()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 1200)
+          }, 1600)
           setIsTransitioning(true)
           previousSlide()
         }

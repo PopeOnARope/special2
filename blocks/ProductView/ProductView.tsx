@@ -198,7 +198,7 @@ const ProductBox: React.FC<Props> = ({
 
   React.useEffect(() => {
     var ls = localStorage.getItem('namespace.visited')
-    // if (ls == null) {
+    if (ls == null) {
       //ON first render, give a 'content tease' to indicate user should swipe
       setTimeout(() => {
         setMargin(50)
@@ -207,7 +207,7 @@ const ProductBox: React.FC<Props> = ({
         setMargin(0)
       }, 1200)
       localStorage.setItem('namespace.visited', 1)
-    // }
+    }
     smoothscroll.polyfill()
   }, [])
 
@@ -242,7 +242,7 @@ const ProductBox: React.FC<Props> = ({
           e.preventDefault()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 900)
+          }, 1600)
           setIsTransitioning(true)
           handleNext()
         }
@@ -251,7 +251,7 @@ const ProductBox: React.FC<Props> = ({
           e.preventDefault()
           setTimeout(() => {
             setIsTransitioning(false)
-          }, 900)
+          }, 1600)
           setIsTransitioning(true)
           handlePrevious()
         }
@@ -373,13 +373,13 @@ const ProductBox: React.FC<Props> = ({
               peakingImageIndex !== 0 ? 'justify-between' : 'justify-end'
             }  items-start`}
           >
-            {peakingImageIndex !== 0 && (
+            {peakingImageIndex !== 0 && scrollType !=='vertical' && (
               <PreviousButton
                 overlayColor={peakingImage?.overlayColor}
                 onClick={handlePrevious}
               />
             )}
-            {peakingImageIndex !== (images?.length - 1 || 0) && (
+            {peakingImageIndex !== (images?.length - 1 || 0) && scrollType !=='vertical' && (
               <NextButton
                 overlayColor={peakingImage?.overlayColor}
                 onClick={handleNext}
