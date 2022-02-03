@@ -21,6 +21,17 @@ const Head: FC<{ seoInfo: any }> = (props) => {
         <meta property="og:url" content="https://spec-ial.com" />
         <meta name="facebook-domain-verification" content="et0zjvu86iusjxi3uh15yfntu6nuao" />
         <Pixel/>
+
+        <script async dangerouslySetInnerHTML={{
+          __html:`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-7MH9WFNCF1');`}}
+                src="https://www.googletagmanager.com/gtag/js?id=G-7MH9WFNCF1"></script>
+        <script>
+
+        </script>
           {/*<meta property="og:image" content="https://ahrefs.com/blog/wp-content/uploads/2019/12/fb-how-to-become-an-seo-expert.png" />*/}
       </NextHead>
     </>
