@@ -16,6 +16,12 @@ restrictedRegister(
     name: 'ProductView',
     inputs: [
       {
+        name: 'scrollType',
+        type: 'string',
+        enum: ['horizontal', 'vertical'],
+        defaultValue: 'horizontal',
+      },
+      {
         name: 'checkoutType',
         type: 'string',
         enum: ['basic', 'custom'],

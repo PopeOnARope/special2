@@ -87,8 +87,6 @@ const Signup = ({
       redirect: 'follow', // manual, *follow, error
       body: urlencoded,
     })
-    Cookie.set('phoneNumber', phoneNumber, { expires: 365 })
-    Cookie.set('email', email, { expires: 365 })
 
     window.location.href = '/home'
     return response.json()

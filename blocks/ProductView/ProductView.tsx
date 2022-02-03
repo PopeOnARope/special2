@@ -30,6 +30,7 @@ interface Props {
   renderSeo?: boolean
   description?: string
   title?: string
+  scrollType?: string
 }
 
 interface ButtonProps {
@@ -76,6 +77,7 @@ const ProductBox: React.FC<Props> = ({
   editionFont,
   editionDescriptionFont,
   checkoutType,
+  scrollType='horizontal'
 }) => {
   const [loading, setLoading] = useState(false)
   const [hasRendered, setHasRendered] = useState(false)
@@ -196,7 +198,7 @@ const ProductBox: React.FC<Props> = ({
 
   React.useEffect(() => {
     var ls = localStorage.getItem('namespace.visited')
-    if (ls == null) {
+    // if (ls == null) {
       //ON first render, give a 'content tease' to indicate user should swipe
       setTimeout(() => {
         setMargin(50)
@@ -205,7 +207,7 @@ const ProductBox: React.FC<Props> = ({
         setMargin(0)
       }, 1200)
       localStorage.setItem('namespace.visited', 1)
-    }
+    // }
     smoothscroll.polyfill()
   }, [])
 
@@ -398,9 +400,10 @@ const ProductBox: React.FC<Props> = ({
             }}
           >
             <div
-              className="inline-flex"
+              className={scrollType==='horizontal' ? `inline-flex` : `flex flex-col`}
               style={{
-                marginLeft: `-${margin || width * peakingImageIndex}px`,
+                marginLeft: scrollType==='horizontal' && `-${margin || width * peakingImageIndex}px`,
+                marginTop: scrollType === 'vertical' && `-${margin || height * peakingImageIndex}px`,
                 transition: '0.8s all',
               }}
             >
