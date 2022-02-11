@@ -22,6 +22,7 @@ import { useSwipeable } from 'react-swipeable'
 import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
 import capiRequest from '@lib/capiRequest'
+import {useRouter} from 'next/router'
 
 interface Props {
   className?: string
@@ -109,6 +110,9 @@ const ProductBox: React.FC<Props> = ({
     closeProductDetails,
   } = useUI()
 
+  const router = useRouter();
+  const handle = router.query.handle;
+
   const [peakingImage, setPeakingImage] = useState({
     image: '',
     overlayColor: 'white',
@@ -127,7 +131,7 @@ const ProductBox: React.FC<Props> = ({
     capiRequest('track', 'ViewContent', {
       content_name: title, //Product name here
       content_category: collection, //Category name here
-      content_ids: [product.id], //Shopify product id here
+      content_ids: [handle], //Shopify product id here
       content_type: 'product',
       value: variant.price,
       currency: 'USD',
@@ -165,7 +169,7 @@ const ProductBox: React.FC<Props> = ({
     capiRequest('track', 'AddToCart', {
       content_name: title, //Product name here
       content_category: collection, //Category name here
-      content_ids: [product.id], //Shopify product id here
+      content_ids: [handle], //Shopify product id here
       content_type: 'product',
       value: variant.price,
       currency: 'USD',
