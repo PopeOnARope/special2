@@ -23,6 +23,7 @@ import Customize from './Customize'
 import { isMobile } from '@lib/isMobile'
 import capiRequest from '@lib/capiRequest'
 import {useRouter} from 'next/router'
+import getProductId from '@lib/getProductId'
 
 interface Props {
   className?: string
@@ -131,7 +132,7 @@ const ProductBox: React.FC<Props> = ({
     capiRequest('track', 'ViewContent', {
       content_name: title, //Product name here
       content_category: collection, //Category name here
-      content_ids: [handle], //Shopify product id here
+      content_ids: [getProductId(handle)], //Shopify product id here
       content_type: 'product',
       value: variant.price,
       currency: 'USD',
@@ -169,7 +170,7 @@ const ProductBox: React.FC<Props> = ({
     capiRequest('track', 'AddToCart', {
       content_name: title, //Product name here
       content_category: collection, //Category name here
-      content_ids: [handle], //Shopify product id here
+      content_ids: [getProductId(handle)], //Shopify product id here
       content_type: 'product',
       value: variant.price,
       currency: 'USD',
