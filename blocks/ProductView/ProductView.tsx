@@ -128,7 +128,6 @@ const ProductBox: React.FC<Props> = ({
     setPeakingImage(i[0])
     setIsMobile(isMobile())
     setHasRendered(true)
-    console.log({product: JSON.parse(JSON.stringify(product))})
     capiRequest('track', 'ViewContent', {
       content_name: title, //Product name here
       content_category: collection, //Category name here
