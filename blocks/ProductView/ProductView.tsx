@@ -20,6 +20,7 @@ import ProductLoader from './ProductLoader'
 import ProductDetails from '@components/ProductDetails/ProductDetails'
 import { useSwipeable } from 'react-swipeable'
 import Customize from './Customize'
+import MakeAnOffer from './MakeAnOffer/MakeAnOffer'
 import { isMobile } from '@lib/isMobile'
 import capiRequest from '@lib/capiRequest'
 import {useRouter} from 'next/router'
@@ -60,6 +61,86 @@ const PreviousButton: React.FC<ButtonProps> = ({ onClick, overlayColor }) => (
   </button>
 )
 
+const BasicCheckoutButton = ({
+  loading,
+  addToCart,
+  variant
+}) => (
+  <button
+    className="hover-button active flex items-center"
+    icon={<Plus />}
+    name="add-to-cart"
+    disabled={loading}
+    onClick={addToCart}
+  >
+    <span className="flex flex-row justify-between mr-2 w-full ">
+      <span>Bag {loading && <LoadingDots />}</span>
+      {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
+    </span>
+  </button>
+)
+
+function renderCheckout(
+  checkoutType,
+  makeAnOfferInfo,
+  makeAnOfferSubmitInfo,
+  title,
+  variant,
+  displayProductDetails,
+  toggleProductDetails,
+  customMethods,
+  width,
+  loading,
+  addToCart
+) {
+  switch(checkoutType) {
+    case 'custom':
+      return (
+        <Customize
+          variant={variant}
+          displayProductDetails={displayProductDetails}
+          toggleProductDetails={toggleProductDetails}
+          {...customMethods}
+          screenWidth={width}
+        />
+      );
+    case 'makeAnOffer':
+      return (
+        <div sx={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <MakeAnOffer
+            makeAnOfferInfo={makeAnOfferInfo}
+            makeAnOfferSubmitInfo={makeAnOfferSubmitInfo}
+            productTitle={title}
+            variant={variant}
+            displayProductDetails={displayProductDetails}
+            toggleProductDetails={toggleProductDetails}
+            {...customMethods}
+            screenWidth={width}
+            button={
+              <BasicCheckoutButton
+                loading={loading}
+                addToCart={addToCart}
+                variant={variant}
+              />
+            }
+          />
+        </div>
+      );
+    default:
+      return (
+        <BasicCheckoutButton
+          loading={loading}
+          addToCart={addToCart}
+          variant={variant}
+        />
+      );
+  }
+};
+
 const ProductBox: React.FC<Props> = ({
   product,
   description,
@@ -79,7 +160,9 @@ const ProductBox: React.FC<Props> = ({
   editionFont,
   editionDescriptionFont,
   checkoutType,
-  scrollType='horizontal'
+  scrollType='horizontal',
+  makeAnOfferInfo,
+  makeAnOfferSubmitInfo
 }) => {
   const [loading, setLoading] = useState(false)
   const [hasRendered, setHasRendered] = useState(false)
@@ -511,8 +594,25 @@ const ProductBox: React.FC<Props> = ({
             __{title}
           </h2>
         </div>
+        
+        {
+          /* Render Checkout Experience */
+          renderCheckout(
+            checkoutType,
+            makeAnOfferInfo,
+            makeAnOfferSubmitInfo,
+            title,
+            variant,
+            displayProductDetails,
+            toggleProductDetails,
+            customMethods,
+            width,
+            loading,
+            addToCart
+          )
+        }
 
-        {checkoutType === 'custom' ? (
+        {/* {checkoutType === 'custom' ? (
           <Customize
             variant={variant}
             displayProductDetails={displayProductDetails}
@@ -533,7 +633,7 @@ const ProductBox: React.FC<Props> = ({
               {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
             </span>
           </button>
-        )}
+        )} */}
         <p
           className="mt-4"
           style={{
