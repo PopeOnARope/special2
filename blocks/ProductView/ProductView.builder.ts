@@ -24,7 +24,7 @@ restrictedRegister(
       {
         name: 'checkoutType',
         type: 'string',
-        enum: ['basic', 'custom'],
+        enum: ['basic', 'custom', 'makeAnOffer'],
         defaultValue: 'basic',
       },
       {
@@ -175,6 +175,16 @@ restrictedRegister(
       },
       { name: 'edition', type: 'text', defaultValue: 'Edition' },
       { name: 'editionDescription', type: 'text', defaultValue: '' },
+      {
+        name: 'makeAnOfferInfo',
+        type: 'richText',
+        defaultValue: 'enter a long description of this item here!',
+      },
+      {
+        name: 'makeAnOfferSubmitInfo',
+        type: 'richText',
+        defaultValue: 'enter a long description of this item here!',
+      }
     ],
     image: 'https://unpkg.com/css.gg@2.0.0/icons/svg/inpicture.svg',
     description:
