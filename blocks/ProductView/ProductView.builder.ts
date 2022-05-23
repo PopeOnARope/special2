@@ -24,7 +24,7 @@ restrictedRegister(
       {
         name: 'checkoutType',
         type: 'string',
-        enum: ['basic', 'custom', 'makeAnOffer'],
+        enum: ['basic', 'custom', 'makeAnOffer', 'customOffer'],
         defaultValue: 'basic',
       },
       {

@@ -74,7 +74,7 @@ const BasicCheckoutButton = ({
     onClick={addToCart}
   >
     <span className="flex flex-row justify-between mr-2 w-full ">
-      <span>Bag {loading && <LoadingDots />}</span>
+      <span>Purchase {loading && <LoadingDots />}</span>
       {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
     </span>
   </button>
@@ -120,11 +120,42 @@ function renderCheckout(
             toggleProductDetails={toggleProductDetails}
             {...customMethods}
             screenWidth={width}
+            orientation="row"
             button={
               <BasicCheckoutButton
                 loading={loading}
                 addToCart={addToCart}
                 variant={variant}
+              />
+            }
+          />
+        </div>
+      );
+      case 'customOffer':
+      return (
+        <div sx={{
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <MakeAnOffer
+            makeAnOfferInfo={makeAnOfferInfo}
+            makeAnOfferSubmitInfo={makeAnOfferSubmitInfo}
+            productTitle={title}
+            variant={variant}
+            displayProductDetails={displayProductDetails}
+            toggleProductDetails={toggleProductDetails}
+            {...customMethods}
+            screenWidth={width}
+            orientation="column"
+            button={
+              <Customize
+                variant={variant}
+                displayProductDetails={displayProductDetails}
+                toggleProductDetails={toggleProductDetails}
+                {...customMethods}
+                screenWidth={width}
+                
               />
             }
           />
@@ -569,7 +600,6 @@ const ProductBox: React.FC<Props> = ({
           bottom: '0',
           right: '0',
           transition: '0.5s all',
-          // opacity: showBuyButton ? 100 : 0,
           bottom: showBuyButton ? 0 : '-25rem',
           zIndex: '9',
         }}

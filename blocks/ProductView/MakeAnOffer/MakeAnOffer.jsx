@@ -60,7 +60,7 @@ const OfferForm = (props) => {
 
   async function postData() {
     var urlencoded = new URLSearchParams()
-    urlencoded.append('g', 'XKvFZS')
+    urlencoded.append('g', 'Y8KUXC')
     urlencoded.append('email', email)
     urlencoded.append('$phone_number', `+${phoneNumber}`)
     urlencoded.append('$first_name', name.split(' ')[0])
@@ -234,7 +234,8 @@ const MakeAnOffer = ({
   makeAnOfferSubmitInfo,
   variant,
   addToCart,
-  button
+  button,
+  orientation
 }) => {
   const [flowState, setFlowState] = React.useState(0)
   const [width, setWidth] = React.useState(0)
@@ -268,7 +269,7 @@ const MakeAnOffer = ({
   `
 
   return (
-    <div className="flex" style={{ zIndex: flowState ? 1 : 100, width: '100%' }}>
+    <div className="flex" style={{ zIndex: flowState ? 1 : 100, width: '100%', flexDirection: orientation }}>
       { button }
       <StyledWindow
         display={flowState ? 'none' : 'inherit'}
