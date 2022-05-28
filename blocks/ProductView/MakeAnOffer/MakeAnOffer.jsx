@@ -1,14 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import {
-  CSSTransition,
-  SwitchTransition,
-} from 'react-transition-group'
+import { CSSTransition, SwitchTransition } from 'react-transition-group'
 import TextInput from './TextInput'
 import { validateEmail } from '@lib/validateEmail'
 import Button from '../../Button/Button'
 import { LoadingDots } from '@components/ui'
-
 
 const StyledWindow = styled.div`
   opacity: ${(props) => (!props.flowState ? '0' : '1')};
@@ -17,11 +13,12 @@ const StyledWindow = styled.div`
   padding: 2rem 4rem;
   background: black;
   height: calc(100% - 7rem);
+  overflow: scroll;
   position: fixed;
   top: 5rem;
   right: 2rem;
   width: calc(100vw - 4.5rem);
-  z-index: 9;
+  z-index: 10;
 
   @media (max-width: 768px) {
     padding: 1rem 2rem;
@@ -49,13 +46,13 @@ const OfferForm = (props) => {
   }
 
   function formatPhoneNumber(phoneNumberString) {
-    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
-    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    var cleaned = ('' + phoneNumberString).replace(/\D/g, '')
+    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
     if (match) {
-      var intlCode = (match[1] ? '+1 ' : '');
-      return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('');
+      var intlCode = match[1] ? '+1 ' : ''
+      return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('')
     }
-    return null;
+    return null
   }
 
   async function postData() {
@@ -96,7 +93,7 @@ const OfferForm = (props) => {
           setFormStatus('error')
           setError(r.errors[0])
         }
-          setFormStatus('success')
+        setFormStatus('success')
       })
       .catch((r) => {
         setFormStatus('error')
@@ -115,9 +112,9 @@ const OfferForm = (props) => {
   return (
     <div>
       {formStatus !== 'loading' && formStatus !== 'success' && (
-        <div className='form'>
+        <div className="form">
           <fieldset>
-          <TextInput
+            <TextInput
               name="amount"
               label="Enter Offer Amount"
               placeholder="$0.00"
@@ -172,61 +169,68 @@ const OfferForm = (props) => {
           </fieldset>
 
           <Button
-              onClick={handleSubmit}
-              disabled={
-                formStatus === 'success' || formStatus === 'initial'
-              }
-            >
-              {' '}
-              <span> {formStatus === 'loading' && <LoadingDots />}</span>
-              <span>
-                {(formStatus === 'initial' || formStatus === 'ready') && 'SUBMIT OFFER'}
-              </span>
-              <span>
-                {formStatus === 'success' &&
-                  'Thank you for your offer! We will be in touch'}
-              </span>
-            </Button>
+            onClick={handleSubmit}
+            disabled={formStatus === 'success' || formStatus === 'initial'}
+          >
+            {' '}
+            <span> {formStatus === 'loading' && <LoadingDots />}</span>
+            <span>
+              {(formStatus === 'initial' || formStatus === 'ready') &&
+                'SUBMIT OFFER'}
+            </span>
+            <span>
+              {formStatus === 'success' &&
+                'Thank you for your offer! We will be in touch'}
+            </span>
+          </Button>
         </div>
       )}
 
       {formStatus === 'success' && (
-        <div className='submitted-offer'>
+        <div className="submitted-offer">
           <div style={{ fontWeight: 'bold' }}>
-            <p>{ name },</p>
+            <p>{name},</p>
             <p>Thank you for submitting an offer</p>
           </div>
 
-          <div className="mt-4" dangerouslySetInnerHTML={{ __html: props.makeAnOfferSubmitInfo }} />
+          <div
+            className="mt-4"
+            dangerouslySetInnerHTML={{ __html: props.makeAnOfferSubmitInfo }}
+          />
 
           <div className="mb-4 mt-4">
-            <label className='block'>Offer:</label>
-            <strong>{ `$${amount}` }</strong>
+            <label className="block">Offer:</label>
+            <strong>{`$${amount}`}</strong>
           </div>
 
           <div className="mb-4">
-            <label className='block'>Email:</label>
-            <strong>{ email }</strong>
+            <label className="block">Email:</label>
+            <strong>{email}</strong>
           </div>
 
           <div className="mb-4">
-            <label className='block'>Phone:</label>
-            <strong>{ formatPhoneNumber(phoneNumber) }</strong>
+            <label className="block">Phone:</label>
+            <strong>{formatPhoneNumber(phoneNumber)}</strong>
           </div>
 
-          <p>Can't wait? Purchase this item for the asking price 
+          <p>
+            Can't wait? Purchase this item for the asking price
             <span
               role="button"
-              onClick={() => { setFlowState(0) }}
+              onClick={() => {
+                setFlowState(0)
+              }}
               className="underline"
-            > here</span>
+            >
+              {' '}
+              here
+            </span>
           </p>
-
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
 const MakeAnOffer = ({
   productTitle,
@@ -235,7 +239,9 @@ const MakeAnOffer = ({
   variant,
   addToCart,
   button,
-  orientation
+  orientation,
+  onClickMakeAndOffer,
+  onCloseMakeAnOfferWindow,
 }) => {
   const [flowState, setFlowState] = React.useState(0)
   const [width, setWidth] = React.useState(0)
@@ -247,12 +253,12 @@ const MakeAnOffer = ({
   const [error, setError] = React.useState('')
   const [formStatus, setFormStatus] = React.useState('initial')
 
-
   React.useEffect(() => {
     setWidth(document.getElementById('buy-button').clientWidth)
     setHeight(window.innerHeight)
   })
   function handleButtonClick() {
+    onClickMakeAndOffer();
     if (flowState === 0) {
       setFlowState(1)
     } else {
@@ -269,8 +275,15 @@ const MakeAnOffer = ({
   `
 
   return (
-    <div className="flex" style={{ zIndex: flowState ? 1 : 100, width: '100%', flexDirection: orientation }}>
-      { button }
+    <div
+      className="flex"
+      style={{
+        zIndex: flowState ? 1 : 100,
+        width: '100%',
+        flexDirection: orientation,
+      }}
+    >
+      {flowState === 0 &&  button}
       <StyledWindow
         display={flowState ? 'none' : 'inherit'}
         flowState={flowState}
@@ -294,6 +307,7 @@ const MakeAnOffer = ({
         )}
         <button
           onClick={() => {
+            onCloseMakeAnOfferWindow();
             setFlowState(0)
           }}
           className="absolute px-4"
@@ -306,22 +320,40 @@ const MakeAnOffer = ({
         <SwitchTransition>
           <CSSTransition classNames="in-out" timeout={200} key={flowState}>
             <div>
-              {(flowState === 1) && (
+              {flowState === 1 && (
                 <>
                   <br></br>
                   <h1 className="mt-4 mb-4">
-                    <span style={{ paddingRight: '5px', fontWeight: 'bold' }}>MAKE AN OFFER</span>
-                    <span style={{ fontStyle: 'italic', paddingRight: '5px' }}> { productTitle } </span>
+                    <span style={{ paddingRight: '5px', fontWeight: 'bold' }}>
+                      MAKE AN OFFER
+                    </span>
+                    <span style={{ fontStyle: 'italic', paddingRight: '5px' }}>
+                      {' '}
+                      {productTitle}{' '}
+                    </span>
                     <MoreInfo
-                      onClick={() => { setFlowState(2) }}
-                    >{"MORE INFO >"}</MoreInfo>
+                      onClick={() => {
+                        setFlowState(2)
+                      }}
+                    >
+                      {'MORE INFO >'}
+                    </MoreInfo>
                   </h1>
                   <br></br>
-                  { formStatus !== 'loading' && formStatus !== 'success' && (
+                  {formStatus !== 'loading' && formStatus !== 'success' && (
                     <div className="mb-4">
-                      <p className="mb-2">You'll be notified within 48 hours if your offer is accepted.</p>
-                      <p className="mb-2">You'll have 36 hours to complete payment - where you'll provide billing and shipping information.</p>
-                      <p className="mb-2">If your offer is not accepted you'll have the ability to make additional offers.</p>
+                      <p className="mb-2">
+                        You'll be notified within 48 hours if your offer is
+                        accepted.
+                      </p>
+                      <p className="mb-2">
+                        You'll have 36 hours to complete payment - where you'll
+                        provide billing and shipping information.
+                      </p>
+                      <p className="mb-2">
+                        If your offer is not accepted you'll have the ability to
+                        make additional offers.
+                      </p>
                     </div>
                   )}
                   <OfferForm
@@ -340,10 +372,15 @@ const MakeAnOffer = ({
                 <>
                   <br></br>
                   <h1 className="mt-4 mb-4">
-                    <span style={{ paddingRight: '5px', fontWeight: 'bold' }}>MAKE AN OFFER INFORMATION</span>
+                    <span style={{ paddingRight: '5px', fontWeight: 'bold' }}>
+                      MAKE AN OFFER INFORMATION
+                    </span>
                   </h1>
                   <br></br>
-                  <div className="mt-4" dangerouslySetInnerHTML={{ __html: makeAnOfferInfo }} />
+                  <div
+                    className="mt-4"
+                    dangerouslySetInnerHTML={{ __html: makeAnOfferInfo }}
+                  />
                 </>
               )}
             </div>
@@ -352,7 +389,9 @@ const MakeAnOffer = ({
       </StyledWindow>
       <button
         id="buy-button"
-        className={`hover-button w-full ${flowState === 0 && 'active'}`}
+        className={` hover-button-light w-full ${
+          flowState === 0 && 'active'
+        } flex flex-col justify-center items-center`}
         onClick={handleButtonClick}
       >
         <span>MAKE OFFER</span>
@@ -364,7 +403,7 @@ const MakeAnOffer = ({
           width: `calc(${33.333 * flowState}% - 2rem)`,
           transition: '0.6s all',
           position: 'absolute',
-          right: '2rem'
+          right: '2rem',
         }}
       ></div>
     </div>

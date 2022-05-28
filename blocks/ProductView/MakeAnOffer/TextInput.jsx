@@ -4,7 +4,7 @@ import CurrencyInput from 'react-currency-input-field'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  font-family: Value Sans Pro;
+  font-family: InputMono;
   font-size: 1rem;
   input {
     color: black;

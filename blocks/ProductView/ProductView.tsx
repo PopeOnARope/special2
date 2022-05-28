@@ -7,9 +7,7 @@ import smoothscroll from 'smoothscroll-polyfill'
 import { ArrowLeft, ChevronUp, Plus } from '../../components/icons'
 import { NextSeo } from 'next-seo'
 import { useUI } from '@components/ui/context'
-import {
-  useAddItemToCart,
-} from '@lib/shopify/storefront-data-hooks'
+import { useAddItemToCart } from '@lib/shopify/storefront-data-hooks'
 import {
   prepareVariantsWithOptions,
   getPrice,
@@ -23,7 +21,7 @@ import Customize from './Customize'
 import MakeAnOffer from './MakeAnOffer/MakeAnOffer'
 import { isMobile } from '@lib/isMobile'
 import capiRequest from '@lib/capiRequest'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import getProductId from '@lib/getProductId'
 
 interface Props {
@@ -61,20 +59,20 @@ const PreviousButton: React.FC<ButtonProps> = ({ onClick, overlayColor }) => (
   </button>
 )
 
-const BasicCheckoutButton = ({
-  loading,
-  addToCart,
-  variant
-}) => (
+const BasicCheckoutButton = ({ loading, addToCart, variant, size }) => (
   <button
-    className="hover-button active flex items-center"
+    className={`hover-button active flex items-center ${
+      size === 'large' && 'p-8'
+    }`}
     icon={<Plus />}
     name="add-to-cart"
     disabled={loading}
     onClick={addToCart}
   >
     <span className="flex flex-row justify-between mr-2 w-full ">
-      <span>Purchase {loading && <LoadingDots />}</span>
+      <span className={size === 'large' && 'uppercase'}>
+        Purchase {loading && <LoadingDots />}
+      </span>
       {getPrice(variant.priceV2.amount, variant.priceV2.currencyCode)}
     </span>
   </button>
@@ -91,9 +89,10 @@ function renderCheckout(
   customMethods,
   width,
   loading,
-  addToCart
+  addToCart,
+  setShouldHandleScroll
 ) {
-  switch(checkoutType) {
+  switch (checkoutType) {
     case 'custom':
       return (
         <Customize
@@ -103,12 +102,13 @@ function renderCheckout(
           {...customMethods}
           screenWidth={width}
         />
-      );
+      )
     case 'makeAnOffer':
       return (
-        <div sx={{
+        <div
+          sx={{
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           <MakeAnOffer
@@ -121,21 +121,29 @@ function renderCheckout(
             {...customMethods}
             screenWidth={width}
             orientation="row"
+            onClickMakeAndOffer={() => {
+              setShouldHandleScroll(false)
+            }}
+            onCloseMakeAnOfferWindow={() => {
+              setShouldHandleScroll(true)
+            }}
             button={
               <BasicCheckoutButton
                 loading={loading}
                 addToCart={addToCart}
                 variant={variant}
+                size="large"
               />
             }
           />
         </div>
-      );
-      case 'customOffer':
+      )
+    case 'customOffer':
       return (
-        <div sx={{
+        <div
+          sx={{
             display: 'flex',
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           <MakeAnOffer
@@ -148,6 +156,12 @@ function renderCheckout(
             {...customMethods}
             screenWidth={width}
             orientation="column"
+            onClickMakeAndOffer={() => {
+              setShouldHandleScroll(false)
+            }}
+            onCloseMakeAnOfferWindow={() => {
+              setShouldHandleScroll(true)
+            }}
             button={
               <Customize
                 variant={variant}
@@ -155,12 +169,11 @@ function renderCheckout(
                 toggleProductDetails={toggleProductDetails}
                 {...customMethods}
                 screenWidth={width}
-                
               />
             }
           />
         </div>
-      );
+      )
     default:
       return (
         <BasicCheckoutButton
@@ -168,9 +181,9 @@ function renderCheckout(
           addToCart={addToCart}
           variant={variant}
         />
-      );
+      )
   }
-};
+}
 
 const ProductBox: React.FC<Props> = ({
   product,
@@ -191,9 +204,9 @@ const ProductBox: React.FC<Props> = ({
   editionFont,
   editionDescriptionFont,
   checkoutType,
-  scrollType='horizontal',
+  scrollType = 'horizontal',
   makeAnOfferInfo,
-  makeAnOfferSubmitInfo
+  makeAnOfferSubmitInfo,
 }) => {
   const [loading, setLoading] = useState(false)
   const [hasRendered, setHasRendered] = useState(false)
@@ -208,6 +221,7 @@ const ProductBox: React.FC<Props> = ({
   const [size, setSize] = useState('regular')
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [_isMobile, setIsMobile] = React.useState(true)
+  const [shouldHandleScroll, setShouldHandleScroll] = useState(true)
 
   const customAttributes = { leftArmText, rightArmText, size }
 
@@ -225,8 +239,8 @@ const ProductBox: React.FC<Props> = ({
     closeProductDetails,
   } = useUI()
 
-  const router = useRouter();
-  const handle = router.query.handle;
+  const router = useRouter()
+  const handle = router.query.handle
 
   const [peakingImage, setPeakingImage] = useState({
     image: '',
@@ -249,7 +263,6 @@ const ProductBox: React.FC<Props> = ({
       content_type: 'product',
       value: variant.price,
       currency: 'USD',
-
     })
   }, [])
 
@@ -287,7 +300,6 @@ const ProductBox: React.FC<Props> = ({
       content_type: 'product',
       value: variant.price,
       currency: 'USD',
-
     })
 
     try {
@@ -380,11 +392,13 @@ const ProductBox: React.FC<Props> = ({
   )
 
   React.useEffect(() => {
-    window.addEventListener('wheel', handleScroll, { passive: false })
-    return function cleanup() {
-      window.removeEventListener('wheel', handleScroll)
+    if (shouldHandleScroll) {
+      window.addEventListener('wheel', handleScroll, { passive: false })
+      return function cleanup() {
+        window.removeEventListener('wheel', handleScroll)
+      }
     }
-  }, [handleScroll])
+  }, [handleScroll, shouldHandleScroll])
 
   if (!images) {
     return (
@@ -492,18 +506,19 @@ const ProductBox: React.FC<Props> = ({
               peakingImageIndex !== 0 ? 'justify-between' : 'justify-end'
             }  items-start`}
           >
-            {peakingImageIndex !== 0 && scrollType !=='vertical' && (
+            {peakingImageIndex !== 0 && scrollType !== 'vertical' && (
               <PreviousButton
                 overlayColor={peakingImage?.overlayColor}
                 onClick={handlePrevious}
               />
             )}
-            {peakingImageIndex !== (images?.length - 1 || 0) && scrollType !=='vertical' && (
-              <NextButton
-                overlayColor={peakingImage?.overlayColor}
-                onClick={handleNext}
-              />
-            )}
+            {peakingImageIndex !== (images?.length - 1 || 0) &&
+              scrollType !== 'vertical' && (
+                <NextButton
+                  overlayColor={peakingImage?.overlayColor}
+                  onClick={handleNext}
+                />
+              )}
           </div>
         </div>
         {peakingImage.image && (
@@ -519,10 +534,16 @@ const ProductBox: React.FC<Props> = ({
             }}
           >
             <div
-              className={scrollType==='horizontal' ? `inline-flex` : `flex flex-col`}
+              className={
+                scrollType === 'horizontal' ? `inline-flex` : `flex flex-col`
+              }
               style={{
-                marginLeft: scrollType==='horizontal' && `-${margin || width * peakingImageIndex}px`,
-                marginTop: scrollType === 'vertical' && `-${margin || height * peakingImageIndex}px`,
+                marginLeft:
+                  scrollType === 'horizontal' &&
+                  `-${margin || width * peakingImageIndex}px`,
+                marginTop:
+                  scrollType === 'vertical' &&
+                  `-${margin || height * peakingImageIndex}px`,
                 transition: '0.8s all',
               }}
             >
@@ -624,7 +645,7 @@ const ProductBox: React.FC<Props> = ({
             __{title}
           </h2>
         </div>
-        
+
         {
           /* Render Checkout Experience */
           renderCheckout(
@@ -638,7 +659,8 @@ const ProductBox: React.FC<Props> = ({
             customMethods,
             width,
             loading,
-            addToCart
+            addToCart,
+            setShouldHandleScroll
           )
         }
 

@@ -97,8 +97,25 @@
   color: white;
 }
 
+.hover-button-light {
+  background: linear-gradient(to left, lightgrey 50%, #ffc391 50%) right;
+  transition: 0.5s ease-out;
+  background-size: 200%;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0;
+  width: 100%;
+  padding: 1rem;
+  color: black;
+}
+
 @media (min-width: 480px) {
   .hover-button.active:hover {
+    box-shadow: 6px 5px 10px rgba(0, 0, 0, 0.2);
+    color: #000;
+    background-position: left;
+  }
+  .hover-button-light.active:hover {
     box-shadow: 6px 5px 10px rgba(0, 0, 0, 0.2);
     color: #000;
     background-position: left;

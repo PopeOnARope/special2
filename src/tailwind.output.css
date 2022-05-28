@@ -2139,6 +2139,12 @@ html {
   background-color: rgba(0, 0, 0, var(--bg-opacity));
 }
 
+.border-black{
+  --border-opacity: 1;
+  border-color: #000000;
+  border-color: rgba(0, 0, 0, var(--border-opacity));
+}
+
 .border{
   border-width: 1px;
 }
@@ -2490,6 +2496,10 @@ html {
   --text-opacity: 1;
   color: #6b7280;
   color: rgba(107, 114, 128, var(--text-opacity));
+}
+
+.italic{
+  font-style: italic;
 }
 
 .uppercase{
