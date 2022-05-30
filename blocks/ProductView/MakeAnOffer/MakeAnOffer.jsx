@@ -23,6 +23,10 @@ const StyledWindow = styled.div`
   @media (max-width: 768px) {
     padding: 1rem 2rem;
     bottom: unset;
+    text-align: left;
+    button {
+      width: 100%;;
+    }
   }
   transition: ${(props) =>
     !props.flowState ? '0.8s height, 1s opacity' : '0.8s height, 0.2s opacity'};
@@ -36,6 +40,8 @@ const OfferForm = (props) => {
   const [error, setError] = props.error
   const [formStatus, setFormStatus] = props.formStatus
   const [flowState, setFlowState] = props.flowState
+
+  const {legalCopy} = props;
 
   function doSetFormStatus() {
     if (validateEmail(email)) {
@@ -168,9 +174,10 @@ const OfferForm = (props) => {
             {/* <span>To add a note or include a barter in your offer click here</span> */}
           </fieldset>
 
-          <Button
+          <button
             onClick={handleSubmit}
             disabled={formStatus === 'success' || formStatus === 'initial'}
+            style={{background: 'lightgrey', padding: '3rem 6rem', fontFamily: 'InputMono', color: 'black'}}
           >
             {' '}
             <span> {formStatus === 'loading' && <LoadingDots />}</span>
@@ -182,8 +189,10 @@ const OfferForm = (props) => {
               {formStatus === 'success' &&
                 'Thank you for your offer! We will be in touch'}
             </span>
-          </Button>
+          </button>
+          <p style={{marginTop: '1rem', marginLeft: '1rem', fontSize: '0.75rem'}} dangerouslySetInnerHTML={{__html: legalCopy}}></p>
         </div>
+
       )}
 
       {formStatus === 'success' && (
@@ -241,7 +250,7 @@ const MakeAnOffer = ({
   button,
   orientation,
   onClickMakeAndOffer,
-  onCloseMakeAnOfferWindow,
+  onCloseMakeAnOfferWindow, legalCopy
 }) => {
   const [flowState, setFlowState] = React.useState(0)
   const [width, setWidth] = React.useState(0)
@@ -358,6 +367,7 @@ const MakeAnOffer = ({
                   )}
                   <OfferForm
                     makeAnOfferSubmitInfo={makeAnOfferSubmitInfo}
+                    legalCopy={legalCopy}
                     flowState={[flowState, setFlowState]}
                     amount={[amount, setAmount]}
                     name={[name, setName]}

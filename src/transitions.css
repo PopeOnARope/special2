@@ -95,6 +95,7 @@
   width: 100%;
   padding: 1rem;
   color: white;
+  font-family: 'InputMono';
 }
 
 .hover-button-light {
@@ -107,6 +108,7 @@
   width: 100%;
   padding: 1rem;
   color: black;
+  font-family: 'InputMono';
 }
 
 @media (min-width: 480px) {

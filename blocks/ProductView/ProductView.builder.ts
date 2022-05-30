@@ -181,7 +181,7 @@ restrictedRegister(
         defaultValue: 'enter a long description of this item here!',
       },
       {
-        name: 'makeAnOfferSubmitInfo',
+        name: 'legalCopy',
         type: 'richText',
         defaultValue: 'enter a long description of this item here!',
       }

@@ -90,7 +90,8 @@ function renderCheckout(
   width,
   loading,
   addToCart,
-  setShouldHandleScroll
+  setShouldHandleScroll,
+  legalCopy
 ) {
   switch (checkoutType) {
     case 'custom':
@@ -121,6 +122,7 @@ function renderCheckout(
             {...customMethods}
             screenWidth={width}
             orientation="row"
+            legalCopy={legalCopy}
             onClickMakeAndOffer={() => {
               setShouldHandleScroll(false)
             }}
@@ -156,6 +158,7 @@ function renderCheckout(
             {...customMethods}
             screenWidth={width}
             orientation="column"
+            legalCopy={legalCopy}
             onClickMakeAndOffer={() => {
               setShouldHandleScroll(false)
             }}
@@ -207,6 +210,7 @@ const ProductBox: React.FC<Props> = ({
   scrollType = 'horizontal',
   makeAnOfferInfo,
   makeAnOfferSubmitInfo,
+  legalCopy
 }) => {
   const [loading, setLoading] = useState(false)
   const [hasRendered, setHasRendered] = useState(false)
@@ -660,7 +664,8 @@ const ProductBox: React.FC<Props> = ({
             width,
             loading,
             addToCart,
-            setShouldHandleScroll
+            setShouldHandleScroll,
+            legalCopy
           )
         }
 
