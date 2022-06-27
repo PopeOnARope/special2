@@ -71,9 +71,11 @@ const OfferForm = (props) => {
     urlencoded.append('sms_consent', 'true')
     urlencoded.append('$consent', '[sms, email]')
     urlencoded.append('$offerAmount', amount)
+    urlencoded.append('$productTitle', props.productTitle)
+    urlencoded.append('$variantId', props.variantId)
     urlencoded.append(
       '$fields',
-      '$phone_number, $first_name, $last_name, sms_consent, $consent, $offerAmount '
+      '$phone_number, $first_name, $last_name, sms_consent, $consent, $offerAmount, $productTitle, $variantId'
     )
 
     const url = 'https://manage.kmail-lists.com/ajax/subscriptions/subscribe'
@@ -369,6 +371,8 @@ const MakeAnOffer = ({
                     makeAnOfferSubmitInfo={makeAnOfferSubmitInfo}
                     legalCopy={legalCopy}
                     flowState={[flowState, setFlowState]}
+                    productTitle={productTitle}
+                    variantId={variant.id}
                     amount={[amount, setAmount]}
                     name={[name, setName]}
                     email={[email, setEmail]}
